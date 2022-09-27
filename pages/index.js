@@ -19,9 +19,16 @@ import { useRef } from "react";
 import PixelatedImage from "@/components/pixelated-image";
 import { CarouselBlog } from "@/components/carousel-blog";
 
+import MobileHandIcon from "@/icons/mobile-hand.svg";
+import GlobeIcon from "@/icons/globe.svg";
+import DownloadIcon from "@/icons/download.svg";
+import PhoneIcon from "@/icons/phone.svg";
+
 // Sanity
 import SanityPageService from "@/services/sanityPageService";
-import TestWebgl from "@/components/webgl";
+import WebGL from "@/components/webgl";
+import TextScrambler from "@/components/text-scrambler";
+import GridOverlay from "@/components/grid-overlay";
 
 const query = `{
   "blog": *[_type == "blog"][0...5]{
@@ -59,7 +66,7 @@ export default function Home(initialData) {
         <m.main initial="initial" animate="enter" exit="exit" className="">
           <m.div
             variants={fade}
-            className="w-full h-full min-h-screen lg:min-h-[125vh] bg-pink/30 pt-24 lg:pt-40 xl:pt-52 border-b border-black/50 px-6 xl:px-10 mx-auto relative overflow-hidden"
+            className="w-full h-full min-h-screen lg:min-h-[115vh] bg-pink/30 pt-24 lg:pt-40 xl:pt-52 border-b border-black/50 px-6 xl:px-10 mx-auto relative overflow-hidden"
           >
             <div className="w-full h-full absolute inset-0 z-0 object-cover object-top scale-y-[1.07] -scale-x-100">
               <ScrollParallax
@@ -71,6 +78,8 @@ export default function Home(initialData) {
                   src="/images/home.jpg"
                   alt="Character Test"
                   layout="fill"
+                  quality={75}
+                  priority
                   className="w-full h-full absolute inset-0 z-0 object-cover object-top"
                 />
               </ScrollParallax>
@@ -83,7 +92,12 @@ export default function Home(initialData) {
 
             <div className="max-w-screen-3xl mx-auto" ref={characterBinder}>
               <h1 className="font-black text-[clamp(80px,_10.2vw,_210px)] leading-[0.95] mb-4 uppercase relative z-10 w-11/12 lg:w-full">
-                Game The System
+                <TextScrambler
+                  text="Game The System"
+                  seed={12}
+                  step={1}
+                  singleLine
+                />
               </h1>
 
               <div className="w-10/12 lg:w-[50%] xl:w-[45%] 2xl:w-[35%] max-w-[720px] pt-[75%] lg:pt-[10%] relative pb-8 lg:pb-0">
@@ -101,15 +115,18 @@ export default function Home(initialData) {
                     hit games with franchise potential built right in.
                   </p>
 
-                  <div className="flex space-x-2">
-                    <Link href="/">
-                      <a className="bg-black text-white px-3 py-6 uppercase tracking-wide w-1/2 text-center">
-                        Make a Game
+                  <div className="flex flex-wrap md:-mx-2">
+                    <Link href="/homa-lab">
+                      <a class="roll-btn w-full md:w-1/2 mb-6 md:mb-0 md:px-2">
+                        <span class="roll-btn__front">Make A Game</span>
+                        <span class="roll-btn__back">Make A Game</span>
                       </a>
                     </Link>
-                    <Link href="/">
-                      <a className="bg-black text-white px-3 py-6 uppercase tracking-wide w-1/2 text-center">
-                        Build A Career
+
+                    <Link href="/careers">
+                      <a class="roll-btn w-full md:w-1/2 md:px-2">
+                        <span class="roll-btn__front">Build A Career</span>
+                        <span class="roll-btn__back">Build A Career</span>
                       </a>
                     </Link>
                   </div>
@@ -166,7 +183,7 @@ export default function Home(initialData) {
                 </div>
               </ScrollParallax>
 
-              <div className="w-full border-b border-black/50">
+              <div className="w-full border-b border-black/50 relative z-10">
                 <div className="grid grid-cols-12 max-w-screen-3xl mx-auto">
                   <div className="col-span-10 col-start-2 md:col-span-10 md:col-start-2 md:border-l md:border-r border-black/50 py-[10vw] md:px-10">
                     <div className="grid grid-cols-10 items-center">
@@ -180,20 +197,56 @@ export default function Home(initialData) {
                           hits.
                         </p>
                       </div>
+
+                      {/* Abstract */}
                       <div className="col-span-5 col-start-4 md:col-span-4 md:col-start-7">
-                        <div className="w-full bg-black opacity-20 h-[50vw] 2xl:h-[720px] rounded-xl"></div>
+                        <div className="w-[75%] lg:w-[75%] relative mx-auto">
+                          <PhoneIcon className="w-full relative z-0" />
+
+                          <div className="absolute top-0 right-0 mr-[-55%] lg:mr-[-45%] mt-[15%] z-10 w-full lg:w-[70%]">
+                            <div className="w-full">
+                              <span className="block uppercase font-medium tracking-wider text-base leading-none lg:leading-none xl:leading-none 2xl:leading-non w-11/12 bg-white border border-b-0 border-black/50 px-3 py-5">
+                                Game Name
+                              </span>
+                            </div>
+                            <div className="w-full">
+                              <span className="block uppercase font-medium tracking-wider text-base leading-none lg:leading-none xl:leading-none 2xl:leading-non w-11/12 bg-white border border-black/50 px-3 py-5">
+                                Game Partner
+                              </span>
+                            </div>
+                          </div>
+
+                          <div className="absolute inset-0 z-1 scale-[0.922] mt-[-4%]">
+                            <Image
+                              src="/images/game-example.webp"
+                              layout="responsive"
+                              width={496}
+                              height={882}
+                              quality={75}
+                              className="w-full"
+                            />
+                          </div>
+
+                          <div className="absolute bottom-0 left-0 ml-[-80%] md:ml-[-20%] mb-[15%] z-10 w-[200%] md:w-[70%] min-w-[290px]">
+                            <div className="w-full">
+                              <span className="block uppercase font-medium tracking-wider text-base leading-none lg:leading-none xl:leading-none 2xl:leading-non w-11/12 bg-white border border-black/50 px-3 py-5 text-center">
+                                10,000,000 installs
+                              </span>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
 
-              <div className="w-full border-b border-black/50 pb-56 md:pb-0">
+              <div className="w-full border-b border-black/50 pb-56 md:pb-0 relative z-10">
                 <div className="grid grid-cols-12 max-w-screen-3xl mx-auto">
                   <div className="col-span-10 col-start-2 md:col-span-10 md:col-start-2 md:border-l md:border-r border-black/50 py-[5vw] md:px-10">
                     <div className="grid grid-cols-12 pb-[10vw]">
                       <div className="col-span-12 lg:col-span-3 mb-5 lg:mb-0">
-                        <p className="text-2xl uppercase font-bold">[Icon]</p>
+                        <GlobeIcon className="w-1/2 max-w-[70px] lg:max-w-[100px] lg:mx-auto" />
                       </div>
                       <div className="col-span-12 lg:col-span-7">
                         <span className="text-lg lg:text-lg xl:text-2xl uppercase font-bold block mb-4">
@@ -207,7 +260,7 @@ export default function Home(initialData) {
 
                     <div className="grid grid-cols-12 pb-[10vw]">
                       <div className="col-span-12 lg:col-span-3 mb-5 lg:mb-0">
-                        <p className="text-2xl uppercase font-bold">[Icon]</p>
+                        <MobileHandIcon className="w-1/2 max-w-[70px] lg:max-w-[100px] lg:mx-auto" />
                       </div>
                       <div className="col-span-12 lg:col-span-7">
                         <span className="text-lg lg:text-lg xl:text-2xl uppercase font-bold block mb-4">
@@ -221,7 +274,7 @@ export default function Home(initialData) {
 
                     <div className="grid grid-cols-12 pb-[10vw]">
                       <div className="col-span-12 lg:col-span-3 mb-5 lg:mb-0">
-                        <p className="text-2xl uppercase font-bold">[Icon]</p>
+                        <DownloadIcon className="w-1/2 max-w-[70px] lg:max-w-[100px] lg:mx-auto" />
                       </div>
                       <div className="col-span-12 lg:col-span-7">
                         <span className="text-lg lg:text-lg xl:text-2xl uppercase font-bold block mb-4">
@@ -240,7 +293,12 @@ export default function Home(initialData) {
             <div className="grid grid-cols-12 py-[15vw] px-6 xl:px-10 max-w-screen-3xl mx-auto">
               <div className="order-2 md:order-1 col-span-12 lg:col-span-2 relative z-10">
                 <span className="uppercase text-sm tracking-widest mb-5 lg:mb-8 block font-medium">
-                  Make A Game
+                  <TextScrambler
+                    text="Make A Game"
+                    seed={5}
+                    step={1}
+                    singleLine
+                  />
                 </span>
               </div>
 
@@ -258,9 +316,21 @@ export default function Home(initialData) {
                   </p>
                 </div>
 
-                <Link href="#">
-                  <a className="inline-block border border-black/50 font-medium uppercase leading-none p-3 rounded-sm hover:bg-black hover:text-white focus:bg-black focus:text-white">
-                    Enter the homa lab
+                <Link href="/careers">
+                  <a className="pill-btn group">
+                    <div className="relative">
+                      <span className="block group-hover:opacity-0">
+                        Build A Career
+                      </span>
+                      <span className="absolute top-0 left-0 right-0 hidden  group-hover:block">
+                        <TextScrambler
+                          text="Build A Career"
+                          seed={5}
+                          step={1}
+                          singleLine
+                        />
+                      </span>
+                    </div>
                   </a>
                 </Link>
               </div>
@@ -359,10 +429,23 @@ export default function Home(initialData) {
             </div>
 
             <div className="w-full flex flex-wrap border-t border-black/50">
-              <div className="w-full lg:w-1/2 px-6 xl:px-10 py-20 lg:py-28 xl:py-32 bg-gray-100 border-b lg:border-b-0 lg:border-r border-black/50">
-                <div className="lg:sticky lg:top-28 xl:top-32 lg:pb-32 xl:pb-48">
-                  <div className="flex w-full lg:h-screen lg:-mt-32 xl:-mt-40 items-center justify-center">
-                    <div className="w-[300px] h-[300px] bg-pink lg:-mt-32 xl:-mt-40"></div>
+              <div className="w-full lg:w-1/2 border-b lg:border-b-0 lg:border-r border-black/50">
+                <div className="lg:sticky lg:top-0 xl:top-0 lg:pb-0 xl:pb-48">
+                  <div className="flex w-full lg:h-screen items-center justify-center relative overflow-hidden">
+                    <GridOverlay />
+                    <div className="w-full h-full p-6 xl:p-10 flex items-center justify-center relative z-10">
+                      {/* <div className="w-[300px] h-[300px] bg-pink lg:-mt-32 xl:-mt-40"></div> */}
+                      <div className="w-[66%]">
+                        <Image
+                          src="/images/graph.webp"
+                          layout="responsive"
+                          width={1152}
+                          height={1150}
+                          quality={80}
+                          className="w-full"
+                        />
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -465,7 +548,12 @@ export default function Home(initialData) {
             >
               <div className="order-2 md:order-1 col-span-12 lg:col-span-2 relative z-10">
                 <span className="uppercase text-sm tracking-widest mb-5 lg:mb-8 block font-medium">
-                  Homa Academy
+                  <TextScrambler
+                    text="Homa Academy"
+                    seed={5}
+                    step={1}
+                    singleLine
+                  />
                 </span>
               </div>
 
@@ -488,14 +576,26 @@ export default function Home(initialData) {
                   </p>
                 </div>
 
-                <Link href="#">
-                  <a className="inline-block border border-black/50 font-medium uppercase leading-none p-3 rounded-sm hover:bg-black hover:text-white focus:bg-black focus:text-white">
-                    Learn More
+                <Link href="homa-lab/homa-academy">
+                  <a className="pill-btn group">
+                    <div className="relative">
+                      <span className="block group-hover:opacity-0">
+                        Learn More
+                      </span>
+                      <span className="absolute top-0 left-0 right-0 hidden  group-hover:block">
+                        <TextScrambler
+                          text="Learn More"
+                          seed={5}
+                          step={1}
+                          singleLine
+                        />
+                      </span>
+                    </div>
                   </a>
                 </Link>
               </div>
 
-              <TestWebgl />
+              <WebGL />
 
               {/* <div className="order-1 md:order-3 col-span-12 md:col-span-6 lg:col-span-4 relative z-0 md:h-full mb-8 lg:mb-0">
                 Henry to replace with WebGl
@@ -556,7 +656,12 @@ export default function Home(initialData) {
               <div className="grid grid-cols-12 py-12 lg:py-[15vw] px-6 xl:px-10 max-w-screen-3xl mx-auto">
                 <div className="col-span-12 lg:col-span-2 relative z-10">
                   <span className="uppercase text-sm tracking-widest mb-5 lg:mb-8 block font-medium">
-                    Build A Career
+                    <TextScrambler
+                      text="Build a career"
+                      seed={5}
+                      step={1}
+                      singleLine
+                    />
                   </span>
                 </div>
 
@@ -614,11 +719,88 @@ export default function Home(initialData) {
                     </div>
                   </div>
 
-                  <Link href="#">
-                    <a className="inline-block border border-black/50 font-medium uppercase leading-none py-6 px-10 rounded-sm bg-black text-white hover:bg-black hover:text-white focus:bg-black focus:text-white">
-                      Apply for a job at Homa
+                  <Link href="/careers">
+                    <a class="roll-btn inline-block">
+                      <span class="roll-btn__front">
+                        Apply for a job at Homa
+                      </span>
+                      <span class="roll-btn__back">
+                        Apply for a job at Homa
+                      </span>
                     </a>
                   </Link>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-orange/40 relative overflow-hidden pb-[25vw] lg:pb-0">
+              <ScrollParallax
+                isAbsolutelyPositioned
+                lerpEase={1}
+                strength={-0.05}
+                zIndex={0}
+              >
+                <div className="scale-[1.12] absolute inset-0 w-full h-full">
+                  <Image
+                    src="/images/hope-cta.jpg"
+                    alt="About Test"
+                    layout="fill"
+                    className="w-full h-full absolute inset-0 z-0 object-cover object-center"
+                  />
+                </div>
+              </ScrollParallax>
+
+              <div className="grid grid-cols-12 py-12 lg:pt-[15vw] lg:pb-[20.5vw] px-6 xl:px-10 max-w-screen-3xl mx-auto">
+                <div className="col-span-12 lg:col-span-7 z-10 mb-12 lg:mb-0">
+                  <h2 className="font-black text-[clamp(50px,_4.45vw,_86px)] leading-[0.95] mb-8 lg:mb-16 uppercase">
+                    There's Hope. Then there's Homa.
+                  </h2>
+                  <div className="content max-w-3xl mb-8 xl:mb-12 w-10/12">
+                    <p>
+                      With us, every step of your game’s build and launch phase
+                      – from ideation right through to monetization - is managed
+                      by experts and tested, tweaked and improved by data-rich
+                      technology. To see our process and the hits its produced:
+                    </p>
+                  </div>
+                </div>
+
+                <div className="col-span-5 col-start-4 lg:col-span-3 lg:col-start-9">
+                  <div className="w-[75%] lg:w-[75%] relative mx-auto">
+                    <PhoneIcon className="w-full relative z-0" />
+
+                    <div className="absolute top-0 right-0 mr-[-55%] lg:mr-[-45%] mt-[15%] z-10 w-full lg:w-[70%]">
+                      <div className="w-full">
+                        <span className="block uppercase font-medium tracking-wider text-base leading-none lg:leading-none xl:leading-none 2xl:leading-non w-11/12 bg-white border border-b-0 border-black/50 px-3 py-5">
+                          Game Name
+                        </span>
+                      </div>
+                      <div className="w-full">
+                        <span className="block uppercase font-medium tracking-wider text-base leading-none lg:leading-none xl:leading-none 2xl:leading-non w-11/12 bg-white border border-black/50 px-3 py-5">
+                          Game Partner
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="absolute inset-0 z-1 scale-[0.922] mt-[-4%]">
+                      <Image
+                        src="/images/game-example.webp"
+                        layout="responsive"
+                        width={496}
+                        height={882}
+                        quality={75}
+                        className="w-full"
+                      />
+                    </div>
+
+                    <div className="absolute bottom-0 left-0 ml-[-80%] md:ml-[-20%] mb-[15%] z-10 w-[200%] md:w-[70%] min-w-[290px]">
+                      <div className="w-full">
+                        <span className="block uppercase font-medium tracking-wider text-base leading-none lg:leading-none xl:leading-none 2xl:leading-non w-11/12 bg-white border border-black/50 px-3 py-5 text-center">
+                          10,000,000 installs
+                        </span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

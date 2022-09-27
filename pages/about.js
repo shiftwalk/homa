@@ -11,12 +11,14 @@ import Header from '@/components/header'
 import Footer from '@/components/footer'
 import Container from '@/components/container'
 import FooterCta from '@/components/footer-cta'
-import { ScrollParallax } from 'react-just-parallax'
+import { MouseParallax, ScrollParallax } from 'react-just-parallax'
 import MousePosition from '@/components/mouse-position'
 import DayInfo from '@/components/day-info'
 import Link from 'next/link'
 import Image from 'next/image'
 import SocialScroller from '@/components/social-scroller'
+import TextScrambler from '@/components/text-scrambler'
+import PixelatedImage from '@/components/pixelated-image'
 
 // Sanity
 // import SanityPageService from '@/services/sanityPageService'
@@ -70,6 +72,8 @@ export default function About(initalData) {
                   src="/images/who-we-are.jpg"
                   alt="Who We Are Landscape"
                   layout="fill"
+                  quality={75}
+                  priority
                   className="w-full h-full absolute inset-0 z-0 object-cover object-top"
                 />
               </ScrollParallax>
@@ -81,23 +85,37 @@ export default function About(initalData) {
             </div>
 
             <div className="max-w-screen-3xl mx-auto">
-              <h1 className="font-black text-[clamp(80px,_9vw,190px)] leading-[0.95] mb-4 uppercase relative z-10 w-11/12 lg:w-full">Mobile gaming’s MAJOR PLAYERS</h1>
+              <h1 className="font-black text-[clamp(80px,_9vw,190px)] leading-[0.95] mb-4 uppercase relative z-10 w-11/12 lg:w-full"><TextScrambler text="Mobile gaming’s major players" seed={25} step={2} /></h1>
             </div>
           </m.div>
 
-          <m.div variants={fade} className="bg-gradient-to-b from-pink/20 to-pink relative overflow-hidden">              
+          <m.div variants={fade} className="bg-gradient-to-b from-pink/20 to-pink relative overflow-hidden">
             <div className="w-full border-b border-black/50">
               <div className="grid grid-cols-12 max-w-screen-3xl mx-auto">
-                <div className="col-span-10 col-start-2 md:col-span-10 md:col-start-2 md:border-l md:border-r border-black/50 py-[10vw] md:px-10">
-                  <div className="grid grid-cols-10 items-center">
-                    <div className="col-span-9 md:col-span-5 mb-12 md:mb-0">
+                <div className="col-span-10 col-start-2 md:col-span-10 md:col-start-2 md:border-l md:border-r border-black/50 py-[15vw] pb-[50vw] md:py-[15vw] md:px-10">
+                  <div className="grid grid-cols-10 items-center relative">
+                    <div className="col-span-9 md:col-span-5 mb-12 md:mb-0 relative z-10">
                       <p className="text-2xl uppercase font-bold mb-6">Before Homa, making a hit mobile game was blood, sweat and luck. Now, it’s more like step one, step two, step three.</p>
                       
                       <p className="text-2xl uppercase font-bold">So, who are we? We’re the people behind mobile gaming’s great leap forward. the creative specialists giving game creators the tools, support and data needed to power up their creativity and multiply their downloads.</p>
                     </div>
-                    <div className="col-span-5 col-start-4 md:col-span-4 md:col-start-7">
-                      <div className="w-full bg-black opacity-20 h-[50vw] 2xl:h-[720px] rounded-xl"></div>
-                    </div>
+
+                    <MouseParallax isAbsolutelyPositioned lerpEase={0.15} strength={0.015}>
+                      <ScrollParallax isAbsolutelyPositioned lerpEase={0.015} zIndex={0}>
+                        <div className="absolute bottom-[-55vw] left-[20vw] md:left-auto md:bottom-[-15vw] md:right-[-10vw] w-[120%] md:w-[66%] z-0">
+                          {/* <Image
+                            src="/images/character-test.webp"
+                            alt="Character Test"
+                            layout="responsive"
+                            width={930}
+                            height={1236}
+                          /> */}
+
+                          <PixelatedImage image={'/images/character-skull.webp'} width={1982} height={2046} />
+                        </div>
+                      </ScrollParallax>
+                    </MouseParallax>
+
                   </div>
                 </div>
               </div>
@@ -141,6 +159,33 @@ export default function About(initalData) {
                   </div>
                 </div>
               </div>
+            </div>
+          </m.div>
+
+          <m.div variants={fade} className="w-full py-[25vw] lg:py-[18vw] xl:py-[15vw] relative overflow-hidden mb-0 px-6 lg:px-10">
+            <div className="w-full h-full absolute inset-0 z-0 object-cover object-center scale-[1.1]">
+              <ScrollParallax isAbsolutelyPositioned lerpEase={1} strength={-0.035} zIndex={0}>
+                <Image
+                  src="/images/who-we-are.jpg"
+                  alt="Who We Are Landscape"
+                  layout="fill"
+                  quality={75}
+                  priority
+                  className="w-full h-full absolute inset-0 z-0 object-cover object-center"
+                />
+              </ScrollParallax>
+            </div>
+
+            <div className="max-w-screen-xl mx-auto text-center relative z-10">
+              <span className="text-2xl uppercase font-bold mb-8 lg:mb-12 block">Our People</span>
+              <h2 className="font-black text-[clamp(50px,_5.5vw,120px)] leading-[0.95] uppercase text-center relative z-10 w-11/12 lg:w-full mb-8 lg:mb-12">To lead the world,<br/> you need people from all over it</h2>
+
+              <Link href="/careers">
+                <a class="roll-btn w-auto inline-block">
+                  <span class="roll-btn__front">Apply for a Job at Homa</span>
+                  <span class="roll-btn__back">Apply for a Job at Homa</span>
+                </a>
+              </Link>
             </div>
           </m.div>
 

@@ -15,6 +15,7 @@ import Image from 'next/image'
 import { ScrollParallax } from 'react-just-parallax'
 import DayInfo from '@/components/day-info'
 import MousePosition from '@/components/mouse-position'
+import TextScrambler from '@/components/text-scrambler'
 
 // Sanity
 // import SanityPageService from '@/services/sanityPageService'
@@ -69,7 +70,17 @@ export default function Careers(initalData) {
               </div>
               
               <div className="max-w-screen-3xl mx-auto px-6 xl:px-10 mb-[15vw]">
-                <h1 className="font-black text-[clamp(80px,_9vw,190px)] leading-[0.95] mb-4 uppercase relative z-10 w-11/12 lg:w-full"><span className="block mb-8 lg:mb-12">Brains over backgrounds.</span><span className="block mb-8 lg:mb-12">Results over CVs.</span><span className="block mb-8 lg:mb-12">Determination over degrees.</span></h1>
+                <h1 className="font-black text-[clamp(80px,_9vw,190px)] leading-[0.95] mb-4 uppercase relative z-10 w-11/12 lg:w-full">
+                  <span className="block mb-8 lg:mb-12">
+                    <TextScrambler text="Brains over backgrounds." seed={22} step={2} />
+                  </span>
+                  <span className="block mb-8 lg:mb-12">
+                    <TextScrambler text="Results over CVs." seed={16} step={2} />
+                  </span>
+                  <span className="block mb-8 lg:mb-12">
+                    <TextScrambler text="Determination over degrees." seed={25} step={2} />
+                  </span>
+                </h1>
               </div>
 
               <div className="w-full border-t border-b border-black/50">

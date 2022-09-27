@@ -19,11 +19,10 @@ import Image from 'next/image'
 
 // Sanity
 import SanityPageService from '@/services/sanityPageService'
-import BodyRenderer from '@/components/body-renderer'
 import SanityImage from '@/components/sanity-image'
 
 const query = `{
-  "article": *[_type == "blog" && slug.current == $slug][0]{
+  "article": *[_type == "caseStudies" && slug.current == $slug][0]{
     title,
     heroImage {
       asset-> {
@@ -36,36 +35,9 @@ const query = `{
         y
       },
     },
-    category-> {
-      title,
-      slug {
-        current
-      }
-    },
     publishDate,
-    author-> {
-      name
-    },
-    contentBlocks[] {
-      ...,
-      text,
-      authorName,
-      authorJobTitle,
-      image {
-        asset-> {
-          ...
-        },
-        overrideVideo {
-          asset-> {
-            ...
-          }
-        },
-        overrideVimeoVideo,
-        alt,
-        caption,
-        captionSubHeading
-      },
-    },
+    projectName,
+    partnerName,
     slug {
       current
     }
@@ -74,7 +46,7 @@ const query = `{
 
 const pageService = new SanityPageService(query)
 
-export default function BlogSlug(initialData) {
+export default function CaseStudySlug(initialData) {
   // Sanity Data
   const { data: { article } } = pageService.getPreviewHook(initialData)()
   
@@ -99,7 +71,7 @@ export default function BlogSlug(initialData) {
               </div>
 
               <div className={`max-w-screen-3xl mx-auto mt-6 lg:mt-0`}>
-                <Link href="/blog">
+                <Link href="/games">
                   <a className="w-10 lg:w-12 xl:w-16 h-10 lg:h-12 xl:h-16 border border-black/50 p-3 xl:p-4 flex items-center justify-center leading-[0] text-2xl mb-6 lg:mb-10 xl:mb-12 hover:bg-black hover:text-white">
                     <svg className="w-full" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.102 20.9 20.9 1.1M20.898 20.9 1.1 1.1" stroke="currentColor" stroke-miterlimit="10"/></svg>
                   </a>
@@ -113,8 +85,9 @@ export default function BlogSlug(initialData) {
                   <div className="w-full lg:w-1/2 py-6 lg:py-10 pl-6 xl:pl-10 pr-6 xl:pr-10">
                     <div className="max-w-[920px] ml-auto flex flex-wrap h-full">
                       <div className="w-full">
-                        <Link href={`/blog/categories/${article.category.slug.current}`}>
-                          <a className="inline-block border border-black/50 font-medium uppercase leading-none p-3 rounded-sm hover:bg-black hover:text-white focus:bg-black focus:text-white mr-3 mb-6 lg:mb-12">{article.category.title}</a>
+                        {/* @TODO Wire up */}
+                        <Link href={`/blog/`}>
+                          <a className="inline-block border border-black/50 font-medium uppercase leading-none p-3 rounded-sm hover:bg-black hover:text-white focus:bg-black focus:text-white mr-3 mb-6 lg:mb-12">Success Story</a>
                         </Link>
 
                         <h2 className="font-black text-[clamp(46px,_4.45vw,_86px)] leading-[0.9] mb-12 lg:mb-[15vw] uppercase w-11/12">{article.title}</h2>
@@ -127,10 +100,16 @@ export default function BlogSlug(initialData) {
                             <span className="block">{article.publishDate}</span>
                           </span>
                         )}
-                        {article.author && (
+                        {article.projectName && (
                           <span className="uppercase text-sm lg:text-base tracking-widest mb-2 lg:mb-4 font-medium flex">
-                            <span className="min-w-[150px]">Author:</span>
-                            <span className="block">{article.author.name}</span>
+                            <span className="min-w-[150px]">Project:</span>
+                            <span className="block">{article.projectName}</span>
+                          </span>
+                        )}
+                        {article.partnerName && (
+                          <span className="uppercase text-sm lg:text-base tracking-widest mb-2 lg:mb-4 font-medium flex">
+                            <span className="min-w-[150px]">Partner:</span>
+                            <span className="block">{article.partnerName}</span>
                           </span>
                         )}
                         <span className="uppercase text-sm lg:text-base tracking-widest mb-2 lg:mb-4 font-medium flex">
@@ -145,19 +124,18 @@ export default function BlogSlug(initialData) {
                       <ScrollParallax isAbsolutelyPositioned lerpEase={1} strength={-0.05}>
                         <SanityImage
                           image={article.heroImage}
-                          alt="About Test"
                           layout="fill"
                           className="w-full h-full absolute inset-0 z-0 object-cover object-top"
-                        />
+                        />                        
                       </ScrollParallax>
                     </div>
                   </div>
                 </div>
               </div>
 
-              <div className="content pt-[10vw] pb-[5vw] px-6 lg:px-10">
+              <div className="content py-[10vw]">
                 <div className="w-full">
-                  <BodyRenderer body={article.contentBlocks} />
+                  <p className="text-center">Article content will go here...</p>
                 </div>
               </div>
 
@@ -178,7 +156,7 @@ export async function getStaticProps(context) {
 }
 
 export async function getStaticPaths() {
-  const paths = await pageService.fetchPaths('blog')
+  const paths = await pageService.fetchPaths('caseStudies')
   return {
     paths: paths,
     fallback: false,

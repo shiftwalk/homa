@@ -4,13 +4,14 @@ import TikTokIcon from "@/icons/tiktok.svg"
 import LinkedInIcon from "@/icons/linkedin.svg"
 import FacebookIcon from "@/icons/facebook.svg"
 import InstagramIcon from "@/icons/instagram.svg"
+import TextScrambler from "./text-scrambler"
 
 export default function SocialScroller() {
   return (
     <div className="w-full flex flex-wrap ">
       <div className="w-full lg:w-1/2 px-6 xl:px-10 py-8 lg:py-28 xl:py-32">
         <div className="lg:sticky lg:top-28 xl:top-32 lg:pb-32 xl:pb-48 max-w-screen-md ml-auto">
-          <span className="uppercase text-sm tracking-widest mb-5 lg:mb-8 block font-medium">The Community</span>
+          <span className="uppercase text-sm tracking-widest mb-5 lg:mb-8 block font-medium"><TextScrambler text="The Community" seed={5} step={1} singleLine /></span>
 
           <h3 className="font-black text-[clamp(50px,_5vw,_86px)] leading-[0.95] mb-8 lg:mb-16 uppercase max-w-[500px] xl:max-w-none">Social Media Multiplayer Code</h3>
 
@@ -22,7 +23,7 @@ export default function SocialScroller() {
 
       {/* Players & Fans */}
       <div className="w-full lg:w-1/2 px-6 xl:px-10 py-12 lg:pt-[145px] xl:pt-[145px] lg:pb-24 xl:pb-24 bg-black text-white">
-        <span className="uppercase text-sm tracking-widest mb-5 lg:mb-12 xl:mb-16 block font-medium">For Players and Fans</span>
+        <span className="uppercase text-sm tracking-widest mb-5 lg:mb-12 xl:mb-16 block font-medium"><TextScrambler text="For Players And Fans" seed={5} step={1} singleLine /></span>
         
         <div className="max-w-screen-md mr-auto">
           <ul className="w-full grid gap-6 xl:gap-10 grid-cols-12 mb-12 lg:mb-16 xl:mb-24">
@@ -65,7 +66,7 @@ export default function SocialScroller() {
           </ul>
 
           {/* Game Makers */}
-          <span className="uppercase text-sm tracking-widest mb-5 lg:mb-12 xl:mb-16 block font-medium">For Game Makers</span>
+          <span className="uppercase text-sm tracking-widest mb-5 lg:mb-12 xl:mb-16 block font-medium"><TextScrambler text="For Game Makers" seed={5} step={1} singleLine /></span>
           
           <ul className="w-full grid gap-6 xl:gap-10 grid-cols-12 mb-12 lg:mb-16 xl:mb-24">
             <li className="block col-span-3 lg:col-span-6">
@@ -143,7 +144,7 @@ export default function SocialScroller() {
           </ul>
 
           {/* Web3 Community */}
-          <span className="uppercase text-sm tracking-widest mb-5 lg:mb-12 xl:mb-16 block font-medium">For Our Web3 Community</span>
+          <span className="uppercase text-sm tracking-widest mb-5 lg:mb-12 xl:mb-16 block font-medium"><TextScrambler text="For Our Web3 Community" seed={5} step={1} singleLine /></span>
           
           <ul className="w-full grid gap-6 xl:gap-10 grid-cols-12">
             <li className="block col-span-3 lg:col-span-6">

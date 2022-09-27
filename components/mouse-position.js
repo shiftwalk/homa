@@ -20,7 +20,12 @@ export default function MousePosition() {
   
   return (
     <div>
-      <span className="block">x {mouseCoords.x} : y {mouseCoords.y}</span>
+      <span className="block">x 
+      {mouseCoords.x < 1000 && '0'}{mouseCoords.x}
+      &nbsp;:&nbsp;
+      y
+      {mouseCoords.y < 1000 && '0'}{mouseCoords.y}
+      </span>
     </div>
   )
 }

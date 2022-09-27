@@ -1,3 +1,5 @@
+import TextScrambler from "./text-scrambler";
+
 export default function DayInfo({ className }) {
   let d = new Date()
 
@@ -7,7 +9,7 @@ export default function DayInfo({ className }) {
   
   return (
     <span className={`block tabular-nums ${className ? className : null}`}>
-      {date.replace(',', '').replace(', ', ' ')} {time.replace(' ', '')} XX°C
+        <TextScrambler text={`${date.replace(',', '').replace(', ', ' ')} ${time.replace(' ', '')} XX°C`} seed={16} />
     </span>
   )
 }

@@ -3,7 +3,7 @@ import sanity from "@/services/sanity"
 import { useNextSanityImage } from "next-sanity-image"
 import { useState } from "react"
 
-export default function Image({ image, layout, widthOverride, heightOverride, focalPoint, className, priority, noCaption }) {
+export default function SanityImage({ image, layout, widthOverride, heightOverride, focalPoint, className, priority, noCaption }) {
   const [imageIsLoaded, setImageIsLoaded] = useState(false)
 
   // Pass in custom URL builder props

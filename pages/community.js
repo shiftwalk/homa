@@ -17,42 +17,49 @@ import DayInfo from '@/components/day-info'
 import MousePosition from '@/components/mouse-position'
 import DiscordIcon from "@/icons/discord.svg"
 import TwitterIcon from "@/icons/twitter.svg"
+import TikTokIcon from "@/icons/tiktok.svg"
 import Link from 'next/link'
 import { CarouselPhone } from '@/components/carousel-phone'
 import { CarouselTeam } from '@/components/carousel-team'
 import AccordionList from '@/components/accordion'
+import TextScrambler from '@/components/text-scrambler'
 
 // Sanity
-// import SanityPageService from '@/services/sanityPageService'
+import SanityPageService from '@/services/sanityPageService'
 
-// const query = `{
-//   "about": *[_type == "about"][0]{
-//     title,
-//     imageExample {
-//       asset-> {
-//         ...
-//       },
-//       caption,
-//       alt,
-//       hotspot {
-//         x,
-//         y
-//       },
-//     },
-//     seo {
-//       ...,
-//       shareGraphic {
-//         asset->
-//       }
-//     }
-//   }
-// }`
+const query = `{
+  "team": *[_type == "team"]{
+    title,
+    image {
+      asset-> {
+        ...
+      },
+      caption,
+      alt,
+      hotspot {
+        x,
+        y
+      },
+    },
+    jobTitle,
+    company,
+    linkedIn,
+    twitter,
+  },
+  "community": *[_type == "community"][0]{
+    title,
+    gangQAndA[] {
+      question,
+      answer
+    }
+  }
+}`
 
-// const pageService = new SanityPageService(query)
+const pageService = new SanityPageService(query)
 
-export default function Community(initalData) {
+export default function Community(initialData) {
   // Sanity Data
-  // const { data: { about } } = pageService.getPreviewHook(initialData)()
+  const { data: { team, community } } = pageService.getPreviewHook(initialData)()
   
   return (
     <Layout>
@@ -75,6 +82,8 @@ export default function Community(initalData) {
                     src="/images/community.jpg"
                     alt="Community Landscape"
                     layout="fill"
+                    quality={75}
+                    priority
                     className="w-full h-full absolute inset-0 z-0 object-cover object-top"
                   />
                 </ScrollParallax>
@@ -86,7 +95,7 @@ export default function Community(initalData) {
               </div>
 
               <div className="max-w-screen-3xl mx-auto">
-                <h1 className="font-black text-[clamp(80px,_8.5vw,180px)] leading-[0.95] mb-4 uppercase relative z-10 w-11/12 lg:w-full">OUt of the game, into the universe.</h1>
+                <h1 className="font-black text-[clamp(80px,_8.5vw,180px)] leading-[0.95] mb-4 uppercase relative z-10 w-11/12 lg:w-full"><TextScrambler text="Out of the game, into the universe." seed={30} step={2} /></h1>
               </div>
             </div>
 
@@ -131,7 +140,7 @@ export default function Community(initalData) {
                         rel="noopener noreferrer"
                         className="block group w-full"
                       >
-                        <span className="w-full aspect-square rounded-[15%] bg-[#E6C3E6]/10 group-hover:bg-white group-focus:bg-white mr-4 flex items-center justify-center">
+                        <span className="w-full aspect-square rounded-[15%] bg-[#E6C3E6]/10 group-hover:bg-[#1DA1F2] group-focus:bg-[#1DA1F2] mr-4 flex items-center justify-center">
                           <TwitterIcon className="w-[50%] text-[#E6C3E6] group-hover:text-white group-focus:text-white" />
                         </span>
 
@@ -267,8 +276,32 @@ export default function Community(initalData) {
 
 
 
-            <div className="bg-orange/40 mb-[8vw]">
-              <div className="grid grid-cols-12 py-12 lg:pt-[20vw] lg:pb-[12.5vw] px-6 xl:px-10 max-w-screen-3xl mx-auto">
+            <div className="bg-orange/40 mb-[8vw] relative overflow-hidden pb-[50vw] lg:pb-0">
+              <ScrollParallax isAbsolutelyPositioned lerpEase={1} strength={-0.05} zIndex={0}>
+                <div className="scale-[1.12] absolute inset-0 w-full h-full">
+                  <Image
+                    src="/images/homagang-cta.jpg"
+                    alt="About Test"
+                    layout="fill"
+                    className="w-full h-full absolute inset-0 z-0 object-cover object-center"
+                  />             
+                </div>   
+              </ScrollParallax>
+
+              <ScrollParallax isAbsolutelyPositioned lerpEase={1} strength={0.05} zIndex={1}>
+                <div className="absolute bottom-0 right-0 w-[55%] lg:w-[40%] max-w-[900px] mb-[-0.4vw]">
+                  <Image
+                    src="/images/princess-large.webp"
+                    alt="About Test"
+                    layout="responsive"
+                    width={1566}
+                    height={1480}
+                    className="w-full"
+                  />             
+                </div>   
+              </ScrollParallax>
+
+              <div className="grid grid-cols-12 py-12 lg:pt-[15vw] lg:pb-[20.5vw] px-6 xl:px-10 max-w-screen-3xl mx-auto">
                 <div className="col-span-12 lg:col-span-2 relative z-10">
                   <span className="uppercase text-sm tracking-widest mb-5 lg:mb-8 block font-medium">About</span>
                 </div>
@@ -283,13 +316,84 @@ export default function Community(initalData) {
             </div>
 
             <div className="pb-[8vw] mb-[8vw] border-b border-black/50">
-              <CarouselTeam />
+              <CarouselTeam items={team} />
             </div>
 
             <div className="mb-[8vw]">
               <div className="max-w-screen-2xl mx-auto">
                 <div className="px-6 lg:px-24">
-                  <AccordionList />
+                  <AccordionList items={community.gangQAndA} />
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-orange/40 relative overflow-hidden pb-[45vw] lg:pb-0">
+              <ScrollParallax isAbsolutelyPositioned lerpEase={1} strength={-0.05} zIndex={0}>
+                <div className="scale-[1.12] absolute inset-0 w-full h-full">
+                  <Image
+                    src="/images/join-us-cta.jpg"
+                    alt="About Test"
+                    layout="fill"
+                    className="w-full h-full absolute inset-0 z-0 object-cover object-center"
+                  />             
+                </div>   
+              </ScrollParallax>
+
+              <ScrollParallax isAbsolutelyPositioned lerpEase={0.025} strength={0.05} zIndex={1}>
+                <div className="absolute bottom-0 right-0 w-[35%] lg:w-[25%] max-w-[500px] mr-[10%] mb-[5%] lg:mb-[15%]">
+                  <Image
+                    src="/images/character-test-2.webp"
+                    alt="About Test"
+                    layout="responsive"
+                    width={902}
+                    height={1344}
+                    className="w-full"
+                  />             
+                </div>   
+              </ScrollParallax>
+
+              <div className="grid grid-cols-12 py-12 lg:pt-[12vw] lg:pb-[20.5vw] px-6 xl:px-10 max-w-screen-3xl mx-auto">
+                <div className="col-span-12 lg:col-span-5 z-10">
+                  <h2 className="display-text mb-8 lg:mb-12 xl:mb-20">Want to join us?</h2>
+
+                  <ul className="w-full grid gap-6 xl:gap-10 grid-cols-12 mb-12 lg:mb-16 xl:mb-24">
+                    <li className="block col-span-3 lg:col-span-5">
+                      <a
+                        href="https://discord.gg/homagames"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block group w-full"
+                      >
+                        <span className="w-full aspect-square rounded-[15%] bg-white/50 group-hover:bg-[#5865F2] group-focus:bg-[#5865F2] mr-4 flex items-center justify-center">
+                          <DiscordIcon className="w-[56.5%] text-white group-hover:text-white group-focus:text-white" />
+                        </span>
+
+                        <span className="w-full hidden lg:flex items-center pt-3 opacity-0 group-hover:opacity-100 group-focus:opacity-100">
+                          <span className="inline-block border border-black text-xs uppercase tracking-widest px-2 py-1 font-medium rounded-sm">Join</span>
+
+                          <span className="inline-block ml-auto text-xs tracking-widest font-medium">/homegang</span>
+                        </span>
+                      </a>
+                    </li>
+                    <li className="block col-span-3 lg:col-span-5">
+                      <a
+                        href="https://discord.gg/homagames"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block group w-full"
+                      >
+                        <span className="w-full aspect-square rounded-[15%] bg-white/50 group-hover:bg-[#1DA1F2] group-focus:bg-[#1DA1F2] mr-4 flex items-center justify-center">
+                          <TwitterIcon className="w-[50%] text-white group-hover:text-white group-focus:text-white" />
+                        </span>
+
+                        <span className="w-full hidden lg:flex items-center pt-3 opacity-0 group-hover:opacity-100 group-focus:opacity-100">
+                          <span className="inline-block border border-black text-xs uppercase tracking-widest px-2 py-1 font-medium rounded-sm">Follow</span>
+
+                          <span className="inline-block ml-auto text-xs tracking-widest font-medium">@homagames</span>
+                        </span>
+                      </a>
+                    </li>
+                  </ul>
                 </div>
               </div>
             </div>
@@ -303,10 +407,8 @@ export default function Community(initalData) {
 }
 
 // Sanity CMS Props
-// export async function getStaticProps(context) {
-//   const cms = await pageService.fetchQuery(context)
+export async function getStaticProps(context) {
+  const cms = await pageService.fetchQuery(context)
 
-//   return {
-//     props: { ...cms }
-//   }
-// }
+  return cms
+}

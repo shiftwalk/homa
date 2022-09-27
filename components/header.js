@@ -9,6 +9,7 @@ import { useRouter } from "next/router"
 import Link from "next/link"
 import { disableBodyScroll, enableBodyScroll, clearAllBodyScrollLocks } from "body-scroll-lock"
 import useScrollDirection from '@/helpers/scroll-direction';
+import TextScrambler from "./text-scrambler"
 
 export default function Header() {
   const scrollDirection = useScrollDirection();
@@ -174,13 +175,23 @@ export default function Header() {
               </li>
 
               <li>
-                <Link href="/homa-lab">
-                  <a
-                    className="uppercase font-medium tracking-widest lg:h-[70px] xl:h-[80px] items-center justify-center lg:text-sm lg:leading-none xl:text-base xl:leading-none md:px-5 lg:px-7 xl:px-8 2xl:px-10 bg-black text-white flex"
-                  >
-                    <span className="hidden xl:inline">Enter The&nbsp;</span>Homa Lab
-                  </a>
-                </Link>
+                <a
+                  href="https://lab-v2.homagames.com/login" target="_blank" rel="noopener noreferrer"
+                  className="uppercase font-medium tracking-widest lg:h-[70px] xl:h-[80px] items-center justify-center lg:text-sm lg:leading-none xl:text-base xl:leading-none md:px-5 lg:px-7 xl:px-8 2xl:px-10 bg-black text-white flex group"
+                >
+                  <div className="relative">
+                    <span className="block group-hover:opacity-0"><span className="hidden xl:inline">Enter The&nbsp;</span>Homa Lab</span>
+                    
+                    <span className="absolute top-0 left-0 right-0 hidden  group-hover:block">
+                      <span className="hidden lg:block xl:hidden">
+                        <TextScrambler text="Homa Lab" seed={5} step={1} singleLine />
+                      </span>
+                      <span className="hidden xl:block">
+                        <TextScrambler text="Enter The Homa Lab" seed={5} step={1} singleLine />
+                      </span>
+                    </span>
+                  </div>
+                </a>
               </li>
             </ul>
           </nav>

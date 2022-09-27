@@ -14,7 +14,11 @@
 
 /* Simple defaults */
 body {
-  @apply font-sans antialiased text-black bg-white;
+  @apply font-sans antialiased text-black bg-white selection:bg-black selection:text-white;
+}
+
+.bg-black {
+  @apply selection:bg-white selection:text-black;
 }
 
 /* Soften Page Transition Scrolls */
@@ -71,7 +75,7 @@ canvas {
   @apply justify-start;
 
   @screen lg {
-    grid-auto-columns: 60%;
+    grid-auto-columns: 49%;
   }
 }
 
@@ -110,6 +114,10 @@ canvas {
     @apply justify-start;
 
     @screen lg {
+      grid-auto-columns: 40.5%;
+    }
+
+    @screen xl {
       grid-auto-columns: 27.5%;
     }
   }
@@ -121,14 +129,86 @@ canvas {
   .embla__slide-inner {
     @apply transition-all ease-in-out duration-500 h-auto lg:h-auto p-6 lg:p-10;
   }
+
+  .is-selected {
+    @apply bg-pink/20;
+    
+    .embla__slide-inner {
+      @apply bg-transparent;
+    }
+  }
 }
 
 .embla--blog {
+  .embla__container {
+    grid-auto-columns: 70%;
+
+    @screen lg {
+      grid-auto-columns: 32.5%;
+    }
+  }
+
   .is-selected {
     .embla__slide-inner {
       @apply bg-white;
     }
   }
+}
+
+.embla--card {
+  .embla__slide-inner {
+    @apply p-0 lg:p-0
+  }
+
+  .embla__slide-title {
+    @apply opacity-0 transition-opacity ease-in-out duration-300 hidden;
+  }
+
+  .is-selected {
+    .embla__slide-title {
+      @apply opacity-100 block;
+    }
+  }
+}
+
+
+.roll-btn {
+  @apply relative;
+}
+
+.roll-btn__front {
+  @apply bg-black block text-white text-center uppercase px-6 py-6 tracking-wide relative;
+  -webkit-transform-origin: 50% 100% 0;
+  transform-origin: 50% 100% 0;
+  transition: -webkit-transform .3s cubic-bezier(.76,0,.24,1) 0s;
+  transition: transform .3s cubic-bezier(.76,0,.24,1) 0s;
+  transition: transform .3s cubic-bezier(.76,0,.24,1) 0s,-webkit-transform .3s cubic-bezier(.76,0,.24,1) 0s;
+}
+
+.roll-btn__back {
+  @apply block text-black h-full w-full text-center uppercase px-6 py-6 tracking-wide absolute left-0 top-[100%] z-[-1] bg-pink;
+  -webkit-transform-origin: 50% 0 0;
+  transform-origin: 50% 0 0;
+  -webkit-transform: rotateX(-90deg);
+  transform: rotateX(-90deg);
+  transition: -webkit-transform .3s cubic-bezier(.76,0,.24,1) 0s;
+  transition: transform .3s cubic-bezier(.76,0,.24,1) 0s;
+  transition: transform .3s cubic-bezier(.76,0,.24,1) 0s, -webkit-transform .3s cubic-bezier(.76,0,.24,1) 0s;
+}
+
+.roll-btn:hover {
+  .roll-btn__front {
+    -webkit-transform: translateY(-100%) rotateX(90deg);
+    transform: translateY(-100%) rotateX(90deg);
+  }
+  .roll-btn__back {
+    -webkit-transform: translateY(-100%) rotateX(0);
+    transform: translateY(-100%) rotateX(0);
+  }
+}
+
+.pill-btn {
+  @apply inline-block border border-black/50 font-medium uppercase leading-none p-3 rounded-sm hover:bg-black hover:text-white focus:bg-black focus:text-white;
 }
 
 #webgl {

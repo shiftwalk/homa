@@ -19,6 +19,7 @@ import Link from 'next/link'
 // Sanity
 import SanityPageService from '@/services/sanityPageService'
 import SkipButtons from './skip-buttons'
+import TextScrambler from './text-scrambler'
 
 export const articlesPerPage = 3;
 
@@ -69,7 +70,7 @@ export default function BlogBody({blog, numberOfArticles, categories, subPage, i
               </div>
 
               <div className={`max-w-screen-3xl mx-auto hidden lg:block ${!subPage && 'mb-12 lg:mb-24 xl:mb-32' }`}>
-                <h1 className="text-base uppercase tracking-widest font-medium leading-none block">The news arcade</h1>
+                <h1 className="text-base uppercase tracking-widest font-medium leading-none block"><TextScrambler text="The news arcade" seed={14} /></h1>
               </div>
 
               {!subPage && (
