@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import Experience from "@/helpers/webgl/Experience.js";
 
-export default function TestWebgl() {
+export default function WebGL() {
   const canvasRef = useRef(null);
 
   let experience;
@@ -9,9 +9,15 @@ export default function TestWebgl() {
     experience = new Experience(canvasRef.current);
 
     const section = document.querySelector("#test");
-    experience.world.addModel("/models/test.glb", section, 0.22);
-
-    // experience.world.addModel("/models/test.glb", { x: 350, y: 0 });
+    experience.world.addModel(
+      "/models/test.glb",
+      section,
+      3.5,
+      0.22,
+      -3,
+      0.08,
+      0.001
+    );
   });
 
   return <canvas ref={canvasRef} id="webgl"></canvas>;
