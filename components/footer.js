@@ -100,13 +100,24 @@ export default function Footer() {
                   />
                 </li>
 
-                <li className="w-1/2 md:w-full block mb-4 md:mb-16 xl:mb-24">
+                <li className="w-1/2 md:w-full block mb-4 md:mb-6 xl:mb-10">
                   <FancyLink
-                    destination="/homa-lab/homa-academy"
+                    destination="/homa-lab/submissions-and-creatives"
                     a11yText="Navigate to the homa lab page"
-                    label="Homa Academy"
+                    label="Submissions & Creatives"
                     className="uppercase text-sm xl:text-base font-medium tracking-widest leading-none xl:leading-none hover:opacity-75 focus:opacity-75"
                   />
+                </li>
+
+                <li className="w-1/2 md:w-full block mb-4 md:mb-16 xl:mb-24">
+                  <a
+                    href="https://academy.homagames.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="uppercase text-sm xl:text-base font-medium tracking-widest leading-none xl:leading-none hover:opacity-75 focus:opacity-75"
+                  >
+                    Homa Academy
+                  </a>
                 </li>
 
                 <li className="w-1/2 md:w-full block mb-4 md:mb-6 xl:mb-10">
@@ -280,7 +291,7 @@ export default function Footer() {
 
       {/* Mobile Logo */}
       <div className="grid grid-cols-5 md:grid-cols-12">
-        <div className="col-span-5 block md:hidden">
+        <div className="col-span-5 block md:hidden mt-32 md:mt-0">
           <HomaLogoIcon className="w-full mb-12" />
 
           <div className="w-full 2xl:space-x-8">

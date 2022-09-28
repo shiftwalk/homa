@@ -36,46 +36,51 @@ export default function MobileMenu({ menuClose, setMobileChildMenuOpen, mobileCh
                     </Link>
                   </li>
                   <li className="block">
-                    <Link href="/homa-lab/slug">
+                    <Link href="/homa-lab/ideas">
                       <a className="block px-6 py-5 uppercase text-base leading-none relative" onClick={menuClose}>
                         Ideas
                       </a>
                     </Link>
                   </li>
                   <li className="block">
-                    <Link href="/homa-lab/slug">
+                    <Link href="/homa-lab/market-watchers">
                       <a className="block px-6 py-5 uppercase text-base leading-none relative" onClick={menuClose}>
                         Market Watchers
                       </a>
                     </Link>
                   </li>
                   <li className="block">
-                    <Link href="/homa-lab/slug">
+                    <Link href="/homa-lab/homa-sdk">
                       <a className="block px-6 py-5 uppercase text-base leading-none relative" onClick={menuClose}>
                         Homa SDK
                       </a>
                     </Link>
                   </li>
                   <li className="block">
-                    <Link href="/homa-lab/slug">
+                    <Link href="/homa-lab/dev-tools">
                       <a className="block px-6 py-5 uppercase text-base leading-none relative" onClick={menuClose}>
                         Dev Tools
                       </a>
                     </Link>
                   </li>
                   <li className="block">
-                    <Link href="/homa-lab/slug">
+                    <Link href="/homa-lab/data-analytics">
                       <a className="block px-6 py-5 uppercase text-base leading-none relative" onClick={menuClose}>
                         Data Analytics
                       </a>
                     </Link>
                   </li>
                   <li className="block">
-                    <Link href="/homa-lab/slug">
+                    <Link href="/homa-lab/submissions-and-creatives">
                       <a className="block px-6 py-5 uppercase text-base leading-none relative" onClick={menuClose}>
-                        Academy
+                        Submissions And Creatives
                       </a>
                     </Link>
+                  </li>
+                  <li className="block">
+                    <a href="https://academy.homagames.com/" target="_blank" rel="noopener noreferrer" className="block px-6 py-5 uppercase text-base leading-none relative" onClick={menuClose}>
+                      Homa Academy
+                    </a>
                   </li>
                 </ul>
               )}

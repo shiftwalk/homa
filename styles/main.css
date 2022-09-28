@@ -92,17 +92,22 @@ canvas {
 }
 
 .is-selected {
-  .embla__slide-inner {
-    @apply bg-pink/20;
-  }
-
   .embla__slide-inner-blur {
     @apply blur-0;
   }
 }
 
+.embla--games {
+  .is-selected {
+    .embla__slide-inner {
+      @apply bg-pink/20;
+    }
 
-
+    .embla__slide-inner-blur {
+      @apply blur-0;
+    }
+  }
+}
 
 
 .embla--team {
@@ -131,7 +136,7 @@ canvas {
   }
 
   .is-selected {
-    @apply bg-pink/20;
+    
     
     .embla__slide-inner {
       @apply bg-transparent;
@@ -141,7 +146,7 @@ canvas {
 
 .embla--blog {
   .embla__container {
-    grid-auto-columns: 70%;
+    grid-auto-columns: 90%;
 
     @screen lg {
       grid-auto-columns: 32.5%;
@@ -211,6 +216,7 @@ canvas {
   @apply inline-block border border-black/50 font-medium uppercase leading-none p-3 rounded-sm hover:bg-black hover:text-white focus:bg-black focus:text-white;
 }
 
+
 #webgl {
   position: fixed;
   inset: 0;
@@ -234,4 +240,10 @@ canvas {
 
 .scene-container2 {
   top:450%
+}
+
+.cover-image {
+  img {
+    @apply object-cover object-center;
+  }
 }

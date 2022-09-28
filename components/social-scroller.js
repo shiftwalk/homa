@@ -27,7 +27,7 @@ export default function SocialScroller() {
         
         <div className="max-w-screen-md mr-auto">
           <ul className="w-full grid gap-6 xl:gap-10 grid-cols-12 mb-12 lg:mb-16 xl:mb-24">
-            <li className="block col-span-3 lg:col-span-6">
+            <li className="block col-span-6 lg:col-span-6">
               <a
                 href="https://discord.gg/homagames"
                 target="_blank"
@@ -45,7 +45,7 @@ export default function SocialScroller() {
                 </span>
               </a>
             </li>
-            <li className="block col-span-3 lg:col-span-6">
+            <li className="block col-span-6 lg:col-span-6">
               <a
                 href="https://discord.gg/homagames"
                 target="_blank"
@@ -69,7 +69,7 @@ export default function SocialScroller() {
           <span className="uppercase text-sm tracking-widest mb-5 lg:mb-12 xl:mb-16 block font-medium"><TextScrambler text="For Game Makers" seed={5} step={1} singleLine /></span>
           
           <ul className="w-full grid gap-6 xl:gap-10 grid-cols-12 mb-12 lg:mb-16 xl:mb-24">
-            <li className="block col-span-3 lg:col-span-6">
+            <li className="block col-span-6 lg:col-span-6">
               <a
                 href="https://discord.gg/homagames"
                 target="_blank"
@@ -87,7 +87,7 @@ export default function SocialScroller() {
                 </span>
               </a>
             </li>
-            <li className="block col-span-3 lg:col-span-6">
+            <li className="block col-span-6 lg:col-span-6">
               <a
                 href="https://discord.gg/homagames"
                 target="_blank"
@@ -105,7 +105,7 @@ export default function SocialScroller() {
                 </span>
               </a>
             </li>
-            <li className="block col-span-3 lg:col-span-6">
+            <li className="block col-span-6 lg:col-span-6">
               <a
                 href="https://discord.gg/homagames"
                 target="_blank"
@@ -123,7 +123,7 @@ export default function SocialScroller() {
                 </span>
               </a>
             </li>
-            <li className="block col-span-3 lg:col-span-6">
+            <li className="block col-span-6 lg:col-span-6">
               <a
                 href="https://discord.gg/homagames"
                 target="_blank"
@@ -147,7 +147,7 @@ export default function SocialScroller() {
           <span className="uppercase text-sm tracking-widest mb-5 lg:mb-12 xl:mb-16 block font-medium"><TextScrambler text="For Our Web3 Community" seed={5} step={1} singleLine /></span>
           
           <ul className="w-full grid gap-6 xl:gap-10 grid-cols-12">
-            <li className="block col-span-3 lg:col-span-6">
+            <li className="block col-span-6 lg:col-span-6">
               <a
                 href="https://discord.gg/homagames"
                 target="_blank"
@@ -165,7 +165,7 @@ export default function SocialScroller() {
                 </span>
               </a>
             </li>
-            <li className="block col-span-3 lg:col-span-6">
+            <li className="block col-span-6 lg:col-span-6">
               <a
                 href="https://discord.gg/homagames"
                 target="_blank"

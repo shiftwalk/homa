@@ -6,36 +6,47 @@ import { fade } from "@/helpers/transitions";
 
 import { useEffect } from "react";
 
-// Components
-import Layout from "@/components/layout";
-import Header from "@/components/header";
-import Footer from "@/components/footer";
-import Container from "@/components/container";
-import FooterCta from "@/components/footer-cta";
-import MousePosition from "@/components/mouse-position";
-import DayInfo from "@/components/day-info";
-import Image from "next/image";
-import Link from "next/link";
-import SocialScroller from "@/components/social-scroller";
-import { useRef } from "react";
-import PixelatedImage from "@/components/pixelated-image";
-import { CarouselBlog } from "@/components/carousel-blog";
+import Layout from '@/components/layout'
+import Header from '@/components/header'
+import Footer from '@/components/footer'
+import FooterCta from '@/components/footer-cta'
+import MousePosition from '@/components/mouse-position'
+import DayInfo from '@/components/day-info'
+import Image from 'next/image'
+import Link from 'next/link'
+import SocialScroller from '@/components/social-scroller'
+import { useRef } from 'react'
+import PixelatedImage from '@/components/pixelated-image'
+import { CarouselBlog } from '@/components/carousel-blog'
+import Marquee from 'react-fast-marquee'
 
-import MobileHandIcon from "@/icons/mobile-hand.svg";
-import GlobeIcon from "@/icons/globe.svg";
-import DownloadIcon from "@/icons/download.svg";
-import PhoneIcon from "@/icons/phone.svg";
+import MobileHandIcon from '@/icons/mobile-hand.svg'
+import GlobeIcon from '@/icons/globe.svg'
+import DownloadIcon from '@/icons/download.svg'
+import PhoneIcon from '@/icons/phone.svg'
 
 // Sanity
-import SanityPageService from "@/services/sanityPageService";
-import TextScrambler from "@/components/text-scrambler";
-import GridOverlay from "@/components/grid-overlay";
+import SanityPageService from '@/services/sanityPageService'
+import TextScrambler from '@/components/text-scrambler'
+import GridOverlay from '@/components/grid-overlay'
+import SanityImage from '@/components/sanity-image'
 
 const query = `{
   "blog": *[_type == "blog"][0...5]{
     title,
     slug {
       current
+    },
+    heroImage {
+      asset-> {
+        ...
+      },
+      caption,
+      alt,
+      hotspot {
+        x,
+        y
+      },
     },
     category-> {
       title,
@@ -44,6 +55,35 @@ const query = `{
       }
     },
     publishDate
+  },
+  "products": *[_type == "products"]{
+    title,
+    introText
+  },
+  "home": *[_type == "home"][0]{
+    title,
+    introText,
+    makeAGameCtaHeading,
+    makeAGameCtaText,
+    homaAcademyCtaHeading,
+    homaAcademyCtaText,
+    scrollingImages[] {
+      asset-> {
+        ...
+      },
+      caption,
+      alt,
+      hotspot {
+        x,
+        y
+      },
+    },
+    seo {
+      ...,
+      shareGraphic {
+        asset->
+      }
+    }
   }
 }`;
 
@@ -51,11 +91,6 @@ const pageService = new SanityPageService(query);
 
 export default function Home(initialData) {
   const characterBinder = useRef(null);
-
-  // Sanity Data
-  const {
-    data: { blog },
-  } = pageService.getPreviewHook(initialData)();
 
   useEffect(() => {
     window.experience.clearPage();
@@ -75,9 +110,14 @@ export default function Home(initialData) {
     );
   });
 
+  const { data: { blog, products, home } } = pageService.getPreviewHook(initialData)()
+
   return (
     <Layout>
-      <NextSeo title="Home" />
+      <NextSeo
+        title={home.seo?.metaTitle ? home.seo?.metaTitle : 'Home'}
+        description={home.seo?.metaDesc ? home.seo?.metaDesc : null}
+      />
 
       <Header />
 
@@ -110,16 +150,12 @@ export default function Home(initialData) {
             </div>
 
             <div className="max-w-screen-3xl mx-auto" ref={characterBinder}>
-              <h1 className="font-black text-[clamp(80px,_10.2vw,_210px)] leading-[0.95] mb-4 uppercase relative z-10 w-11/12 lg:w-full">
-                <TextScrambler
-                  text="Game The System"
-                  seed={12}
-                  step={1}
-                  singleLine
-                />
+
+              <h1 className="font-black text-[clamp(60px,_10.2vw,_210px)] leading-[0.95] mb-4 uppercase relative z-10 w-full md:w-11/12 lg:w-full">
+                <TextScrambler text="Game The System" seed={12} step={1} singleLine />
               </h1>
 
-              <div className="w-10/12 lg:w-[50%] xl:w-[45%] 2xl:w-[35%] max-w-[720px] pt-[75%] lg:pt-[10%] relative pb-8 lg:pb-0">
+              <div className="w-full lg:w-[50%] xl:w-[45%] 2xl:w-[35%] max-w-[720px] pt-[75%] lg:pt-[10%] relative pb-8 lg:pb-0">
                 <div className="relative z-10">
                   <p className="text-lg md:text-xl xl:text-2xl mb-6 lg:mb-10">
                     We're believers in data and builders of tools that help game
@@ -156,7 +192,7 @@ export default function Home(initialData) {
                   strength={0.025}
                 >
                   <ScrollParallax isAbsolutelyPositioned lerpEase={0.15}>
-                    <div className="absolute top-[-15vw] lg:top-auto lg:bottom-[-80%] right-[-10vw] lg:right-[-55%] xl:right-[-70%] w-[55vw] lg:w-[28vw] 2xl:w-[30vw] max-w-[500px] z-0">
+                    <div className="absolute top-[-15vw] lg:top-auto lg:bottom-[-80%] right-[-5vw] lg:right-[-55%] xl:right-[-70%] w-[55vw] lg:w-[28vw] 2xl:w-[30vw] max-w-[500px] z-0">
                       {/* <Image
                         src="/images/character-test.webp"
                         alt="Character Test"
@@ -179,13 +215,8 @@ export default function Home(initialData) {
 
           <m.div variants={fade}>
             <div className="bg-gradient-to-b from-pink/20 to-pink relative overflow-hidden">
-              <ScrollParallax
-                isAbsolutelyPositioned
-                lerpEase={0.15}
-                strength={0.025}
-                zIndex={0}
-              >
-                <div className="absolute bottom-0 right-[3%] z-0 w-[57%] lg:w-[30%] max-w-[320px] lg:max-w-[400px] xl:max-w-[480px]">
+              <ScrollParallax isAbsolutelyPositioned lerpEase={0.15} strength={0.025} zIndex={0}>
+                <div className="absolute bottom-0 right-[10%] md:right-[3%] z-0 w-[77%] lg:w-[30%] max-w-[320px] lg:max-w-[400px] xl:max-w-[480px]">
                   {/* <Image
                     src="/images/horse.webp"
                     alt="Bee"
@@ -207,22 +238,15 @@ export default function Home(initialData) {
                   <div className="col-span-10 col-start-2 md:col-span-10 md:col-start-2 md:border-l md:border-r border-black/50 py-[10vw] md:px-10">
                     <div className="grid grid-cols-10 items-center">
                       <div className="col-span-9 md:col-span-5 mb-12 md:mb-0">
-                        <p className="text-2xl uppercase font-bold">
-                          HI,
-                          <br />
-                          WE'RE HOMA, a gaming technology lab that gives game
-                          creators the data-driven tools and human expertise
-                          needed to turn their creative ideas into commercial
-                          hits.
-                        </p>
+                        <p className="text-2xl uppercase font-bold">{home.introText}</p>
                       </div>
 
                       {/* Abstract */}
-                      <div className="col-span-5 col-start-4 md:col-span-4 md:col-start-7">
-                        <div className="w-[75%] lg:w-[75%] relative mx-auto">
+                      <div className="col-span-6 col-start-3 md:col-span-4 md:col-start-7">
+                        <div className="w-[100%] lg:w-[75%] relative mx-auto">
                           <PhoneIcon className="w-full relative z-0" />
 
-                          <div className="absolute top-0 right-0 mr-[-55%] lg:mr-[-45%] mt-[15%] z-10 w-full lg:w-[70%]">
+                          <div className="absolute top-0 right-0 mr-[-35%] lg:mr-[-45%] mt-[15%] z-10 w-full lg:w-[70%]">
                             <div className="w-full">
                               <span className="block uppercase font-medium tracking-wider text-base leading-none lg:leading-none xl:leading-none 2xl:leading-non w-11/12 bg-white border border-b-0 border-black/50 px-3 py-5">
                                 Game Name
@@ -246,7 +270,7 @@ export default function Home(initialData) {
                             />
                           </div>
 
-                          <div className="absolute bottom-0 left-0 ml-[-80%] md:ml-[-20%] mb-[15%] z-10 w-[200%] md:w-[70%] min-w-[290px]">
+                          <div className="absolute bottom-0 left-0 ml-[-40%] md:ml-[-20%] mb-[15%] z-10 w-[130%] md:w-[70%] min-w-[120px] md:min-w-[290px]">
                             <div className="w-full">
                               <span className="block uppercase font-medium tracking-wider text-base leading-none lg:leading-none xl:leading-none 2xl:leading-non w-11/12 bg-white border border-black/50 px-3 py-5 text-center">
                                 10,000,000 installs
@@ -265,43 +289,31 @@ export default function Home(initialData) {
                   <div className="col-span-10 col-start-2 md:col-span-10 md:col-start-2 md:border-l md:border-r border-black/50 py-[5vw] md:px-10">
                     <div className="grid grid-cols-12 pb-[10vw]">
                       <div className="col-span-12 lg:col-span-3 mb-5 lg:mb-0">
-                        <GlobeIcon className="w-1/2 max-w-[70px] lg:max-w-[100px] lg:mx-auto" />
+                        <GlobeIcon className="w-[40%] max-w-[50px] lg:max-w-[100px] lg:mx-auto" />
                       </div>
                       <div className="col-span-12 lg:col-span-7">
-                        <span className="text-lg lg:text-lg xl:text-2xl uppercase font-bold block mb-4">
-                          We've joined forces with
-                        </span>
-                        <span className="font-black text-[clamp(50px,_5vw,_86px)] leading-[0.95] mb-8 lg:mb-16 uppercase max-w-[500px]">
-                          1,000+ Studios Developers
-                        </span>
+                        <span className="text-lg lg:text-lg xl:text-2xl uppercase font-bold block mb-4">Our data-driven creations have helped</span>
+                        <span className="font-black text-[clamp(40px,_5vw,_86px)] leading-[0.95] mb-8 lg:mb-16 uppercase max-w-[500px]">1,000+ Studios  Developers</span>
                       </div>
                     </div>
 
                     <div className="grid grid-cols-12 pb-[10vw]">
                       <div className="col-span-12 lg:col-span-3 mb-5 lg:mb-0">
-                        <MobileHandIcon className="w-1/2 max-w-[70px] lg:max-w-[100px] lg:mx-auto" />
+                        <MobileHandIcon className="w-[40%] max-w-[50px] lg:max-w-[100px] lg:mx-auto" />
                       </div>
                       <div className="col-span-12 lg:col-span-7">
-                        <span className="text-lg lg:text-lg xl:text-2xl uppercase font-bold block mb-4">
-                          Combining our creative expertise into
-                        </span>
-                        <span className="font-black text-[clamp(50px,_5vw,_86px)] leading-[0.95] mb-8 lg:mb-16 uppercase max-w-[500px]">
-                          80+ Mobile Games
-                        </span>
+                        <span className="text-lg lg:text-lg xl:text-2xl uppercase font-bold block mb-4">turn their creative ideas into</span>
+                        <span className="font-black text-[clamp(40px,_5vw,_86px)] leading-[0.95] mb-8 lg:mb-16 uppercase max-w-[500px]">80+ Mobile Games</span>
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-12 pb-[10vw]">
+                    <div className="grid grid-cols-12 pb-[30vw] md:pb-[10vw]">
                       <div className="col-span-12 lg:col-span-3 mb-5 lg:mb-0">
-                        <DownloadIcon className="w-1/2 max-w-[70px] lg:max-w-[100px] lg:mx-auto" />
+                        <DownloadIcon className="w-[40%] max-w-[50px] lg:max-w-[100px] lg:mx-auto" />
                       </div>
                       <div className="col-span-12 lg:col-span-7">
-                        <span className="text-lg lg:text-lg xl:text-2xl uppercase font-bold block mb-4">
-                          Resulting in chart topping hits and
-                        </span>
-                        <span className="font-black text-[clamp(50px,_5vw,_86px)] leading-[0.95] mb-8 lg:mb-16 uppercase max-w-[500px]">
-                          1,000,000,000+ Downloads
-                        </span>
+                        <span className="text-lg lg:text-lg xl:text-2xl uppercase font-bold block mb-4">Resulting in</span>
+                        <span className="font-black text-[clamp(40px,_5vw,_86px)] leading-[0.95] mb-8 lg:mb-16 uppercase max-w-[500px]">1,000,000,000+ Downloads</span>
                       </div>
                     </div>
                   </div>
@@ -322,17 +334,9 @@ export default function Home(initialData) {
               </div>
 
               <div className="order-3 md:order-2 col-span-12 md:col-span-6 z-10">
-                <h1 className="font-black text-[clamp(50px,_4.45vw,_86px)] leading-[0.95] mb-8 lg:mb-16 uppercase">
-                  We’re changing games by bringing data into play
-                </h1>
+                <h2 className="font-black text-[clamp(35px,_4.45vw,_86px)] leading-[0.95] mb-8 lg:mb-16 uppercase">{home.makeAGameCtaHeading}</h2>
                 <div className="content max-w-3xl mb-8 xl:mb-12 w-10/12">
-                  <p>
-                    Creativity can’t be forced, but with Homa Lab it can be
-                    tweaked, iterated and rigorously tested. From idea to
-                    monetization, Homa Lab’s real-time flow of data and insight
-                    lets you build games that outperform by every conceivable
-                    metric.
-                  </p>
+                  <p>{home.makeAGameCtaText}</p>
                 </div>
 
                 <Link href="/careers">
@@ -470,7 +474,7 @@ export default function Home(initialData) {
               </div>
 
               <div className="w-full lg:w-1/2 pb-12 lg:pb-16 xl:pb-24">
-                {Array.from(Array(9), (e, i) => {
+                {products.map((e, i) => {
                   return (
                     <div
                       className={`w-full ${
@@ -483,18 +487,9 @@ export default function Home(initialData) {
                         </span>
                       </div>
                       <div className="w-3/4">
-                        <h3 className="font-black text-3xl lg:text-4xl xl:text-5xl leading-[0.95] mb-12 lg:mb-24 uppercase max-w-[500px] xl:max-w-none">
-                          Ideas
-                        </h3>
-
+                        <h3 className="font-black text-3xl lg:text-4xl xl:text-5xl leading-[0.95] mb-12 lg:mb-24 uppercase max-w-[500px] xl:max-w-none">{e.title}</h3>
                         <div className="content w-11/12 lg:w-11/12 max-w-[650px]">
-                          <p>
-                            Whether through Tiktok, Discord or in-person events
-                            like Homa Jams, we believe in creating a community
-                            that unities game makers and game players (if
-                            there's a distinction) with all sorts of creative
-                            people around the world.
-                          </p>
+                          <p>{e.introText}</p>
                         </div>
                       </div>
                     </div>
@@ -577,41 +572,22 @@ export default function Home(initialData) {
               </div>
 
               <div className="order-3 md:order-2 col-span-12 md:col-span-6 z-10">
-                <h1 className="font-black text-[clamp(50px,_4.45vw,_86px)] leading-[0.95] mb-8 lg:mb-16 uppercase max-w-[500px]">
-                  Level up your game
-                </h1>
+                <h2 className="font-black text-[clamp(50px,_4.45vw,_86px)] leading-[0.95] mb-8 lg:mb-16 uppercase max-w-[500px]">{home.homaAcademyCtaHeading}</h2>
                 <div className="content max-w-3xl mb-8 xl:mb-12 w-10/12">
-                  <p>
-                    The Homa Academy provides developers and studios everywhere
-                    the insights needed to create games with hit potential coded
-                    right in.
-                  </p>
-
-                  <p>
-                    Stop by to learn the ins and outs of game design, including
-                    in-depth game play analysis, methods for ideation &amp;
-                    player experience optimization, as well as hands-on game
-                    builing tutorials, hangouts and more.
-                  </p>
+                  <p>{home.homaAcademyCtaText}</p>
                 </div>
 
-                <Link href="homa-lab/homa-academy">
-                  <a className="pill-btn group">
-                    <div className="relative">
-                      <span className="block group-hover:opacity-0">
-                        Learn More
-                      </span>
-                      <span className="absolute top-0 left-0 right-0 hidden  group-hover:block">
-                        <TextScrambler
-                          text="Learn More"
-                          seed={5}
-                          step={1}
-                          singleLine
-                        />
-                      </span>
-                    </div>
-                  </a>
-                </Link>
+                <a
+                  href="https://academy.homagames.com/"
+                  target="_blank"
+                  rel="noopener noreferrer" 
+                  className="pill-btn group"
+                >
+                  <div className="relative">
+                    <span className="block group-hover:opacity-0">Learn More</span>
+                    <span className="absolute top-0 left-0 right-0 hidden  group-hover:block"><TextScrambler text="Learn More" seed={5} step={1} singleLine /></span>
+                  </div>
+                </a>
               </div>
 
               {/* <div className="order-1 md:order-3 col-span-12 md:col-span-6 lg:col-span-4 relative z-0 md:h-full mb-8 lg:mb-0">
@@ -620,52 +596,50 @@ export default function Home(initialData) {
             </div>
 
             <div className="">
-              <div className="relative z-0 flex overflow-x-hidden">
-                <div className="animate-marquee whitespace-nowrap">
-                  <img
-                    className="inline-block w-[60%] md:w-[40%] xl:w-[30%] aspect-square"
-                    src="https://place.dog/500/500"
-                    alt="PLACEHOLDER"
-                  />
-                  <img
-                    className="inline-block w-[60%] md:w-[40%] xl:w-[30%] aspect-square"
-                    src="https://place.dog/600/600"
-                    alt="PLACEHOLDER"
-                  />
-                  <img
-                    className="inline-block w-[60%] md:w-[40%] xl:w-[30%] aspect-square"
-                    src="https://place.dog/700/700"
-                    alt="PLACEHOLDER"
-                  />
-                  <img
-                    className="inline-block w-[60%] md:w-[40%] xl:w-[30%] aspect-square"
-                    src="https://place.dog/800/800"
-                    alt="PLACEHOLDER"
-                  />
+              <div className="relative z-0">
+                <Marquee speed={130} gradient={false}>
+                  {home.scrollingImages.map((e, i) => {
+                    return (
+                      <span className="inline-block w-[60%] md:w-[40%] xl:w-[30%] h-[60vw] md:h-[40vw] xl:h-[30vw] aspect-square relative overflow-hidden" key={i}>
+                        <SanityImage
+                          key={i}
+                          image={e}
+                          layout="fill"
+                          className="block w-full h-full inset-0 scale-[1.02]"
+                        />
+                      </span>
+                    )
+                  })}
+                </Marquee>
+                {/* <div className="animate-marquee whitespace-nowrap">
+                  {home.scrollingImages.map((e, i) => {
+                    return (
+                      <span className="inline-block w-[60%] md:w-[40%] xl:w-[30%] h-[60vw] md:h-[40vw] xl:h-[30vw] aspect-square relative overflow-hidden" key={i}>
+                        <SanityImage
+                          key={i}
+                          image={e}
+                          layout="fill"
+                          className="block w-full h-full inset-0"
+                        />
+                      </span>
+                    )
+                  })}
                 </div>
 
                 <div className="absolute top-0 animate-marquee2 whitespace-nowrap">
-                  <img
-                    className="inline-block w-[60%] md:w-[40%] xl:w-[30%] aspect-square"
-                    src="https://place.dog/500/500"
-                    alt="PLACEHOLDER"
-                  />
-                  <img
-                    className="inline-block w-[60%] md:w-[40%] xl:w-[30%] aspect-square"
-                    src="https://place.dog/600/600"
-                    alt="PLACEHOLDER"
-                  />
-                  <img
-                    className="inline-block w-[60%] md:w-[40%] xl:w-[30%] aspect-square"
-                    src="https://place.dog/700/700"
-                    alt="PLACEHOLDER"
-                  />
-                  <img
-                    className="inline-block w-[60%] md:w-[40%] xl:w-[30%] aspect-square"
-                    src="https://place.dog/800/800"
-                    alt="PLACEHOLDER"
-                  />
-                </div>
+                  {home.scrollingImages.map((e, i) => {
+                    return (
+                      <span className="inline-block w-[60vw] md:w-[40vw] xl:w-[30vw] h-[60vw] md:h-[40vw] xl:h-[30vw] aspect-square relative overflow-hidden" key={i}>
+                        <SanityImage
+                          key={i}
+                          image={e}
+                          layout="fill"
+                          className="block w-full h-full inset-0"
+                        />
+                      </span>
+                    )
+                  })}
+                </div> */}
               </div>
             </div>
 
@@ -702,10 +676,7 @@ export default function Home(initialData) {
                       </h3>
 
                       <div className="content content--small w-11/12">
-                        <p>
-                          We’re a distributed team with a flagship HQ in Paris.
-                          Work from here, or anywhere.
-                        </p>
+                        <p>We’re in Paris, you don’t need you to be.</p>
                       </div>
                     </div>
 
@@ -773,20 +744,15 @@ export default function Home(initialData) {
                     There's Hope. Then there's Homa.
                   </h2>
                   <div className="content max-w-3xl mb-8 xl:mb-12 w-10/12">
-                    <p>
-                      With us, every step of your game’s build and launch phase
-                      – from ideation right through to monetization - is managed
-                      by experts and tested, tweaked and improved by data-rich
-                      technology. To see our process and the hits its produced:
-                    </p>
+                    <p>We play to win, so our clients can win. With us, every step of your game’s build and launch phase – from ideation right through to monetization - is managed by experts and tested, tweaked and improved by data-rich technology.</p>
                   </div>
                 </div>
 
-                <div className="col-span-5 col-start-4 lg:col-span-3 lg:col-start-9">
-                  <div className="w-[75%] lg:w-[75%] relative mx-auto">
+                <div className="col-span-6 col-start-4 md:col-span-4 md:col-start-8">
+                  <div className="w-[100%] lg:w-[75%] relative mx-auto">
                     <PhoneIcon className="w-full relative z-0" />
 
-                    <div className="absolute top-0 right-0 mr-[-55%] lg:mr-[-45%] mt-[15%] z-10 w-full lg:w-[70%]">
+                    <div className="absolute top-0 right-0 mr-[-35%] lg:mr-[-45%] mt-[15%] z-10 w-full lg:w-[70%]">
                       <div className="w-full">
                         <span className="block uppercase font-medium tracking-wider text-base leading-none lg:leading-none xl:leading-none 2xl:leading-non w-11/12 bg-white border border-b-0 border-black/50 px-3 py-5">
                           Game Name
@@ -810,7 +776,7 @@ export default function Home(initialData) {
                       />
                     </div>
 
-                    <div className="absolute bottom-0 left-0 ml-[-80%] md:ml-[-20%] mb-[15%] z-10 w-[200%] md:w-[70%] min-w-[290px]">
+                    <div className="absolute bottom-0 left-0 ml-[-40%] md:ml-[-20%] mb-[15%] z-10 w-[130%] md:w-[70%] min-w-[120px] md:min-w-[290px]">
                       <div className="w-full">
                         <span className="block uppercase font-medium tracking-wider text-base leading-none lg:leading-none xl:leading-none 2xl:leading-non w-11/12 bg-white border border-black/50 px-3 py-5 text-center">
                           10,000,000 installs

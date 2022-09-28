@@ -125,11 +125,21 @@ export default function Header() {
                   </li>
                   <li className="block">
                     <FancyLink
-                      destination="/homa-lab/homa-academy"
+                      destination="/homa-lab/submissions-and-creatives"
                       a11yText="Navigate to the homa lab page"
-                      label="Homa Academy"
+                      label="Submissions And Creatives"
                       className="uppercase font-medium tracking-widest lg:text-sm lg:leading-none xl:text-base xl:leading-none inline-block py-4"
                     />
+                  </li>
+                  <li className="block">
+                    <a
+                      className="uppercase font-medium tracking-widest lg:text-sm lg:leading-none xl:text-base xl:leading-none inline-block py-4"
+                      href="https://academy.homagames.com/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <span className="relative">Homa Academy</span>
+                    </a>
                   </li>
                 </ul>
               </li>

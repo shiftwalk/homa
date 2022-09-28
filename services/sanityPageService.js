@@ -14,14 +14,14 @@ export default class SanityPageService {
     return () => sanity.usePreviewSubscription(this.query, subscription)
   }
 
-  // async fetchQuery ({params, preview = false}) {
-  //   sanity.setPreviewMode(preview)
-  //   const slug = params?.slug
-  //   const res = await sanity.fetchQuery({query: this.query, params})
-  //   res.preview = preview
-  //   if (slug?.length > 0) res.slug = slug
-  //   return res
-  // }
+  async fetchQueryBlank ({params, preview = false}) {
+    sanity.setPreviewMode(preview)
+    const slug = params?.slug
+    const res = await sanity.fetchQuery({query: this.query, params})
+    res.preview = preview
+    if (slug?.length > 0) res.slug = slug
+    return res
+  }
 
   async fetchQuery ({params, preview = false}) {
     sanity.setPreviewMode(preview)

@@ -68,6 +68,12 @@ const query = `{
     },
     slug {
       current
+    },
+    seo {
+      ...,
+      shareGraphic {
+        asset->
+      }
     }
   }
 }`
@@ -77,10 +83,29 @@ const pageService = new SanityPageService(query)
 export default function BlogSlug(initialData) {
   // Sanity Data
   const { data: { article } } = pageService.getPreviewHook(initialData)()
-  
+  let d = new Date(article.publishDate);
+  let ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d);
+  let mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(d);
+  let da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d);
+
   return (
     <Layout>
-      <NextSeo title={article.title} />
+      <NextSeo
+        title={article.seo?.metaTitle ? article.seo?.metaTitle : article.title }
+        description={article.seo?.metaDesc ? article.seo?.metaDesc : null}
+        openGraph={{
+          title: article.seo?.metaTitle ? article.seo?.metaTitle : article.title,
+          description: article.seo?.metaDesc ? article.seo?.metaDesc : null,
+          images: [
+            {
+              url: article.seo?.shareGraphic?.asset.url ? article.seo?.shareGraphic?.asset.url : article.heroImage.asset.url,
+              width: article.seo?.shareGraphic?.asset.metadata.dimensions.width ? article.seo?.shareGraphic?.asset.metadata.dimensions.width : article.heroImage.asset.metadata.dimensions.width,
+              height: article.seo?.shareGraphic?.asset.metadata.dimensions.height ? article.seo?.shareGraphic?.asset.metadata.dimensions.height : article.heroImage.asset.metadata.dimensions.height,
+              type: 'image/jpeg',
+            }
+          ]
+        }}
+      />
 
       <Header />
 
@@ -124,7 +149,7 @@ export default function BlogSlug(initialData) {
                         {article.publishDate && (
                           <span className="uppercase text-sm lg:text-base tracking-widest mb-2 lg:mb-4 font-medium flex">
                             <span className="min-w-[150px]">Published:</span>
-                            <span className="block">{article.publishDate}</span>
+                            <span className="block">{da} {mo} {ye}</span>
                           </span>
                         )}
                         {article.author && (
@@ -147,7 +172,7 @@ export default function BlogSlug(initialData) {
                           image={article.heroImage}
                           alt="About Test"
                           layout="fill"
-                          className="w-full h-full absolute inset-0 z-0 object-cover object-top"
+                          className="w-full h-full absolute inset-0 z-0 object-cover object-center"
                         />
                       </ScrollParallax>
                     </div>

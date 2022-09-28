@@ -26,15 +26,15 @@
   }
 
   & > h1, & > .h1 {
-    @apply text-3xl lg:text-4xl mb-[8vw] lg:mb-[5vw];
+    @apply text-2xl lg:text-4xl mb-[8vw] lg:mb-[5vw];
   }
 
   & > h2, & > .h2 {
-    @apply text-2xl lg:text-3xl;
+    @apply text-xl lg:text-3xl;
   }
 
   & > h3, & > .h3 {
-    @apply text-xl lg:text-2xl;
+    @apply text-lg lg:text-2xl;
   }
 }
 
@@ -46,6 +46,12 @@
 
   & > p > a {
     @apply underline hover:text-opacity-25 focus:text-opacity-25;
+  }
+}
+
+.content--nolead {
+  & > p {
+    @apply leading-[1.25] lg:leading-[1.25] xl:leading-[1.25]
   }
 }
 

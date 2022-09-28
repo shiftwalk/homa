@@ -3,6 +3,7 @@ import useEmblaCarousel from 'embla-carousel-react'
 import ClassNames from 'embla-carousel-class-names'
 import Link from 'next/link'
 import ArrowRightIcon from '@/icons/arrow-right.svg'
+import SanityImage from './sanity-image'
 
 export const CarouselBlog = ({items}) => {
   const [emblaNewsRef, emblaApi] = useEmblaCarousel({ loop: true, speed: 3.5, align: 'start', inViewThreshold: 1 }, [ClassNames()])
@@ -35,12 +36,21 @@ export const CarouselBlog = ({items}) => {
       <div class="embla__viewport w-[91.05vw] ml-auto bg-opacity-70 overflow-hidden" ref={emblaNewsRef}>
         <div className="embla__container">
           {items.map((e, i) => {
+            let d = new Date(e.publishDate);
+            let ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d);
+            let mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(d);
+            let da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d);
+
             return (
               <Link href={`/blog/${e.slug.current}`}>
                 <a className="embla__slide" key={i}>
                   <div className="w-full bg-gray-100 aspect-square border-b border-black/50 relative overflow-hidden">
-                    <img className="block w-full h-full absolute inset-0 aspect-square scale-[1.03] embla__slide-inner-blur" src="https://place.dog/500/500" alt="PLACEHOLDER" />
-                  </div>
+                    <SanityImage
+                      image={e.heroImage}
+                      layout="fill"
+                      className="block w-full h-full absolute inset-0 aspect-square scale-[1.03] embla__slide-inner-blur"
+                    />
+                </div>
                   <div className="embla__slide-inner">
                     <div className="embla__slide-inner-blur">
                       <h2 className="font-bold text-lg lg:text-xl xl:text-2xl uppercase w-full mb-12 md:mb-20 lg:mb-28 xl:mb-32">{e.title}</h2>
@@ -50,7 +60,7 @@ export const CarouselBlog = ({items}) => {
                           <span className="inline-block border border-black/50 font-medium uppercase leading-none p-3 rounded-sm hover:bg-black hover:text-white focus:bg-black focus:text-white">{e.category.title}</span>
                         )}
 
-                        <span className="block text-sm lg:text-base text-black/50 leading-none ml-auto">June 8 2022</span>
+                        <span className="block text-sm lg:text-base text-black/50 leading-none ml-auto">{da} {mo} {ye}</span>
                       </div>
                     </div>
                   </div>

@@ -10,8 +10,8 @@ export default function ModularImageBlock({ image }) {
           <span className="block w-full text-base opacity-60">{image.caption}</span>
         )}
 
-        {image.caption &&(
-          <span className="block w-full text-base opacity-60 mt-3 xl:mt-auto">Source: GettyImages</span>
+        {image.source &&(
+          <span className="block w-full text-base opacity-60 mt-3 xl:mt-auto">{image.source}</span>
         )}
       </div>
       <div className="content w-full xl:w-[75%] 2xl:w-[70%] order-1 xl:order-1 pb-3 xl:pb-0">

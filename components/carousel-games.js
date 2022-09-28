@@ -18,11 +18,11 @@ export const CarouselGames = ({ heading, items }) => {
   }, [emblaApi])
 
   return (
-    <div className="embla">
+    <div className="embla embla--games">
       <div className="w-[91.05vw] lg:w-[93vw] ml-auto flex flex-wrap mb-6">
         <div className="flex-1">
           { heading && (
-            <h2 className="font-black text-[clamp(46px,_4.45vw,_86px)] leading-[0.9] uppercase">{heading}</h2>
+            <h2 className="font-black text-[clamp(40px,_4.45vw,_86px)] leading-[0.9] uppercase">{heading}</h2>
           )}
         </div>
 
@@ -64,9 +64,11 @@ export const CarouselGames = ({ heading, items }) => {
                     </div>
                   </div>
 
-                  <div className="flex flex-wrap w-full mt-auto">
-                    <a href={e.appStoreLink} target="_blank" rel="noopener noreferrer" className="block uppercase font-medium tracking-widest text-sm leading-none xl:text-base xl:leading-none flex-1">Download Game</a>
-                  </div>
+                  {(e.appStoreLink || e.googlePlayStoreLink) && (
+                    <div className="flex flex-wrap w-full mt-auto">
+                      <a href={e.appStoreLink ? e.appStoreLink : e.googlePlayStoreLink} target="_blank" rel="noopener noreferrer" className="block uppercase font-medium tracking-widest text-sm leading-none xl:text-base xl:leading-none flex-1">Download Game</a>
+                    </div>
+                  )}
                 </div>
               </div>
             )
