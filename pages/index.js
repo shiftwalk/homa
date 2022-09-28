@@ -4,6 +4,8 @@ import { NextSeo } from "next-seo";
 import { MouseParallax, ScrollParallax } from "react-just-parallax";
 import { fade } from "@/helpers/transitions";
 
+import { useEffect } from "react";
+
 // Components
 import Layout from "@/components/layout";
 import Header from "@/components/header";
@@ -26,7 +28,6 @@ import PhoneIcon from "@/icons/phone.svg";
 
 // Sanity
 import SanityPageService from "@/services/sanityPageService";
-import WebGL from "@/components/webgl";
 import TextScrambler from "@/components/text-scrambler";
 import GridOverlay from "@/components/grid-overlay";
 
@@ -55,6 +56,24 @@ export default function Home(initialData) {
   const {
     data: { blog },
   } = pageService.getPreviewHook(initialData)();
+
+  useEffect(() => {
+    window.experience.clearPage();
+
+    window.experience.world.addScene(
+      "/models/test.glb",
+      document.querySelector(".scene-container"),
+      0.03,
+      0.001
+    );
+
+    window.experience.world.addScene(
+      "/models/ship.glb",
+      document.querySelector(".scene-container2"),
+      0.03,
+      0.001
+    );
+  });
 
   return (
     <Layout>
@@ -542,10 +561,10 @@ export default function Home(initialData) {
               </div>
             </div>
 
-            <div
-              id="test"
-              className="grid grid-cols-12 pb-12 lg:pb-[15vw] px-6 xl:px-10 max-w-screen-3xl mx-auto"
-            >
+            <div className="grid grid-cols-12 pb-12 lg:pb-[15vw] px-6 xl:px-10 max-w-screen-3xl mx-auto">
+              <div className="scene-container"></div>
+              <div className="scene-container scene-container2"></div>
+
               <div className="order-2 md:order-1 col-span-12 lg:col-span-2 relative z-10">
                 <span className="uppercase text-sm tracking-widest mb-5 lg:mb-8 block font-medium">
                   <TextScrambler
@@ -594,8 +613,6 @@ export default function Home(initialData) {
                   </a>
                 </Link>
               </div>
-
-              <WebGL />
 
               {/* <div className="order-1 md:order-3 col-span-12 md:col-span-6 lg:col-span-4 relative z-0 md:h-full mb-8 lg:mb-0">
                 Henry to replace with WebGl
@@ -652,7 +669,7 @@ export default function Home(initialData) {
               </div>
             </div>
 
-            <div className="bg-lime text-black">
+            <div id="webgl-ship" className="bg-lime text-black">
               <div className="grid grid-cols-12 py-12 lg:py-[15vw] px-6 xl:px-10 max-w-screen-3xl mx-auto">
                 <div className="col-span-12 lg:col-span-2 relative z-10">
                   <span className="uppercase text-sm tracking-widest mb-5 lg:mb-8 block font-medium">

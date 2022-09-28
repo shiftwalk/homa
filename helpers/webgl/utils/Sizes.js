@@ -37,10 +37,6 @@ export default class Sizes extends EventEmitter {
 
       this.pixelRatio = Math.min(window.devicePixelRatio, 2);
 
-      if (this.experience.scroll.scrollY) {
-        this.experience.scroll.scrollY = -window.scrollY / this.screen.height;
-      }
-
       this.trigger("resize");
     });
   }

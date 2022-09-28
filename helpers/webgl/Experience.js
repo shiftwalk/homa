@@ -1,7 +1,6 @@
 import * as THREE from "three";
 
 import Sizes from "./utils/Sizes";
-import Scroll from "./utils/Scroll";
 import Time from "./utils/Time";
 
 import Camera from "./Camera";
@@ -20,7 +19,6 @@ export default class Experience {
     this.canvas = canvas;
 
     this.sizes = new Sizes();
-    this.scroll = new Scroll();
     this.time = new Time();
 
     this.sizes.on("resize", () => {
@@ -37,27 +35,28 @@ export default class Experience {
     this.renderer = new Renderer();
     this.world = new World();
 
-    setTimeout(() => {
-      window.dispatchEvent(new Event("resize"));
-    }, 1000);
-
     window.experience = this;
   }
 
-  resize() {
+  resize = () => {
     this.camera.resize();
     this.renderer.resize();
     this.world.resize();
-  }
+  };
 
-  update() {
+  update = () => {
     this.renderer.update();
     this.world.update();
-    this.camera.update();
-  }
+  };
 
   destroy = () => {
     this.renderer.destroy();
     this.camera.destroy();
+  };
+
+  clearPage = () => {
+    if (this.world) {
+      this.world.destroy();
+    }
   };
 }

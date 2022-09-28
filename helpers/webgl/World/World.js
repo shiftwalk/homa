@@ -3,51 +3,51 @@ import Experience from "../Experience";
 
 import Model from "./Model";
 
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
+
 export default class World {
   constructor() {
     this.experience = new Experience();
     this.sizes = this.experience.sizes;
+    this.time = this.experience.time;
     this.camera = this.experience.camera;
+    this.renderer = this.experience.renderer.instance;
 
-    this.currentModels = [];
+    this.gltfLoader = new GLTFLoader();
 
-    this.scrollY = 0;
+    this.currentScenes = [];
   }
 
-  addModel(
-    model,
-    section,
-    xPosition,
-    yPosition,
-    zPosition,
-    customScale,
-    animationTimingModifier
-  ) {
+  addScene(modelUrl, container, scale, animationTimingModifier) {
     const newModel = new Model(
-      model,
-      section,
-      xPosition,
-      yPosition,
-      zPosition,
-      customScale,
+      modelUrl,
+      container,
+      scale,
       animationTimingModifier
     );
-
-    this.currentModels.push(newModel);
+    this.currentScenes.push(newModel);
   }
 
   update() {
-    if (this.currentModels.length > 0) {
-      this.currentModels.forEach((model) => {
-        model.update();
+    if (this.currentScenes.length > 1) {
+      this.currentScenes.forEach((scene) => {
+        scene.update();
       });
     }
   }
 
   resize() {
-    if (this.currentModels.length > 0) {
-      this.currentModels.forEach((model) => {
-        model.resize();
+    if (this.currentScenes.length > 1) {
+      this.currentScenes.forEach((scene) => {
+        scene.resize();
+      });
+    }
+  }
+
+  destroy() {
+    if (this.currentScenes.length > 1) {
+      this.currentScenes.forEach((scene) => {
+        scene.destroy();
       });
     }
   }
