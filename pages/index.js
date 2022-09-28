@@ -557,9 +557,6 @@ export default function Home(initialData) {
             </div>
 
             <div className="grid grid-cols-12 pb-12 lg:pb-[15vw] px-6 xl:px-10 max-w-screen-3xl mx-auto">
-              <div className="scene-container"></div>
-              <div className="scene-container scene-container2"></div>
-
               <div className="order-2 md:order-1 col-span-12 lg:col-span-2 relative z-10">
                 <span className="uppercase text-sm tracking-widest mb-5 lg:mb-8 block font-medium">
                   <TextScrambler
@@ -590,9 +587,9 @@ export default function Home(initialData) {
                 </a>
               </div>
 
-              {/* <div className="order-1 md:order-3 col-span-12 md:col-span-6 lg:col-span-4 relative z-0 md:h-full mb-8 lg:mb-0">
-                Henry to replace with WebGl
-              </div> */}
+              <div className="order-1 md:order-3 col-span-12 md:col-span-6 lg:col-span-4 relative z-0 md:h-full mb-8 lg:mb-0 overflow-hidden">
+                <div className="scene-container relative w-[65%] lg:w-full aspect-square lg:-mt-12"></div>
+              </div>
             </div>
 
             <div className="">
@@ -643,7 +640,7 @@ export default function Home(initialData) {
               </div>
             </div>
 
-            <div id="webgl-ship" className="bg-lime text-black">
+            <div id="webgl-ship" className="bg-lime text-black overflow-hidden">              
               <div className="grid grid-cols-12 py-12 lg:py-[15vw] px-6 xl:px-10 max-w-screen-3xl mx-auto">
                 <div className="col-span-12 lg:col-span-2 relative z-10">
                   <span className="uppercase text-sm tracking-widest mb-5 lg:mb-8 block font-medium">
@@ -656,7 +653,11 @@ export default function Home(initialData) {
                   </span>
                 </div>
 
-                <div className="col-span-12 lg:col-span-8 z-10">
+                <div className="col-span-12 lg:col-span-8 z-10 relative">
+                  <div className="absolute top-[10%] xl:top-[-20%] right-[-20%] lg:right-[-40%] xl:right-[-50%] w-[80%] lg:w-[90%] aspect-square z-1">
+                    <div className="scene-container scene-container2 relative w-full aspect-square z-1"></div>
+                  </div>
+
                   <h1 className="font-black text-[clamp(50px,_4.45vw,_86px)] leading-[0.95] mb-8 lg:mb-16 uppercase">
                     We’re changing the game by rewriting the rules
                   </h1>
@@ -670,7 +671,7 @@ export default function Home(initialData) {
                   </div>
 
                   <div className="w-full flex flex-wrap border border-black/50 mb-6 lg:mb-8">
-                    <div className="w-full lg:w-1/3 border-b lg:border-b-0 lg:border-r border-black/50 p-5 lg:p-6 xl:p-8 2xl:p-10">
+                    <div className="w-full lg:w-1/3 bg-lime border-b lg:border-b-0 lg:border-r border-black/50 p-5 lg:p- relative z-106 xl:p-8 2xl:p-10">
                       <h3 className="font-bold text-2xl lg:text-3xl xl:text-4xl leading-[0.95] mb-12 lg:mb-32 uppercase">
                         WFH, WFParis, WFAnywhere
                       </h3>
@@ -680,7 +681,7 @@ export default function Home(initialData) {
                       </div>
                     </div>
 
-                    <div className="w-full lg:w-1/3 border-b lg:border-b-0 lg:border-r border-black/50 p-5 lg:p-6 xl:p-8 2xl:p-10">
+                    <div className="w-full lg:w-1/3 bg-lime border-b lg:border-b-0 lg:border-r border-black/50 p-5 lg:p- relative z-106 xl:p-8 2xl:p-10">
                       <h3 className="font-bold text-2xl lg:text-3xl xl:text-4xl leading-[0.95] mb-12 lg:mb-32 uppercase w-11/12">
                         Work In English
                       </h3>
@@ -693,7 +694,7 @@ export default function Home(initialData) {
                       </div>
                     </div>
 
-                    <div className="w-full lg:w-1/3 p-5 lg:p-6 xl:p-8 2xl:p-10">
+                    <div className="w-full lg:w-1/3 bg-lime p-5 lg:p-6 xl:p-8 2xl:p-10 relative z-10">
                       <h3 className="font-bold text-2xl lg:text-3xl xl:text-4xl leading-[0.95] mb-12 lg:mb-32 uppercase">
                         Work your way up
                       </h3>
