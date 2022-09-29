@@ -21,10 +21,11 @@ import TextScrambler from "@/components/text-scrambler";
 import PixelatedImage from "@/components/pixelated-image";
 
 // Sanity
-import SanityPageService from '@/services/sanityPageService'
-import SanityImage from '@/components/sanity-image'
-import Marquee from 'react-fast-marquee'
-import SanityBlockContent from '@sanity/block-content-to-react'
+import SanityPageService from "@/services/sanityPageService";
+import SanityImage from "@/components/sanity-image";
+import Marquee from "react-fast-marquee";
+import SanityBlockContent from "@sanity/block-content-to-react";
+import { useRef, useEffect } from "react";
 
 const query = `{
   "about": *[_type == "about"][0]{
@@ -69,18 +70,52 @@ const query = `{
       }
     }
   }
-}`
+}`;
 
-const pageService = new SanityPageService(query)
+const pageService = new SanityPageService(query);
 
 export default function About(initialData) {
   // Sanity Data
-  const { data: { about } } = pageService.getPreviewHook(initialData)()
-  
+  const {
+    data: { about },
+  } = pageService.getPreviewHook(initialData)();
+
+  const target1 = useRef(null);
+  const target2 = useRef(null);
+  const target3 = useRef(null);
+
+  useEffect(() => {
+    window.experience.clearPage();
+
+    window.experience.world.addScene(
+      "/models/test.glb",
+      target1.current,
+      0.03,
+      0.001,
+      null
+    );
+
+    window.experience.world.addScene(
+      "/models/ship.glb",
+      target2.current,
+      0.03,
+      0.001,
+      null
+    );
+
+    window.experience.world.addScene(
+      "/models/test.glb",
+      target3.current,
+      0.03,
+      0.001,
+      null
+    );
+  });
+
   return (
     <Layout>
       <NextSeo
-        title={about.seo?.metaTitle ? about.seo?.metaTitle : 'About'}
+        title={about.seo?.metaTitle ? about.seo?.metaTitle : "About"}
         description={about.seo?.metaDesc ? about.seo?.metaDesc : null}
       />
 
@@ -115,7 +150,13 @@ export default function About(initialData) {
             </div>
 
             <div className="max-w-screen-3xl mx-auto">
-              <h1 className="font-black text-[clamp(55px,_9vw,190px)] leading-[0.95] mb-4 uppercase relative z-10 w-11/12 lg:w-full"><TextScrambler text="Mobile gaming’s major players" seed={25} step={2} /></h1>
+              <h1 className="font-black text-[clamp(55px,_9vw,190px)] leading-[0.95] mb-4 uppercase relative z-10 w-11/12 lg:w-full">
+                <TextScrambler
+                  text="Mobile gaming’s major players"
+                  seed={25}
+                  step={2}
+                />
+              </h1>
             </div>
           </m.div>
 
@@ -128,11 +169,10 @@ export default function About(initialData) {
                 <div className="col-span-10 col-start-2 md:col-span-10 md:col-start-2 md:border-l md:border-r border-black/50 py-[15vw] pb-[50vw] md:py-[15vw] md:px-10">
                   <div className="grid grid-cols-10 items-center relative">
                     <div className="col-span-9 md:col-span-5 mb-12 md:mb-0 relative z-10 content text-2xl md:text-2xl lg:text-2xl xl:text-2xl uppercase font-bold content--nolead">
-
-                    <SanityBlockContent
-                      serializers={{ 
-                        container: ({ children }) => children
-                      }}
+                      <SanityBlockContent
+                        serializers={{
+                          container: ({ children }) => children,
+                        }}
                         blocks={about.introText}
                       />
                     </div>
@@ -178,19 +218,30 @@ export default function About(initialData) {
                         Our Community
                       </p>
 
-                      <h2 className="font-black text-[clamp(46px,_4.45vw,_86px)] leading-[0.9] mb-12 lg:mb-32 uppercase">{about.ourCommunityHeading}</h2>
+                      <h2 className="font-black text-[clamp(46px,_4.45vw,_86px)] leading-[0.9] mb-12 lg:mb-32 uppercase">
+                        {about.ourCommunityHeading}
+                      </h2>
 
                       <div className="w-full flex flex-wrap border border-black/50 mb-6 lg:mb-8">
-                      {about.ourCommunityStats.map((e, i) => {
-                        return (
-                          <div className={`w-full lg:w-1/3 p-5 lg:p-6 xl:p-8 2xl:p-10 ${ (i + 1) !== about.ourCommunityStats.length ? 'border-b lg:border-b-0 border-black/50 lg:border-r' : '' }`} key={i}>
-                            <h3 className="font-black text-[clamp(100px,_9vw,_200px)] leading-[0.95] mb-4 uppercase w-11/12">{e.number}</h3>
+                        {about.ourCommunityStats.map((e, i) => {
+                          return (
+                            <div
+                              className={`w-full lg:w-1/3 p-5 lg:p-6 xl:p-8 2xl:p-10 ${
+                                i + 1 !== about.ourCommunityStats.length
+                                  ? "border-b lg:border-b-0 border-black/50 lg:border-r"
+                                  : ""
+                              }`}
+                              key={i}
+                            >
+                              <h3 className="font-black text-[clamp(100px,_9vw,_200px)] leading-[0.95] mb-4 uppercase w-11/12">
+                                {e.number}
+                              </h3>
 
-                            <div className="content w-11/12 mb-16 lg:mb-48">
-                              <p className="uppercase font-bold">{e.thing}</p>
+                              <div className="content w-11/12 mb-16 lg:mb-48">
+                                <p className="uppercase font-bold">{e.thing}</p>
+                              </div>
                             </div>
-                          </div>
-                          )
+                          );
                         })}
                       </div>
                     </div>
@@ -223,8 +274,12 @@ export default function About(initialData) {
             </div>
 
             <div className="max-w-screen-xl mx-auto text-center relative z-10">
-              <span className="text-2xl uppercase font-bold mb-8 lg:mb-12 block">Our People</span>
-              <h2 className="font-black text-[clamp(50px,_5.5vw,120px)] leading-[0.95] uppercase text-center relative z-10 w-11/12 lg:w-full mb-8 lg:mb-12">{about.ourPeopleCtaHeading}</h2>
+              <span className="text-2xl uppercase font-bold mb-8 lg:mb-12 block">
+                Our People
+              </span>
+              <h2 className="font-black text-[clamp(50px,_5.5vw,120px)] leading-[0.95] uppercase text-center relative z-10 w-11/12 lg:w-full mb-8 lg:mb-12">
+                {about.ourPeopleCtaHeading}
+              </h2>
 
               <Link href="/careers">
                 <a class="roll-btn w-auto inline-block">
@@ -262,7 +317,9 @@ export default function About(initialData) {
                       </span>
                     </div>
                     <div className="w-3/4">
-                      <h3 className="font-black text-3xl lg:text-4xl xl:text-5xl leading-[0.95] mb-12 lg:mb-24 uppercase max-w-[500px] xl:max-w-none">{e.heading}</h3>
+                      <h3 className="font-black text-3xl lg:text-4xl xl:text-5xl leading-[0.95] mb-12 lg:mb-24 uppercase max-w-[500px] xl:max-w-none">
+                        {e.heading}
+                      </h3>
 
                       <div className="content w-11/12 lg:w-11/12 max-w-[650px]">
                         <p>{e.text}</p>
@@ -275,61 +332,96 @@ export default function About(initialData) {
           </m.div>
 
           <m.div variants={fade}>
-            <div className={`bg-lime text-black border-t border-black/50 z-0 sticky top-0`}>
+            <div className={`bg-lime text-black border-t border-black/50 z-0 `}>
               <div className="grid grid-cols-12 py-[15vw] h-screen px-6 xl:px-10 max-w-screen-3xl mx-auto items-center">
-                
                 <div className="col-span-12 lg:col-span-6 z-10">
-                  <span className="uppercase text-sm tracking-widest mb-5 lg:mb-8 block font-medium">We Value:</span>
-                  <h2 className="display-text mb-6 lg:mb-12 xl:mb-16">Ambition</h2>
-                  <span className="uppercase text-xl lg:text-2xl xl:text-3xl tracking-widest mb-3 lg:mb-5 block font-black leading-none lg:leading-none xl:leading-none">We put flags on summits</span>
+                  <span className="uppercase text-sm tracking-widest mb-5 lg:mb-8 block font-medium">
+                    We Value:
+                  </span>
+                  <h2 className="display-text mb-6 lg:mb-12 xl:mb-16">
+                    Ambition
+                  </h2>
+                  <span className="uppercase text-xl lg:text-2xl xl:text-3xl tracking-widest mb-3 lg:mb-5 block font-black leading-none lg:leading-none xl:leading-none">
+                    We put flags on summits
+                  </span>
                   <div className="content content--lg max-w-3xl mb-8 xl:mb-12 w-10/12">
-                    <p>We set our goals ambitiously high and don’t shy away from the climb.</p>
+                    <p>
+                      We set our goals ambitiously high and don’t shy away from
+                      the climb.
+                    </p>
                   </div>
                 </div>
 
                 <div className="col-span-12 lg:col-span-6 z-10 h-full">
                   <div className="h-full flex items-center justify-center">
-                    <div className="w-[300px] h-[300px] border-black border"></div>
+                    <div
+                      ref={target1}
+                      className="w-[300px] h-[300px] border-black border"
+                    ></div>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className={`bg-lime text-black border-t border-black/50 z-0 sticky top-0`}>
+            <div className={`bg-lime text-black border-t border-black/50 z-0 `}>
               <div className="grid grid-cols-12 py-[15vw] h-screen px-6 xl:px-10 max-w-screen-3xl mx-auto items-center">
-                
                 <div className="col-span-12 lg:col-span-6 z-10">
-                  <span className="uppercase text-sm tracking-widest mb-5 lg:mb-8 block font-medium">We Value:</span>
-                  <h2 className="display-text mb-6 lg:mb-12 xl:mb-16">Humility</h2>
-                  <span className="uppercase text-xl lg:text-2xl xl:text-3xl tracking-widest mb-3 lg:mb-5 block font-black leading-none lg:leading-none xl:leading-none">Points on scoreboards</span>
+                  <span className="uppercase text-sm tracking-widest mb-5 lg:mb-8 block font-medium">
+                    We Value:
+                  </span>
+                  <h2 className="display-text mb-6 lg:mb-12 xl:mb-16">
+                    Humility
+                  </h2>
+                  <span className="uppercase text-xl lg:text-2xl xl:text-3xl tracking-widest mb-3 lg:mb-5 block font-black leading-none lg:leading-none xl:leading-none">
+                    Points on scoreboards
+                  </span>
                   <div className="content content--lg max-w-3xl mb-8 xl:mb-12 w-10/12">
-                  <p>Homa is a team sport where no one plays like they’re alone on the field.</p>
+                    <p>
+                      Homa is a team sport where no one plays like they’re alone
+                      on the field.
+                    </p>
                   </div>
                 </div>
 
                 <div className="col-span-12 lg:col-span-6 z-10 h-full">
                   <div className="h-full flex items-center justify-center">
-                    <div className="w-[300px] h-[300px] border-black border"></div>
+                    <div
+                      ref={target2}
+                      className="w-[300px] h-[300px] border-black border"
+                    ></div>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className={`bg-lime text-black border-t border-black/50 relative z-10`}>
+            <div
+              className={`bg-lime text-black border-t border-black/50 relative z-10`}
+            >
               <div className="grid grid-cols-12 py-[15vw] h-screen px-6 xl:px-10 max-w-screen-3xl mx-auto items-center">
-                
                 <div className="col-span-12 lg:col-span-6 z-10">
-                  <span className="uppercase text-sm tracking-widest mb-5 lg:mb-8 block font-medium">We Value:</span>
-                  <h2 className="display-text mb-6 lg:mb-12 xl:mb-16">Curiosity</h2>
-                  <span className="uppercase text-xl lg:text-2xl xl:text-3xl tracking-widest mb-3 lg:mb-5 block font-black leading-none lg:leading-none xl:leading-none">Questions on lips</span>
+                  <span className="uppercase text-sm tracking-widest mb-5 lg:mb-8 block font-medium">
+                    We Value:
+                  </span>
+                  <h2 className="display-text mb-6 lg:mb-12 xl:mb-16">
+                    Curiosity
+                  </h2>
+                  <span className="uppercase text-xl lg:text-2xl xl:text-3xl tracking-widest mb-3 lg:mb-5 block font-black leading-none lg:leading-none xl:leading-none">
+                    Questions on lips
+                  </span>
                   <div className="content content--lg max-w-3xl mb-8 xl:mb-12 w-10/12">
-                    <p>We believe in staying curious to keep our minds and creativity sharp.</p>
+                    <p>
+                      We believe in staying curious to keep our minds and
+                      creativity sharp.
+                    </p>
                   </div>
                 </div>
 
                 <div className="col-span-12 lg:col-span-6 z-10 h-full">
                   <div className="h-full flex items-center justify-center">
-                    <div className="w-[300px] h-[300px] border-black border"></div>
+                    <div
+                      ref={target3}
+                      className="w-[300px] h-[300px] border-black border"
+                    ></div>
                   </div>
                 </div>
               </div>
@@ -340,7 +432,10 @@ export default function About(initialData) {
             <Marquee speed={130} gradient={false}>
               {about.scrollingImages.map((e, i) => {
                 return (
-                  <span className="inline-block w-[60%] md:w-[40%] xl:w-[30%] h-[60vw] md:h-[40vw] xl:h-[30vw] aspect-square relative overflow-hidden" key={i}>
+                  <span
+                    className="inline-block w-[60%] md:w-[40%] xl:w-[30%] h-[60vw] md:h-[40vw] xl:h-[30vw] aspect-square relative overflow-hidden"
+                    key={i}
+                  >
                     <SanityImage
                       key={i}
                       image={e}
@@ -348,7 +443,7 @@ export default function About(initialData) {
                       className="block w-full h-full inset-0 scale-[1.02]"
                     />
                   </span>
-                )
+                );
               })}
             </Marquee>
 
@@ -364,7 +459,7 @@ export default function About(initialData) {
 
 // Sanity CMS Props
 export async function getStaticProps(context) {
-  const cms = await pageService.fetchQuery(context)
+  const cms = await pageService.fetchQuery(context);
 
-  return cms
+  return cms;
 }

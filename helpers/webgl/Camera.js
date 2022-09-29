@@ -13,19 +13,19 @@ export default class Camera {
     this.setInstance();
   }
 
-  setInstance() {
+  setInstance = () => {
     this.instance = new THREE.PerspectiveCamera(50, this.aspectRatio, 1, 100);
     this.instance.position.set(0, 0, 5);
     this.scene.add(this.instance);
-  }
+  };
 
-  resize() {
+  resize = () => {
     this.aspectRatio = this.sizes.screen.width / this.sizes.screen.height;
     this.instance.aspect = this.aspectRatio;
     this.instance.updateProjectionMatrix();
-  }
+  };
 
-  update() {}
+  update = () => {};
 
-  destroy() {}
+  destroy = () => {};
 }

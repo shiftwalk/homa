@@ -2,6 +2,7 @@ import * as THREE from "three";
 
 import Sizes from "./utils/Sizes";
 import Time from "./utils/Time";
+import Scroll from "./utils/Scroll";
 
 import Camera from "./Camera";
 import Renderer from "./Renderer";
@@ -20,6 +21,7 @@ export default class Experience {
 
     this.sizes = new Sizes();
     this.time = new Time();
+    this.scroll = new Scroll();
 
     this.sizes.on("resize", () => {
       this.resize();

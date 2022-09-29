@@ -18,37 +18,45 @@ export default class World {
     this.currentScenes = [];
   }
 
-  addScene(modelUrl, container, scale, animationTimingModifier) {
+  addScene = (
+    modelUrl,
+    container,
+    scale,
+    animationTimingModifier,
+    customEmissive
+  ) => {
     const newModel = new Model(
       modelUrl,
       container,
       scale,
-      animationTimingModifier
+      animationTimingModifier,
+      customEmissive
     );
     this.currentScenes.push(newModel);
-  }
+  };
 
-  update() {
+  update = () => {
     if (this.currentScenes.length > 1) {
       this.currentScenes.forEach((scene) => {
         scene.update();
       });
     }
-  }
+  };
 
-  resize() {
+  resize = () => {
     if (this.currentScenes.length > 1) {
       this.currentScenes.forEach((scene) => {
         scene.resize();
       });
     }
-  }
+  };
 
-  destroy() {
+  destroy = () => {
     if (this.currentScenes.length > 1) {
       this.currentScenes.forEach((scene) => {
         scene.destroy();
       });
+      this.currentScenes = [];
     }
-  }
+  };
 }
