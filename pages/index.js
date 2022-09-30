@@ -106,7 +106,6 @@ export default function Home(initialData) {
   useEffect(() => {
     const experience = new Experience();
     experience.clearPage();
-
     experience.world.addScene(
       "/models/ship.glb",
       target1.current,
@@ -115,14 +114,6 @@ export default function Home(initialData) {
       "#c9e31f",
       0.2
     );
-
-    // window.experience.world.addScene(
-    //   "/models/ship.glb",
-    //   document.querySelector(".scene-container2"),
-    //   0.03,
-    //   0.001,
-    //   "#c9e31f"
-    // );
   });
 
   const {
