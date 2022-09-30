@@ -23,20 +23,22 @@ export default class World {
     container,
     scale,
     animationTimingModifier,
-    customEmissive
+    customEmissive,
+    mouseMultiplicator
   ) => {
     const newModel = new Model(
       modelUrl,
       container,
       scale,
       animationTimingModifier,
-      customEmissive
+      customEmissive,
+      mouseMultiplicator
     );
     this.currentScenes.push(newModel);
   };
 
   update = () => {
-    if (this.currentScenes.length > 1) {
+    if (this.currentScenes.length > 0) {
       this.currentScenes.forEach((scene) => {
         scene.update();
       });
@@ -44,7 +46,7 @@ export default class World {
   };
 
   resize = () => {
-    if (this.currentScenes.length > 1) {
+    if (this.currentScenes.length > 0) {
       this.currentScenes.forEach((scene) => {
         scene.resize();
       });
@@ -52,7 +54,7 @@ export default class World {
   };
 
   destroy = () => {
-    if (this.currentScenes.length > 1) {
+    if (this.currentScenes.length > 0) {
       this.currentScenes.forEach((scene) => {
         scene.destroy();
       });

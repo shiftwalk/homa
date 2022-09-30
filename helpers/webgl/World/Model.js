@@ -9,7 +9,8 @@ export default class Model {
     container,
     scale,
     animationTimingModifier,
-    customEmissive
+    customEmissive,
+    mouseMultiplicator
   ) {
     this.experience = new Experience();
     this.time = this.experience.time;
@@ -24,8 +25,10 @@ export default class Model {
     this.scale = scale;
     this.animationTimingModifier = animationTimingModifier;
     this.customEmissive = customEmissive;
+    this.mouseMultiplicator = mouseMultiplicator;
 
     this.createModel();
+    this.getBounds();
   }
 
   createModel = () => {
@@ -39,7 +42,6 @@ export default class Model {
     this.gltfLoader.load(this.modelUrl, (file) => {
       this.model = file;
       this.model.scene.scale.set(this.scale, this.scale, this.scale);
-      this.modelScene.add(this.model.scene);
 
       if (this.customEmissive !== null) {
         this.model.scene.traverse((scene) => {
@@ -50,6 +52,8 @@ export default class Model {
         });
       }
 
+      this.modelScene.add(this.model.scene);
+
       if (this.model.scene.animations) {
         this.mixer = new THREE.AnimationMixer(this.model.scene);
         const action = this.mixer.clipAction(this.model.animations[0]);
@@ -58,18 +62,35 @@ export default class Model {
     });
   };
 
+  getBounds = () => {
+    this.containerRect = this.container.getBoundingClientRect();
+
+    this.rectWidth = this.containerRect.right - this.containerRect.left;
+    this.rectHeight = this.containerRect.bottom - this.containerRect.top;
+    this.rectLeft = this.containerRect.left;
+    this.rectBottom =
+      this.renderer.domElement.clientHeight - this.containerRect.bottom;
+
+    this.renderer.setScissor(
+      this.rectLeft,
+      this.rectBottom,
+      this.rectWidth,
+      this.rectHeight
+    );
+  };
+
   update = () => {
     if (this.modelScene !== null) {
-      if (this.model) {
+      if (this.mouseMultiplicator !== 0 && this.model) {
         this.model.scene.position.x = lerp(
           this.model.scene.position.x,
-          this.scroll.mouse.x * 0.2,
-          0.075
+          this.scroll.mouse.x * this.mouseMultiplicator,
+          0.04
         );
         this.model.scene.position.y = lerp(
           this.model.scene.position.y,
-          -this.scroll.mouse.y * 0.2,
-          0.075
+          -this.scroll.mouse.y * this.mouseMultiplicator,
+          0.04
         );
       }
 
@@ -80,39 +101,40 @@ export default class Model {
         );
       }
 
-      const element = this.modelScene.userData.element;
-      const rect = element.getBoundingClientRect();
+      const bottom =
+        this.renderer.domElement.clientHeight -
+        this.container.getBoundingClientRect().bottom;
 
-      if (
-        rect.bottom < 0 ||
-        rect.top > this.renderer.domElement.clientHeight ||
-        rect.right < 0 ||
-        rect.left > this.renderer.domElement.clientWidth
-      ) {
-        return; // it's off screen
-      }
+      this.renderer.setViewport(
+        this.rectLeft,
+        bottom,
+        this.rectWidth,
+        this.rectHeight
+      );
 
-      const width = rect.right - rect.left;
-      const height = rect.bottom - rect.top;
-      const left = rect.left;
-      const bottom = this.renderer.domElement.clientHeight - rect.bottom;
-
-      this.renderer.setViewport(left, bottom, width, height);
-      this.renderer.setScissor(left, bottom, width, height);
-
-      const camera = this.modelScene.userData.camera;
-
-      this.renderer.render(this.modelScene, camera);
+      this.renderer.render(this.modelScene, this.modelScene.userData.camera);
     }
   };
 
-  resize = () => {};
+  resize = () => {
+    this.getBounds();
+  };
 
   destroy = () => {
-    this.modelScene.traverse((scene) => {
-      if (scene.isMesh) {
-        scene.geometry.dispose();
-        scene.material.dispose();
+    this.modelScene.traverse((child) => {
+      // Test if it's a mesh
+      if (child instanceof THREE.Mesh) {
+        child.geometry.dispose();
+
+        // Loop through the material properties
+        for (const key in child.material) {
+          const value = child.material[key];
+
+          // Test if there is a dispose function
+          if (value && typeof value.dispose === "function") {
+            value.dispose();
+          }
+        }
       }
     });
     if (this.mixer) {

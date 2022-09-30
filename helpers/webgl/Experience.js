@@ -41,24 +41,24 @@ export default class Experience {
   }
 
   resize = () => {
-    this.camera.resize();
-    this.renderer.resize();
     this.world.resize();
   };
 
   update = () => {
-    this.renderer.update();
     this.world.update();
   };
 
   destroy = () => {
     this.renderer.destroy();
     this.camera.destroy();
+    this.world.destroy();
+    this.sizes.off("resize");
+    this.time.off("tick");
+    window.experience = null;
+    instance = null;
   };
 
   clearPage = () => {
-    if (this.world) {
-      this.world.destroy();
-    }
+    this.world.destroy();
   };
 }

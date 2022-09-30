@@ -18,7 +18,7 @@ export default class Renderer {
       antialias: true,
       alpha: true,
     });
-
+    this.instance.domElement.classList.remove("--hidden");
     this.instance.setSize(this.sizes.screen.width, this.sizes.screen.height);
     this.instance.setPixelRatio(Math.min(this.sizes.pixelRatio, 2));
   };
@@ -28,9 +28,10 @@ export default class Renderer {
     this.instance.setPixelRatio(Math.min(this.sizes.pixelRatio, 2));
   };
 
-  update = () => {
-    this.instance.render(this.scene, this.camera.instance);
-  };
+  update = () => {};
 
-  destroy = () => {};
+  destroy = () => {
+    this.instance.dispose();
+    this.instance.domElement.classList.add("--hidden");
+  };
 }

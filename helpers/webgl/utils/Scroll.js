@@ -8,8 +8,6 @@ export default class Scroll {
     this.experience = new Experience();
     this.sizes = this.experience.sizes;
 
-    console.log(this.sizes);
-
     this.scrollForce = 1;
 
     this.mouse = {

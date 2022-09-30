@@ -84,33 +84,33 @@ export default function About(initialData) {
   const target2 = useRef(null);
   const target3 = useRef(null);
 
-  useEffect(() => {
-    window.experience.clearPage();
+  // useEffect(() => {
+  //   window.experience.clearPage();
 
-    window.experience.world.addScene(
-      "/models/test.glb",
-      target1.current,
-      0.03,
-      0.001,
-      null
-    );
+  //   window.experience.world.addScene(
+  //     "/models/test.glb",
+  //     target1.current,
+  //     0.03,
+  //     0.001,
+  //     null
+  //   );
 
-    window.experience.world.addScene(
-      "/models/ship.glb",
-      target2.current,
-      0.03,
-      0.001,
-      null
-    );
+  //   window.experience.world.addScene(
+  //     "/models/ship.glb",
+  //     target2.current,
+  //     0.03,
+  //     0.001,
+  //     null
+  //   );
 
-    window.experience.world.addScene(
-      "/models/test.glb",
-      target3.current,
-      0.03,
-      0.001,
-      null
-    );
-  });
+  //   window.experience.world.addScene(
+  //     "/models/test.glb",
+  //     target3.current,
+  //     0.03,
+  //     0.001,
+  //     null
+  //   );
+  // });
 
   return (
     <Layout>
