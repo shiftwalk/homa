@@ -21,13 +21,13 @@ export default function Footer() {
           <div className="w-full mt-auto">
             <div className="flex space-x-6 md:space-x-0 md:block">
               <div className="w-[47.5%] md:w-[165px] mb-6">
-                <a href="https://example.com" target="_blank" rel="noopener noreferrer" className="block w-full hover:opacity-75 focus:opacity-75">
+                <a href="https://apps.apple.com/us/developer/homa-games/id1508492426" target="_blank" rel="noopener noreferrer" className="block w-full hover:opacity-75 focus:opacity-75">
                   <AppleAppStoreIcon className="w-full" />
                 </a>
               </div>
 
               <div className="w-[52.5%] md:w-[165px] mb-6">
-                <a href="https://example.com" target="_blank" rel="noopener noreferrer" className="block w-full hover:opacity-75 focus:opacity-75">
+                <a href="https://play.google.com/store/apps/dev?id=4656343638685426415&hl=en&gl=US" target="_blank" rel="noopener noreferrer" className="block w-full hover:opacity-75 focus:opacity-75">
                   <GoogleAppStoreIcon className="w-full" />
                 </a>
               </div>
@@ -42,11 +42,11 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="col-span-5 md:col-span-6 xl:col-span-5 2xl:col-span-4 md:col-start-7 xl:col-start-8 2xl:col-start-9">
+        <div className="col-span-5 md:col-span-7 lg:col-span-6 xl:col-span-6 2xl:col-span-5 3xl:col-span-4 md:col-start-6 lg:col-start-7 xl:col-start-7 2xl:col-start-8 3xl:col-start-9">
           <div className="flex flex-wrap">
             <nav className="w-full md:w-1/2 text-sm md:text-base mb-16 md:mb-0">
               <ul className="w-full flex flex-wrap md:block md:flex-none">
-                <li className="w-1/2 md:w-full block mb-4 md:mb-6 xl:mb-10">
+                <li className="w-1/2 md:w-full block mb-4 md:mb-6 xl:mb-8">
                   <FancyLink
                     destination="/homa-lab"
                     a11yText="Navigate to the homa lab page"
@@ -55,7 +55,7 @@ export default function Footer() {
                   />
                 </li>
 
-                <li className="w-1/2 md:w-full block mb-4 md:mb-6 xl:mb-10">
+                <li className="w-1/2 md:w-full block mb-4 md:mb-6 xl:mb-8">
                   <FancyLink
                     destination="/homa-lab/ideas"
                     a11yText="Navigate to the homa lab page"
@@ -64,7 +64,7 @@ export default function Footer() {
                   />
                 </li>
 
-                <li className="w-1/2 md:w-full block mb-4 md:mb-6 xl:mb-10">
+                <li className="w-1/2 md:w-full block mb-4 md:mb-6 xl:mb-8">
                   <FancyLink
                     destination="/homa-lab/market-watchers"
                     a11yText="Navigate to the homa lab page"
@@ -73,7 +73,7 @@ export default function Footer() {
                   />
                 </li>
 
-                <li className="w-1/2 md:w-full block mb-4 md:mb-6 xl:mb-10">
+                <li className="w-1/2 md:w-full block mb-4 md:mb-6 xl:mb-8">
                   <FancyLink
                     destination="/homa-lab/homa-sdk"
                     a11yText="Navigate to the homa lab page"
@@ -82,7 +82,7 @@ export default function Footer() {
                   />
                 </li>
 
-                <li className="w-1/2 md:w-full block mb-4 md:mb-6 xl:mb-10">
+                <li className="w-1/2 md:w-full block mb-4 md:mb-6 xl:mb-8">
                   <FancyLink
                     destination="/homa-lab/dev-tools"
                     a11yText="Navigate to the homa lab page"
@@ -91,7 +91,7 @@ export default function Footer() {
                   />
                 </li>
 
-                <li className="w-1/2 md:w-full block mb-4 md:mb-6 xl:mb-10">
+                <li className="w-1/2 md:w-full block mb-4 md:mb-6 xl:mb-8">
                   <FancyLink
                     destination="/homa-lab/data-analytics"
                     a11yText="Navigate to the homa lab page"
@@ -100,7 +100,7 @@ export default function Footer() {
                   />
                 </li>
 
-                <li className="w-1/2 md:w-full block mb-4 md:mb-6 xl:mb-10">
+                <li className="w-1/2 md:w-full block mb-4 md:mb-6 xl:mb-8">
                   <FancyLink
                     destination="/homa-lab/submissions-and-creatives"
                     a11yText="Navigate to the homa lab page"
@@ -120,7 +120,7 @@ export default function Footer() {
                   </a>
                 </li>
 
-                <li className="w-1/2 md:w-full block mb-4 md:mb-6 xl:mb-10">
+                <li className="w-1/2 md:w-full block mb-4 md:mb-6 xl:mb-8">
                   <FancyLink
                     destination="/games"
                     a11yText="Navigate to the games page"
@@ -128,7 +128,7 @@ export default function Footer() {
                     className="uppercase text-sm xl:text-base font-medium tracking-widest leading-none xl:leading-none hover:opacity-75 focus:opacity-75"
                   />
                 </li>
-                <li className="w-1/2 md:w-full block mb-4 md:mb-6 xl:mb-10">
+                <li className="w-1/2 md:w-full block mb-4 md:mb-6 xl:mb-8">
                   <FancyLink
                     destination="/homa-lab"
                     a11yText="Navigate to the homa lab page"
@@ -136,7 +136,7 @@ export default function Footer() {
                     className="uppercase text-sm xl:text-base font-medium tracking-widest leading-none xl:leading-none hover:opacity-75 focus:opacity-75"
                   />
                 </li>
-                <li className="w-1/2 md:w-full block mb-4 md:mb-6 xl:mb-10">
+                <li className="w-1/2 md:w-full block mb-4 md:mb-6 xl:mb-8">
                   <FancyLink
                     destination="/community"
                     a11yText="Navigate to the community page"
@@ -144,7 +144,7 @@ export default function Footer() {
                     className="uppercase text-sm xl:text-base font-medium tracking-widest leading-none xl:leading-none hover:opacity-75 focus:opacity-75"
                   />
                 </li>
-                <li className="w-1/2 md:w-full block mb-4 md:mb-6 xl:mb-10">
+                <li className="w-1/2 md:w-full block mb-4 md:mb-6 xl:mb-8">
                   <FancyLink
                     destination="/about"
                     a11yText="Navigate to the about page"
@@ -152,7 +152,7 @@ export default function Footer() {
                     className="uppercase text-sm xl:text-base font-medium tracking-widest leading-none xl:leading-none hover:opacity-75 focus:opacity-75"
                   />
                 </li>
-                <li className="w-1/2 md:w-full block mb-4 md:mb-6 xl:mb-10">
+                <li className="w-1/2 md:w-full block mb-4 md:mb-6 xl:mb-8">
                   <FancyLink
                     destination="/careers"
                     a11yText="Navigate to the careers page"
@@ -171,11 +171,11 @@ export default function Footer() {
               </ul>
             </nav>
 
-            <div className="w-full md:w-1/2 text-sm md:text-base mb-16 md:mb-0">
-              <span className="block uppercase text-sm xl:text-base font-medium tracking-widest leading-none xl:leading-none mb-4 md:mb-6 xl:mb-10">For Developers &amp; Studios</span>
+            <div className="w-full md:w-1/2 lg:w-auto text-sm md:text-base mb-16 md:mb-0 ml-auto">
+              <span className="block uppercase text-sm xl:text-base font-medium tracking-widest leading-none xl:leading-none mb-4 md:mb-6 xl:mb-8">For Developers &amp; Studios</span>
               
               <ul className="w-full mb-10 md:mb-16 xl:mb-24 flex flex-wrap md:block md:flex-none">
-                <li className="block mb-4 md:mb-6 xl:mb-10">
+                <li className="block mb-4 md:mb-6 xl:mb-8">
                   <a
                     href="https://discord.gg/homagames"
                     target="_blank"
@@ -189,7 +189,7 @@ export default function Footer() {
                   </a>
                 </li>
 
-                <li className="block mb-4 md:mb-6 xl:mb-10">
+                <li className="block mb-4 md:mb-6 xl:mb-8">
                   <a
                     href="https://discord.gg/homagames"
                     target="_blank"
@@ -203,7 +203,7 @@ export default function Footer() {
                   </a>
                 </li>
 
-                <li className="block mb-4 md:mb-6 xl:mb-10">
+                <li className="block mb-4 md:mb-6 xl:mb-8">
                   <a
                     href="https://discord.gg/homagames"
                     target="_blank"
@@ -217,7 +217,7 @@ export default function Footer() {
                   </a>
                 </li>
 
-                <li className="block mb-4 md:mb-6 xl:mb-10">
+                <li className="block mb-4 md:mb-6 xl:mb-8">
                   <a
                     href="https://discord.gg/homagames"
                     target="_blank"
@@ -233,10 +233,10 @@ export default function Footer() {
               </ul>
 
 
-              <span className="block uppercase text-sm xl:text-base font-medium tracking-widest leading-none xl:leading-none mb-4 md:mb-6 xl:mb-10">For Our Web3 Community</span>
+              <span className="block uppercase text-sm xl:text-base font-medium tracking-widest leading-none xl:leading-none mb-4 md:mb-6 xl:mb-8">For Our Web3 Community</span>
               
               <ul className="w-full mb-10 md:mb-16 xl:mb-24 flex flex-wrap md:block md:flex-none">
-                <li className="block mb-4 md:mb-6 xl:mb-10">
+                <li className="block mb-4 md:mb-6 xl:mb-8">
                   <a
                     href="https://discord.gg/homagang"
                     target="_blank"
@@ -250,7 +250,7 @@ export default function Footer() {
                   </a>
                 </li>
 
-                <li className="block mb-4 md:mb-6 xl:mb-10">
+                <li className="block mb-4 md:mb-6 xl:mb-8">
                   <a
                     href="https://discord.gg/homagames"
                     target="_blank"
@@ -265,10 +265,10 @@ export default function Footer() {
                 </li>
               </ul>
 
-              <span className="block uppercase text-sm xl:text-base font-medium tracking-widest leading-none xl:leading-none mb-4 md:mb-6 xl:mb-10">For The Fans</span>
+              <span className="block uppercase text-sm xl:text-base font-medium tracking-widest leading-none xl:leading-none mb-4 md:mb-6 xl:mb-8">For The Fans</span>
               
               <ul className="w-full flex flex-wrap md:block md:flex-none">
-                <li className="block mb-4 md:mb-6 xl:mb-10">
+                <li className="block mb-4 md:mb-6 xl:mb-8">
                   <a
                     href="https://discord.gg/homagames"
                     target="_blank"

@@ -18,12 +18,12 @@ export const CarouselBlog = ({items}) => {
 
   return (
     <div className="embla embla--team embla--blog border-t border-black/50 pt-[8vw] mb-[8vw]">
-      <div className="w-[91.05vw] ml-auto flex flex-wrap mb-6">
+      <div className="ml-auto flex flex-wrap mb-6 pl-6 lg:pl-20 lg:pr-[1.7vw] xl:pr-[4vw] 2xl:pr-[3.6vw]">
         <div className="flex-1">
           <h2 className="font-bold text-xl lg:text-2xl xl:text-3xl leading-[0.9] lg:leading-[0.9] xl:leading-[0.9] uppercase">News Feed</h2>
         </div>
 
-        <div className="flex lg:justify-end w-full lg:w-auto lg:ml-auto pr-6 lg:pr-10 mb-5 lg:mb-0">
+        <div className="hidden lg:flex lg:justify-end w-full lg:w-auto lg:ml-auto pr-6 lg:pr-10 mb-5 lg:mb-0">
           <button class="embla__prev w-12 lg:w-16 h-12 lg:h-16 flex items-center p-3 lg:p-4 justify-center border border-black/50 border-r-0 transition-colors ease-in-out duration-300 hover:border-black/100 focus:border-black/100" onClick={scrollPrev}>
             <ArrowRightIcon className="w-full rotate-180" />
           </button>
@@ -33,7 +33,7 @@ export const CarouselBlog = ({items}) => {
         </div>
       </div>
 
-      <div class="embla__viewport w-[91.05vw] ml-auto bg-opacity-70 overflow-hidden" ref={emblaNewsRef}>
+      <div class="embla__viewport ml-auto bg-opacity-70 overflow-hidden pl-6 lg:pl-20 mb-6 lg:mb-0" ref={emblaNewsRef}>
         <div className="embla__container">
           {items.map((e, i) => {
             let d = new Date(e.publishDate);
@@ -60,7 +60,7 @@ export const CarouselBlog = ({items}) => {
                           <span className="inline-block border border-black/50 font-medium uppercase leading-none p-3 rounded-sm hover:bg-black hover:text-white focus:bg-black focus:text-white">{e.category.title}</span>
                         )}
 
-                        <span className="block text-sm lg:text-base text-black/50 leading-none ml-auto">{da} {mo} {ye}</span>
+                        <span className="block uppercase text-sm tracking-widest font-medium ml-auto">{da} {mo} {ye}</span>
                       </div>
                     </div>
                   </div>
@@ -69,6 +69,15 @@ export const CarouselBlog = ({items}) => {
             )
           })}
         </div>
+      </div>
+
+      <div className="flex lg:hidden lg:justify-end w-full lg:w-auto lg:ml-auto px-6 lg:pr-10 mb-5 lg:mb-0">
+        <button class="embla__prev w-12 lg:w-16 h-12 lg:h-16 flex items-center p-3 lg:p-4 justify-center border border-black/50 border-r-0 transition-colors ease-in-out duration-300 hover:border-black/100 focus:border-black/100" onClick={scrollPrev}>
+          <ArrowRightIcon className="w-full rotate-180" />
+        </button>
+        <button class="embla__next w-12 lg:w-16 h-12 lg:h-16 flex items-center p-3 lg:p-4 justify-center border border-black/50 transition-colors ease-in-out duration-300 hover:border-black focus:border-black" onClick={scrollNext}>
+          <ArrowRightIcon className="w-full" />
+        </button>
       </div>
     </div>
   )

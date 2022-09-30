@@ -5,6 +5,7 @@ import LinkedInIcon from "@/icons/linkedin.svg"
 import FacebookIcon from "@/icons/facebook.svg"
 import InstagramIcon from "@/icons/instagram.svg"
 import TextScrambler from "./text-scrambler"
+import Link from "next/link"
 
 export default function SocialScroller() {
   return (
@@ -13,11 +14,22 @@ export default function SocialScroller() {
         <div className="lg:sticky lg:top-28 xl:top-32 lg:pb-32 xl:pb-48 max-w-screen-md ml-auto">
           <span className="uppercase text-sm tracking-widest mb-5 lg:mb-8 block font-medium"><TextScrambler text="The Community" seed={5} step={1} singleLine /></span>
 
-          <h3 className="font-black text-[clamp(50px,_5vw,_86px)] leading-[0.95] mb-8 lg:mb-16 uppercase max-w-[500px] xl:max-w-none">Social Media Multiplayer Code</h3>
+          <h3 className="font-black text-[clamp(50px,_5vw,_86px)] leading-[0.95] mb-8 lg:mb-16 uppercase max-w-[500px] xl:max-w-none">Making Games to build a universe</h3>
 
-          <div className="content w-11/12 lg:w-10/12">
-            <p>Whether through Tiktok, Discord or in-person events like Homa Jams, we believe in creating a community that unities game makers and game players (if there's a distinction) with all sorts of creative people around the world.</p>
+          <div className="content w-11/12 lg:w-10/12 mb-5 lg:mb-8">
+            <p>We’re not just building tools to help developers build better games. We're creating a universe where players can take ownership of their favorite character and step into a web of games, adventure and prizes.</p>
           </div>
+
+          <Link href="/community">
+            <a
+              className="pill-btn group"
+            >
+              <div className="relative">
+                <span className="block group-hover:opacity-0">Learn More</span>
+                <span className="absolute top-0 left-0 right-0 hidden  group-hover:block"><TextScrambler text="Learn More" seed={5} step={1} singleLine /></span>
+              </div>
+            </a>
+          </Link>
         </div>
       </div>
 
@@ -128,10 +140,15 @@ export default function SocialScroller() {
                 href="https://discord.gg/homagames"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block group w-full"
+                className="block group w-full group"
               >
-                <span className="w-full aspect-square rounded-[15%] bg-[#E6C3E6]/10 group-hover:bg-[#fb3958] group-focus:bg-[#fb3958] mr-4 flex items-center justify-center">
-                  <InstagramIcon className="w-[50%] text-[#E6C3E6] group-hover:text-white group-focus:text-white" />
+                <span className="w-full aspect-square rounded-[15%] bg-[#E6C3E6]/10 mr-4 flex items-center justify-center relative overflow-hidden bg-opacity-50">
+                  <div className="absolute inset-0 w-full h-full group-hover:bg-gradient-to-tr from-[#FCAF45] via-[#FD1D1D] to-[#405DE6] opacity-100"></div>
+                  <div className="absolute inset-0 w-full h-full group-hover:bg-gradient-to-tl from-[#C13584] via-[#FD1D1D] to-[#405DE6] opacity-50"></div>
+
+                  <div className="relative z-10 w-[50%]">
+                    <InstagramIcon className="w-full text-[#E6C3E6] group-hover:text-white group-focus:text-white" />
+                  </div>
                 </span>
 
                 <span className="w-full hidden lg:flex items-center pt-3 opacity-0 group-hover:opacity-100 group-focus:opacity-100">

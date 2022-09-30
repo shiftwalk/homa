@@ -57,8 +57,8 @@ export default function Header() {
                   destination="/games"
                   a11yText="Navigate to the games page"
                   label="Games"
-                  className="uppercase font-medium tracking-widest lg:h-[70px] xl:h-[80px] flex items-center justify-center lg:text-sm lg:leading-none xl:text-base xl:leading-none md:px-5 lg:px-7 xl:px-8 2xl:px-10"
-                  active={router.asPath == '/games'}
+                  className="uppercase font-medium tracking-widest lg:h-[70px] xl:h-[80px] flex items-center justify-center lg:text-sm lg:leading-none xl:text-base xl:leading-none md:px-5 lg:px-7 xl:px-8 2xl:px-[50px] 3xl:px-16"
+                  active={router.asPath.includes('/games')}
                 />
               </li>
               
@@ -68,12 +68,12 @@ export default function Header() {
                   destination="/homa-lab"
                   a11yText="Navigate to the homa lab page"
                   label="Homa Lab"
-                  className="uppercase font-medium tracking-widest lg:h-[70px] xl:h-[80px] flex items-center justify-center lg:text-sm lg:leading-none xl:text-base xl:leading-none md:px-5 lg:px-7 xl:px-8 2xl:px-10"
+                  className="uppercase font-medium tracking-widest lg:h-[70px] xl:h-[80px] flex items-center justify-center lg:text-sm lg:leading-none xl:text-base xl:leading-none md:px-5 lg:px-7 xl:px-8 2xl:px-[50px] 3xl:px-16"
                   active={router.asPath.includes('/homa-lab')}
                 />
 
                 {/* Homa Lab Subnav */}
-                <ul className="nav-child mt-[71px] xl:mt-[81px] lg:w-[730px] xl:w-[930px] 2xl:w-[1010px] ml-auto">
+                <ul className="nav-child mt-[71px] xl:mt-[81px] lg:w-[750px] xl:w-[958px] 2xl:w-[1155px] 3xl:w-[1310px] ml-auto">
                   <li className="block">
                     <FancyLink
                       destination="/homa-lab"
@@ -133,12 +133,15 @@ export default function Header() {
                   </li>
                   <li className="block">
                     <a
-                      className="uppercase font-medium tracking-widest lg:text-sm lg:leading-none xl:text-base xl:leading-none inline-block py-4"
+                      className="uppercase font-medium tracking-widest lg:text-sm lg:leading-none xl:text-base xl:leading-none inline-block py-4 group"
                       href="https://academy.homagames.com/"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      <span className="relative">Homa Academy</span>
+                      <div className="relative">
+                        <span className="relative">Homa Academy</span>
+                        <span className={`absolute top-0 left-0 mt-[0px] lg:mt-[3px] xl:mt-[3px] 2xl:mt-[3px] md:translate-x-[-20px] lg:translate-x-[-16px] xl:translate-x-[-19px] 2xl:translate-x-[-22px] w-[8px] h-[8px] xl:w-[9px] xl:h-[9px] 2xl:w-[10px] 2xl:h-[10px] rounded-full bg-black group-hover:opacity-100 group-focus:opacity-100 opacity-0`}></span>
+                      </div>
                     </a>
                   </li>
                 </ul>
@@ -149,7 +152,7 @@ export default function Header() {
                   destination="/community"
                   a11yText="Navigate to the community page"
                   label="Community"
-                  className="uppercase font-medium tracking-widest lg:h-[70px] xl:h-[80px] flex items-center justify-center lg:text-sm lg:leading-none xl:text-base xl:leading-none md:px-5 lg:px-7 xl:px-8 2xl:px-10"
+                  className="uppercase font-medium tracking-widest lg:h-[70px] xl:h-[80px] flex items-center justify-center lg:text-sm lg:leading-none xl:text-base xl:leading-none md:px-5 lg:px-7 xl:px-8 2xl:px-[50px] 3xl:px-16"
                   active={router.asPath == '/community'}
                 />
               </li>
@@ -159,7 +162,7 @@ export default function Header() {
                   destination="/about"
                   a11yText="Navigate to the about page"
                   label="About"
-                  className="uppercase font-medium tracking-widest lg:h-[70px] xl:h-[80px] flex items-center justify-center lg:text-sm lg:leading-none xl:text-base xl:leading-none md:px-5 lg:px-7 xl:px-8 2xl:px-10"
+                  className="uppercase font-medium tracking-widest lg:h-[70px] xl:h-[80px] flex items-center justify-center lg:text-sm lg:leading-none xl:text-base xl:leading-none md:px-5 lg:px-7 xl:px-8 2xl:px-[50px] 3xl:px-16"
                   active={router.asPath == '/about'}
                 />
               </li>
@@ -169,7 +172,7 @@ export default function Header() {
                   destination="/careers"
                   a11yText="Navigate to the careers page"
                   label="Careers"
-                  className="uppercase font-medium tracking-widest lg:h-[70px] xl:h-[80px] flex items-center justify-center lg:text-sm lg:leading-none xl:text-base xl:leading-none md:px-5 lg:px-7 xl:px-8 2xl:px-10"
+                  className="uppercase font-medium tracking-widest lg:h-[70px] xl:h-[80px] flex items-center justify-center lg:text-sm lg:leading-none xl:text-base xl:leading-none md:px-5 lg:px-7 xl:px-8 2xl:px-[50px] 3xl:px-16"
                   active={router.asPath == '/careers'}
                 />
               </li>
@@ -179,7 +182,7 @@ export default function Header() {
                   destination="/blog"
                   a11yText="Navigate to the blog page"
                   label="Blog"
-                  className="uppercase font-medium tracking-widest lg:h-[70px] xl:h-[80px] flex items-center justify-center lg:text-sm lg:leading-none xl:text-base xl:leading-none md:px-5 lg:px-7 xl:px-8 2xl:px-10"
+                  className="uppercase font-medium tracking-widest lg:h-[70px] xl:h-[80px] flex items-center justify-center lg:text-sm lg:leading-none xl:text-base xl:leading-none md:px-5 lg:px-7 xl:px-8 2xl:px-[50px] 3xl:px-16"
                   active={router.asPath.includes('/blog')}
                 />
               </li>
@@ -187,7 +190,7 @@ export default function Header() {
               <li>
                 <a
                   href="https://lab-v2.homagames.com/login" target="_blank" rel="noopener noreferrer"
-                  className="uppercase font-medium tracking-widest lg:h-[70px] xl:h-[80px] items-center justify-center lg:text-sm lg:leading-none xl:text-base xl:leading-none md:px-5 lg:px-7 xl:px-8 2xl:px-10 bg-black text-white flex group"
+                  className="uppercase font-medium tracking-widest lg:h-[70px] xl:h-[80px] items-center justify-center lg:text-sm lg:leading-none xl:text-base xl:leading-none md:px-5 lg:px-7 xl:px-8 2xl:px-[50px] 3xl:px-16 bg-black text-white flex group"
                 >
                   <div className="relative">
                     <span className="block group-hover:opacity-0"><span className="hidden xl:inline">Enter The&nbsp;</span>Homa Lab</span>

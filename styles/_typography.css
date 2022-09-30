@@ -64,3 +64,27 @@ h1, .h1, h2, .h2, h3, .h3 {
   @apply font-black leading-none uppercase;
   font-size: clamp(50px, 7.5vw, 150px);
 }
+
+.index-heading {
+  @apply text-[68px];
+  
+  @screen md {
+    @apply text-[120px]
+  }
+
+  @screen lg {
+    @apply text-[11vw];
+  }
+  
+  @screen xl {
+    @apply text-[10.85vw];
+  }
+
+  @screen 2xl {
+    @apply text-[10.97vw];
+  }
+
+  @media screen and (min-width: 1900px) {
+    @apply text-[208px];
+  }
+}

@@ -56,9 +56,12 @@ const query = `{
     },
     publishDate
   },
-  "products": *[_type == "products"]{
+  "products": *[_type == "products"] | order(orderRank asc){
     title,
-    introText
+    introText,
+    slug {
+      current
+    }
   },
   "home": *[_type == "home"][0]{
     title,
@@ -67,6 +70,12 @@ const query = `{
     makeAGameCtaText,
     homaAcademyCtaHeading,
     homaAcademyCtaText,
+    featuredGames[]->{
+      title,
+      partnerName,
+      gameplayVideo,
+      installs
+    },
     scrollingImages[] {
       asset-> {
         ...
@@ -154,44 +163,32 @@ export default function Home(initialData) {
             </div>
 
             <div className="max-w-screen-3xl mx-auto" ref={characterBinder}>
-              <h1 className="font-black text-[clamp(60px,_10.2vw,_210px)] leading-[0.95] mb-4 uppercase relative z-10 w-full md:w-11/12 lg:w-full">
-                <TextScrambler
-                  text="Game The System"
-                  seed={12}
-                  step={1}
-                  singleLine
-                />
+
+              <h1 className="font-black index-heading tracking-tight leading-[0.95] mb-4 uppercase relative z-10 w-full md:w-11/12 lg:w-full">
+                <TextScrambler text="Game The System" seed={12} step={1} singleLine />
               </h1>
 
               <div className="w-full lg:w-[50%] xl:w-[45%] 2xl:w-[35%] max-w-[720px] pt-[75%] lg:pt-[10%] relative pb-8 lg:pb-0">
                 <div className="relative z-10">
-                  <p className="text-lg md:text-xl xl:text-2xl mb-6 lg:mb-10">
-                    We're believers in data and builders of tools that help game
-                    creators{" "}
-                    <span className="inline border border-black rounded-sm p-1 px-2 uppercase tracking-wider text-sm md:text-base xl:text-lg font-medium">
-                      make
-                    </span>{" "}
-                    and{" "}
-                    <span className="inline border border-black rounded-sm p-1 px-2 uppercase tracking-wider text-sm md:text-base xl:text-lg font-medium">
-                      publish
-                    </span>{" "}
-                    hit games with franchise potential built right in.
-                  </p>
+                  <p className="text-lg md:text-xl xl:text-2xl mb-6 lg:mb-10">We're believers in data and builders of tools that help game creators <Link href="/homa-lab"><a className="inline border border-black rounded-sm p-1 px-2 uppercase tracking-wider text-sm md:text-base xl:text-lg font-medium hover:bg-black hover:text-white focus:bg-black focus:text-white">make</a></Link> and <Link href="/games"><a className="inline border border-black rounded-sm p-1 px-2 uppercase tracking-wider text-sm md:text-base xl:text-lg font-medium hover:bg-black hover:text-white focus:bg-black focus:text-white">publish</a></Link> hit games with franchise potential built right in.</p>
 
-                  <div className="flex flex-wrap md:-mx-2">
-                    <Link href="/homa-lab">
-                      <a class="roll-btn w-full md:w-1/2 mb-6 md:mb-0 md:px-2">
-                        <span class="roll-btn__front">Make A Game</span>
-                        <span class="roll-btn__back">Make A Game</span>
-                      </a>
-                    </Link>
-
-                    <Link href="/careers">
-                      <a class="roll-btn w-full md:w-1/2 md:px-2">
-                        <span class="roll-btn__front">Build A Career</span>
-                        <span class="roll-btn__back">Build A Career</span>
-                      </a>
-                    </Link>
+                  <div className="flex flex-wrap md:mx-[-2px]">
+                    <div className="md:px-[2px] w-full md:w-1/2 mb-6 md:mb-0">
+                      <Link href="/homa-lab">
+                        <a class="roll-btn w-full" >
+                          <span class="roll-btn__front">Make A Game</span>
+                          <span class="roll-btn__back">Make A Game</span>
+                        </a>
+                      </Link>
+                    </div>
+                    <div className="md:px-[2px] w-full md:w-1/2">
+                      <Link href="/careers">
+                        <a class="roll-btn w-full md:w-1/2">
+                          <span class="roll-btn__front">Build A Career</span>
+                          <span class="roll-btn__back">Build A Career</span>
+                        </a>
+                      </Link>
+                    </div>
                   </div>
                 </div>
                 <MouseParallax
@@ -200,7 +197,7 @@ export default function Home(initialData) {
                   strength={0.025}
                 >
                   <ScrollParallax isAbsolutelyPositioned lerpEase={0.15}>
-                    <div className="absolute top-[-15vw] lg:top-auto lg:bottom-[-80%] right-[-5vw] lg:right-[-55%] xl:right-[-70%] w-[55vw] lg:w-[28vw] 2xl:w-[30vw] max-w-[500px] z-0">
+                    <div className="absolute top-[-15vw] lg:top-auto lg:bottom-[-80%] right-[-5vw] lg:right-[-70%] xl:right-[-90%] w-[55vw] lg:w-[28vw] 2xl:w-[30vw] max-w-[460px] z-0">
                       {/* <Image
                         src="/images/character-test.webp"
                         alt="Character Test"
@@ -250,46 +247,47 @@ export default function Home(initialData) {
                 <div className="grid grid-cols-12 max-w-screen-3xl mx-auto">
                   <div className="col-span-10 col-start-2 md:col-span-10 md:col-start-2 md:border-l md:border-r border-black/50 py-[10vw] md:px-10">
                     <div className="grid grid-cols-10 items-center">
-                      <div className="col-span-9 md:col-span-5 mb-12 md:mb-0">
-                        <p className="text-2xl uppercase font-bold">
-                          {home.introText}
-                        </p>
+
+                      <div className="col-span-9 md:col-span-6 md:px-6 lg:px-10 xl:px-24 mb-12 md:mb-0">
+                        <p className="text-2xl xl:text-3xl uppercase font-bold">{home.introText}</p>
                       </div>
 
                       {/* Abstract */}
                       <div className="col-span-6 col-start-3 md:col-span-4 md:col-start-7">
-                        <div className="w-[100%] lg:w-[75%] relative mx-auto">
+                        <div className="w-[100%] md:w-[85%] lg:w-[65%] relative mx-auto">
                           <PhoneIcon className="w-full relative z-0" />
 
                           <div className="absolute top-0 right-0 mr-[-35%] lg:mr-[-45%] mt-[15%] z-10 w-full lg:w-[70%]">
                             <div className="w-full">
-                              <span className="block uppercase font-medium tracking-wider text-base leading-none lg:leading-none xl:leading-none 2xl:leading-non w-11/12 bg-white border border-b-0 border-black/50 px-3 py-5">
-                                Game Name
-                              </span>
+
+                              <span className="block uppercase font-medium tracking-wider text-base leading-none lg:leading-none xl:leading-none 2xl:leading-non w-11/12 bg-white border border-b-0 border-black/50 px-3 py-5">{home.featuredGames[0].title}</span>
                             </div>
                             <div className="w-full">
-                              <span className="block uppercase font-medium tracking-wider text-base leading-none lg:leading-none xl:leading-none 2xl:leading-non w-11/12 bg-white border border-black/50 px-3 py-5">
-                                Game Partner
-                              </span>
+                              <span className="block uppercase font-medium tracking-wider text-base leading-none lg:leading-none xl:leading-none 2xl:leading-non w-11/12 bg-white border border-black/50 px-3 py-5">{home.featuredGames[0].partnerName}</span>
                             </div>
                           </div>
 
-                          <div className="absolute inset-0 z-1 scale-[0.922] mt-[-4%]">
-                            <Image
+                          <div className="absolute inset-0 z-1 scale-y-[0.96] overflow-hidden rounded-[9%] mt-[-1px] scale-x-[0.94]">
+                            <video loop={true} autoPlay="autoplay" playsInline={true} muted className={`object-cover object-center w-full h-full absolute inset-0 scale-[1.03]`}>
+                              <source src={home.featuredGames[0].gameplayVideo} type="video/mp4" />
+
+                              Sorry. Your browser does not support the video tag.
+                            </video>
+
+                            {/* <Image
                               src="/images/game-example.webp"
                               layout="responsive"
                               width={496}
                               height={882}
                               quality={75}
                               className="w-full"
-                            />
+                            /> */}
                           </div>
 
                           <div className="absolute bottom-0 left-0 ml-[-40%] md:ml-[-20%] mb-[15%] z-10 w-[130%] md:w-[70%] min-w-[120px] md:min-w-[290px]">
                             <div className="w-full">
-                              <span className="block uppercase font-medium tracking-wider text-base leading-none lg:leading-none xl:leading-none 2xl:leading-non w-11/12 bg-white border border-black/50 px-3 py-5 text-center">
-                                10,000,000 installs
-                              </span>
+
+                              <span className="block uppercase font-medium tracking-wider text-base leading-none lg:leading-none xl:leading-none 2xl:leading-non w-11/12 bg-white border border-black/50 px-3 py-5 text-center">{home.featuredGames[0].installs} installs</span>
                             </div>
                           </div>
                         </div>
@@ -302,17 +300,14 @@ export default function Home(initialData) {
               <div className="w-full border-b border-black/50 pb-56 md:pb-0 relative z-10">
                 <div className="grid grid-cols-12 max-w-screen-3xl mx-auto">
                   <div className="col-span-10 col-start-2 md:col-span-10 md:col-start-2 md:border-l md:border-r border-black/50 py-[5vw] md:px-10">
-                    <div className="grid grid-cols-12 pb-[10vw]">
+                    <div className="grid grid-cols-12 pt-[4vw] pb-[10vw]">
                       <div className="col-span-12 lg:col-span-3 mb-5 lg:mb-0">
                         <GlobeIcon className="w-[40%] max-w-[50px] lg:max-w-[100px] lg:mx-auto" />
                       </div>
                       <div className="col-span-12 lg:col-span-7">
-                        <span className="text-lg lg:text-lg xl:text-2xl uppercase font-bold block mb-4">
-                          Our data-driven creations have helped
-                        </span>
-                        <span className="font-black text-[clamp(40px,_5vw,_86px)] leading-[0.95] mb-8 lg:mb-16 uppercase max-w-[500px]">
-                          1,000+ Studios Developers
-                        </span>
+
+                        <span className="text-lg lg:text-2xl 2xl:text-3xl uppercase font-bold block mb-4">Our data-driven creations have helped</span>
+                        <span className="font-black text-[clamp(40px,_5vw,_86px)] tracking-tight leading-[0.95] mb-8 lg:mb-16 uppercase max-w-[500px]">1,000+ Studios &amp; Developers</span>
                       </div>
                     </div>
 
@@ -321,12 +316,9 @@ export default function Home(initialData) {
                         <MobileHandIcon className="w-[40%] max-w-[50px] lg:max-w-[100px] lg:mx-auto" />
                       </div>
                       <div className="col-span-12 lg:col-span-7">
-                        <span className="text-lg lg:text-lg xl:text-2xl uppercase font-bold block mb-4">
-                          turn their creative ideas into
-                        </span>
-                        <span className="font-black text-[clamp(40px,_5vw,_86px)] leading-[0.95] mb-8 lg:mb-16 uppercase max-w-[500px]">
-                          80+ Mobile Games
-                        </span>
+
+                        <span className="text-lg lg:text-2xl 2xl:text-3xl uppercase font-bold block mb-4">Combining our creative expertise into</span>
+                        <span className="font-black text-[clamp(40px,_5vw,_86px)] tracking-tight leading-[0.95] mb-8 lg:mb-16 uppercase max-w-[500px]">80+ Mobile Games</span>
                       </div>
                     </div>
 
@@ -335,12 +327,9 @@ export default function Home(initialData) {
                         <DownloadIcon className="w-[40%] max-w-[50px] lg:max-w-[100px] lg:mx-auto" />
                       </div>
                       <div className="col-span-12 lg:col-span-7">
-                        <span className="text-lg lg:text-lg xl:text-2xl uppercase font-bold block mb-4">
-                          Resulting in
-                        </span>
-                        <span className="font-black text-[clamp(40px,_5vw,_86px)] leading-[0.95] mb-8 lg:mb-16 uppercase max-w-[500px]">
-                          1,000,000,000+ Downloads
-                        </span>
+
+                        <span className="text-lg lg:text-2xl 2xl:text-3xl uppercase font-bold block mb-4">Resulting in chart topping hits and</span>
+                        <span className="font-black text-[clamp(40px,_5vw,_86px)] tracking-tight leading-[0.95] mb-8 lg:mb-16 uppercase max-w-[500px]">1,000,000,000+ Downloads</span>
                       </div>
                     </div>
                   </div>
@@ -361,46 +350,28 @@ export default function Home(initialData) {
               </div>
 
               <div className="order-3 md:order-2 col-span-12 md:col-span-6 z-10">
-                <h2 className="font-black text-[clamp(35px,_4.45vw,_86px)] leading-[0.95] mb-8 lg:mb-16 uppercase">
-                  {home.makeAGameCtaHeading}
-                </h2>
+
+                <h2 className="font-black text-[clamp(35px,_4.55vw,_90px)] leading-[0.95] mb-8 lg:mb-16 uppercase tracking-tight">{home.makeAGameCtaHeading}</h2>
                 <div className="content max-w-3xl mb-8 xl:mb-12 w-10/12">
                   <p>{home.makeAGameCtaText}</p>
                 </div>
 
-                <Link href="/careers">
+                <Link href="/homa-lab">
                   <a className="pill-btn group">
                     <div className="relative">
-                      <span className="block group-hover:opacity-0">
-                        Build A Career
-                      </span>
-                      <span className="absolute top-0 left-0 right-0 hidden  group-hover:block">
-                        <TextScrambler
-                          text="Build A Career"
-                          seed={5}
-                          step={1}
-                          singleLine
-                        />
-                      </span>
+
+                      <span className="block group-hover:opacity-0">Enter The Homa Lab</span>
+                      <span className="absolute top-0 left-0 right-0 hidden  group-hover:block"><TextScrambler text="Enter The Homa Lab" seed={5} step={1} singleLine /></span>
                     </div>
                   </a>
                 </Link>
               </div>
 
               <div className="order-1 md:order-3 col-span-12 md:col-span-6 lg:col-span-4 relative z-0 h-[300px] md:h-full">
-                <MouseParallax
-                  isAbsolutelyPositioned
-                  lerpEase={0.15}
-                  strength={-0.015}
-                  zIndex={0}
-                >
-                  <ScrollParallax
-                    isAbsolutelyPositioned
-                    lerpEase={0.15}
-                    strength={-0.14}
-                    zIndex={0}
-                  >
-                    <div className="absolute top-[-20%] right-0 z-0 w-full max-w-[120px] lg:max-w-[160px]">
+
+                <MouseParallax isAbsolutelyPositioned lerpEase={0.15} strength={-0.015} zIndex={0}>
+                  <ScrollParallax isAbsolutelyPositioned lerpEase={0.15} strength={-0.14} zIndex={0}>
+                    <div className="absolute top-[25%] right-[5%] z-0 w-full lg:w-1/2 max-w-[150px] lg:max-w-[160px] xl:max-w-[180px] 2xl:max-w-[230px]">
                       {/* <Image
                         src="/images/bee.webp"
                         alt="Bee"
@@ -418,19 +389,10 @@ export default function Home(initialData) {
                   </ScrollParallax>
                 </MouseParallax>
 
-                <MouseParallax
-                  isAbsolutelyPositioned
-                  lerpEase={0.15}
-                  strength={-0.025}
-                  zIndex={0}
-                >
-                  <ScrollParallax
-                    isAbsolutelyPositioned
-                    lerpEase={0.15}
-                    strength={-0.23}
-                    zIndex={0}
-                  >
-                    <div className="absolute bottom-0 left-8 z-0 w-full max-w-[80px] lg:max-w-[95px] -scale-x-100 rotate-[15deg]">
+
+                <MouseParallax isAbsolutelyPositioned lerpEase={0.15} strength={-0.025} zIndex={0}>
+                  <ScrollParallax isAbsolutelyPositioned lerpEase={0.15} strength={-0.23} zIndex={0}>
+                    <div className="absolute bottom-0 left-[0] z-0 w-full max-w-[90px] xl:max-w-[100px] -scale-x-100 rotate-[15deg]">
                       {/* <Image
                         src="/images/bee.webp"
                         alt="Bee"
@@ -448,19 +410,10 @@ export default function Home(initialData) {
                   </ScrollParallax>
                 </MouseParallax>
 
-                <MouseParallax
-                  isAbsolutelyPositioned
-                  lerpEase={0.15}
-                  strength={0.025}
-                  zIndex={0}
-                >
-                  <ScrollParallax
-                    isAbsolutelyPositioned
-                    lerpEase={0.15}
-                    strength={0.1}
-                    zIndex={0}
-                  >
-                    <div className="absolute top-[40%] left-[33%] z-0 w-full max-w-[90px] lg:max-w-[110px] rotate-[-14deg]">
+
+                <MouseParallax isAbsolutelyPositioned lerpEase={0.15} strength={0.025} zIndex={0}>
+                  <ScrollParallax isAbsolutelyPositioned lerpEase={0.15} strength={0.1} zIndex={0}>
+                    <div className="absolute top-[0] left-[17%] 2xl:left-[22%] z-0 w-full max-w-[70px] lg:max-w-[110px] xl:max-w-[135px] 2xl:max-w-[155px]">
                       {/* <Image
                         src="/images/bee.webp"
                         alt="Bee"
@@ -469,11 +422,8 @@ export default function Home(initialData) {
                         height={548}
                         className="w-full"
                       /> */}
-                      <PixelatedImage
-                        image={"/images/bee.webp"}
-                        width={398}
-                        height={548}
-                      />
+
+                      <PixelatedImage image={'/images/bee2.webp'} width={263} height={352} />
                     </div>
                   </ScrollParallax>
                 </MouseParallax>
@@ -503,28 +453,32 @@ export default function Home(initialData) {
               </div>
 
               <div className="w-full lg:w-1/2 pb-12 lg:pb-16 xl:pb-24">
+                <div className={`w-full px-6 xl:px-10 py-6 xl:py-10 flex flex-wrap border-b border-black/50`}>
+                  <div className="w-auto mr-12">
+                    <span className="uppercase text-sm tracking-widest mt-1 block font-medium">00</span>
+                  </div>
+                  <div className="w-3/4">
+                    <h3 className="font-black text-3xl lg:text-5xl xl:text-5xl 2xl:text-6xl leading-[0.95] tracking-tight mb-24 lg:mb-48 uppercase max-w-[500px] xl:max-w-none">Game The System</h3>
+                  </div>
+                </div>
                 {products.map((e, i) => {
                   return (
-                    <div
-                      className={`w-full ${
-                        i + 1 != 9 && "border-b border-black/50"
-                      } px-6 xl:px-10 py-6 xl:py-10 flex flex-wrap`}
-                    >
-                      <div className="w-auto mr-12">
-                        <span className="uppercase text-sm tracking-widest mt-1 block font-medium">
-                          0{i + 1}
-                        </span>
-                      </div>
-                      <div className="w-3/4">
-                        <h3 className="font-black text-3xl lg:text-4xl xl:text-5xl leading-[0.95] mb-12 lg:mb-24 uppercase max-w-[500px] xl:max-w-none">
-                          {e.title}
-                        </h3>
-                        <div className="content w-11/12 lg:w-11/12 max-w-[650px]">
-                          <p>{e.introText}</p>
+
+                    <Link href={`/homa-lab/${e.slug.current}`} key={i}>
+                      <a className={`w-full ${i + 1 != products.length && 'border-b border-black/50'} px-6 xl:px-10 py-6 xl:py-10 flex flex-wrap hover:bg-pink focus:bg-pink`}>
+                        <div className="w-auto mr-12">
+                          <span className="uppercase text-sm tracking-widest mt-1 block font-medium">0{i + 1}</span>
                         </div>
-                      </div>
-                    </div>
-                  );
+                        <div className="w-3/4">
+                          <h3 className="font-black text-3xl lg:text-5xl xl:text-5xl 2xl:text-6xl leading-[0.95] tracking-tight mb-12 lg:mb-24 uppercase max-w-[500px] xl:max-w-none">{e.title}</h3>
+
+                          <div className="content w-11/12 lg:w-11/12 max-w-[650px]">
+                            <p>{e.introText}</p>
+                          </div>
+                        </div>
+                      </a>
+                    </Link>
+                  )
                 })}
               </div>
             </div>
@@ -561,6 +515,7 @@ export default function Home(initialData) {
               </MouseParallax>
 
               <div className="relative z-0 flex overflow-x-hidden">
+                
                 <div className="mt-56 lg:mt-[25vw] mb-[16vw] animate-marquee whitespace-nowrap">
                   <span className="mx-[10vw] lg:mx-[6vw] text-[clamp(150px,_20.2vw,_410px)] font-black uppercase leading-none">
                     Play To Win
@@ -604,7 +559,9 @@ export default function Home(initialData) {
                   {home.homaAcademyCtaHeading}
                 </h2>
                 <div className="content max-w-3xl mb-8 xl:mb-12 w-10/12">
-                  <p>{home.homaAcademyCtaText}</p>
+                  <p>The Homa Academy provides developers and studios everywhere the insights needed to create games with hit potential coded right in.</p>
+
+                  <p>Stop by to learn the ins and outs of game design, including in-depth game play analysis, methods for ideation &amp; player experience optimization, as well as hands-on game building tutorials, hangouts and more. </p>
                 </div>
 
                 <a
@@ -629,8 +586,16 @@ export default function Home(initialData) {
                 </a>
               </div>
 
-              <div className="order-1 md:order-3 col-span-12 md:col-span-6 lg:col-span-4 relative z-0 md:h-full mb-8 lg:mb-0 overflow-hidden">
-                <div className="scene-container relative w-[65%] lg:w-full aspect-square lg:-mt-12"></div>
+              
+              <div className="order-1 md:order-3 col-span-12 md:col-span-6 lg:col-span-4 relative z-0 md:h-full mb-8 lg:mb-0">
+
+                {/* Henry to replace with WebGl */}
+                {/* <TestWebgl /> */}
+                <video loop={true} autoPlay="autoplay" playsInline={true} muted className={`w-full scale-[1.1]`}>
+                  <source src={'/videos/stairs.webm'} type="video/webm" />
+
+                  Sorry. Your browser does not support the video tag.
+                </video>
               </div>
             </div>
 
@@ -639,10 +604,8 @@ export default function Home(initialData) {
                 <Marquee speed={130} gradient={false}>
                   {home.scrollingImages.map((e, i) => {
                     return (
-                      <span
-                        className="inline-block w-[60%] md:w-[40%] xl:w-[30%] h-[60vw] md:h-[40vw] xl:h-[30vw] aspect-square relative overflow-hidden"
-                        key={i}
-                      >
+
+                      <span className="inline-block w-[60%] md:w-[40%] xl:w-[30%] h-[60vw] md:h-[40vw] xl:h-[30vw] aspect-square relative overflow-hidden border border-r-0 border-black" key={i}>
                         <SanityImage
                           key={i}
                           image={e}
@@ -685,7 +648,9 @@ export default function Home(initialData) {
               </div>
             </div>
 
-            <div id="webgl-ship" className="bg-lime text-black overflow-hidden">
+
+            
+            <div className="bg-lime text-black relative overflow-hidden">
               <div className="grid grid-cols-12 py-12 lg:py-[15vw] px-6 xl:px-10 max-w-screen-3xl mx-auto">
                 <div className="col-span-12 lg:col-span-2 relative z-10">
                   <span className="uppercase text-sm tracking-widest mb-5 lg:mb-8 block font-medium">
@@ -698,57 +663,42 @@ export default function Home(initialData) {
                   </span>
                 </div>
 
+                
                 <div className="col-span-12 lg:col-span-8 z-10 relative">
-                  <div className="absolute top-[10%] xl:top-[-20%] right-[-20%] lg:right-[-40%] xl:right-[-50%] w-[80%] lg:w-[90%] aspect-square z-1">
-                    <div className="scene-container scene-container2 relative w-full aspect-square z-1"></div>
+                  <video loop={true} autoPlay="autoplay" playsInline={true} muted className={`w-[60%] absolute top-0 right-0 z-[1] translate-x-[65%] lg:translate-y-[10%] xl:translate-y-[-5%] hidden lg:block`}>
+                    <source src={'/videos/rocket.webm'} type="video/webm" />
+
+                    Sorry. Your browser does not support the video tag.
+                  </video>
+
+                  <h1 className="font-black text-[clamp(50px,_4.45vw,_86px)] leading-[0.95] mb-8 lg:mb-16 uppercase">We're changing gaming by rewriting the rules</h1>
+                  <div className="content max-w-3xl mb-8 xl:mb-12 md:w-9/12 xl:w-7/12">
+                    <p>Creating tools to superpower others’ creativity requires a lot of creativity on our end too. If you’re creative and up for taking over an industry, we want our logo on your Linkedin.</p>
                   </div>
 
-                  <h1 className="font-black text-[clamp(50px,_4.45vw,_86px)] leading-[0.95] mb-8 lg:mb-16 uppercase">
-                    We’re changing the game by rewriting the rules
-                  </h1>
-                  <div className="content max-w-3xl mb-8 xl:mb-12 w-10/12">
-                    <p>
-                      Creating tools to superpower others’ creativity requires a
-                      lot of creativity on our end too. If you’re creative and
-                      up for taking over an industry, we want our logo on your
-                      Linkedin.
-                    </p>
-                  </div>
+                  <div className="w-full flex flex-wrap border border-black/50 mb-6 lg:mb-8 relative bg-lime z-[10]">
+                    <div className="w-full lg:w-1/3 border-b lg:border-b-0 lg:border-r border-black/50 p-5 lg:p-6 xl:p-8 2xl:p-10">
+                      <h3 className="font-bold text-2xl lg:text-3xl xl:text-3xl leading-[0.95] mb-12 lg:mb-32 uppercase">WFH, WFParis, WFAnywhere</h3>
 
-                  <div className="w-full flex flex-wrap border border-black/50 mb-6 lg:mb-8">
-                    <div className="w-full lg:w-1/3 bg-lime border-b lg:border-b-0 lg:border-r border-black/50 p-5 lg:p- relative z-106 xl:p-8 2xl:p-10">
-                      <h3 className="font-bold text-2xl lg:text-3xl xl:text-4xl leading-[0.95] mb-12 lg:mb-32 uppercase">
-                        WFH, WFParis, WFAnywhere
-                      </h3>
-
-                      <div className="content content--small w-11/12">
-                        <p>We’re in Paris, you don’t need you to be.</p>
+                      <div className="content content--small w-full">
+                        <p>We’re a distributed team with a flagship HQ in Paris. Work from here, or anywhere.</p>
                       </div>
                     </div>
 
-                    <div className="w-full lg:w-1/3 bg-lime border-b lg:border-b-0 lg:border-r border-black/50 p-5 lg:p- relative z-106 xl:p-8 2xl:p-10">
-                      <h3 className="font-bold text-2xl lg:text-3xl xl:text-4xl leading-[0.95] mb-12 lg:mb-32 uppercase w-11/12">
-                        Work In English
-                      </h3>
 
-                      <div className="content content--small w-11/12">
-                        <p>
-                          We’re over 25 nationalities strong and we work in
-                          English all day long.
-                        </p>
+                    <div className="w-full lg:w-1/3 border-b lg:border-b-0 lg:border-r border-black/50 p-5 lg:p-6 xl:p-8 2xl:p-10">
+                      <h3 className="font-bold text-2xl lg:text-3xl xl:text-3xl leading-[0.95] mb-12 lg:mb-32 uppercase w-11/12">Work In<br/>English</h3>
+
+                      <div className="content content--small w-full">
+                        <p>We’re over 25 nationalities strong and we work in English all day long.</p>
                       </div>
                     </div>
 
-                    <div className="w-full lg:w-1/3 bg-lime p-5 lg:p-6 xl:p-8 2xl:p-10 relative z-10">
-                      <h3 className="font-bold text-2xl lg:text-3xl xl:text-4xl leading-[0.95] mb-12 lg:mb-32 uppercase">
-                        Work your way up
-                      </h3>
+                    <div className="w-full lg:w-1/3 p-5 lg:p-6 xl:p-8 2xl:p-10">
+                      <h3 className="font-bold text-2xl lg:text-3xl xl:text-3xl leading-[0.95] mb-12 lg:mb-32 uppercase">Work your<br/>way up</h3>
 
-                      <div className="content content--small w-11/12">
-                        <p>
-                          Twice-yearly reviews: twice-yearly chances to prove
-                          you deserve more.
-                        </p>
+                      <div className="content content--small w-full">
+                        <p>Twice-yearly reviews: twice-yearly chances to prove you deserve more.</p>
                       </div>
                     </div>
                   </div>
@@ -768,13 +718,9 @@ export default function Home(initialData) {
             </div>
 
             <div className="bg-orange/40 relative overflow-hidden pb-[25vw] lg:pb-0">
-              <ScrollParallax
-                isAbsolutelyPositioned
-                lerpEase={1}
-                strength={-0.05}
-                zIndex={0}
-              >
-                <div className="scale-[1.12] absolute inset-0 w-full h-full">
+
+              <ScrollParallax isAbsolutelyPositioned lerpEase={1} strength={-0.05} zIndex={0}>
+                <div className="scale-[1.15] absolute inset-0 w-full h-full">
                   <Image
                     src="/images/hope-cta.jpg"
                     alt="About Test"
@@ -786,17 +732,24 @@ export default function Home(initialData) {
 
               <div className="grid grid-cols-12 py-12 lg:pt-[15vw] lg:pb-[20.5vw] px-6 xl:px-10 max-w-screen-3xl mx-auto">
                 <div className="col-span-12 lg:col-span-7 z-10 mb-12 lg:mb-0">
-                  <h2 className="font-black text-[clamp(50px,_4.45vw,_86px)] leading-[0.95] mb-8 lg:mb-16 uppercase">
-                    There's Hope. Then there's Homa.
-                  </h2>
-                  <div className="content max-w-3xl mb-8 xl:mb-12 w-10/12">
-                    <p>
-                      We play to win, so our clients can win. With us, every
-                      step of your game’s build and launch phase – from ideation
-                      right through to monetization - is managed by experts and
-                      tested, tweaked and improved by data-rich technology.
-                    </p>
+
+                  <h2 className="font-black text-[clamp(50px,_4.45vw,_86px)] leading-[0.95] mb-8 lg:mb-16 uppercase">There's Hope.<br/>Then there's Homa.</h2>
+                  <div className="content max-w-3xl mb-6 xl:mb-8 w-10/12">
+                    <p>With us, every step of your game’s build and launch phase – from ideation right through to monetization - is managed by experts and tested, tweaked and improved by data-rich technology.</p>
+
+                    <p>To see our process and the hits its produced:</p>
                   </div>
+
+                  <Link href="/games">
+                    <a
+                      className="pill-btn group"
+                    >
+                      <div className="relative">
+                        <span className="block group-hover:opacity-0">Learn More</span>
+                        <span className="absolute top-0 left-0 right-0 hidden  group-hover:block"><TextScrambler text="Learn More" seed={5} step={1} singleLine /></span>
+                      </div>
+                    </a>
+                  </Link>
                 </div>
 
                 <div className="col-span-6 col-start-4 md:col-span-4 md:col-start-8">
@@ -805,34 +758,35 @@ export default function Home(initialData) {
 
                     <div className="absolute top-0 right-0 mr-[-35%] lg:mr-[-45%] mt-[15%] z-10 w-full lg:w-[70%]">
                       <div className="w-full">
-                        <span className="block uppercase font-medium tracking-wider text-base leading-none lg:leading-none xl:leading-none 2xl:leading-non w-11/12 bg-white border border-b-0 border-black/50 px-3 py-5">
-                          Game Name
-                        </span>
+
+                        <span className="block uppercase font-medium tracking-wider text-base leading-none lg:leading-none xl:leading-none 2xl:leading-non w-11/12 bg-white border border-b-0 border-black/50 px-3 py-5">{home.featuredGames[0].title}</span>
                       </div>
                       <div className="w-full">
-                        <span className="block uppercase font-medium tracking-wider text-base leading-none lg:leading-none xl:leading-none 2xl:leading-non w-11/12 bg-white border border-black/50 px-3 py-5">
-                          Game Partner
-                        </span>
+                        <span className="block uppercase font-medium tracking-wider text-base leading-none lg:leading-none xl:leading-none 2xl:leading-non w-11/12 bg-white border border-black/50 px-3 py-5">{home.featuredGames[0].partnerName}</span>
                       </div>
                     </div>
 
-                    <div className="absolute inset-0 z-1 scale-[0.922] mt-[-4%]">
-                      <Image
+                    <div className="absolute inset-0 z-1 scale-y-[0.96] overflow-hidden rounded-[9%] mt-[-1px] scale-x-[0.94]">
+                      <video loop={true} autoPlay="autoplay" playsInline={true} muted className={`object-cover object-center w-full h-full absolute inset-0 scale-[1.03]`}>
+                        <source src={home.featuredGames[0].gameplayVideo} type="video/mp4" />
+
+                        Sorry. Your browser does not support the video tag.
+                      </video>
+
+                      {/* <Image
                         src="/images/game-example.webp"
                         layout="responsive"
                         width={496}
                         height={882}
                         quality={75}
                         className="w-full"
-                      />
+                      /> */}
                     </div>
 
                     <div className="absolute bottom-0 left-0 ml-[-40%] md:ml-[-20%] mb-[15%] z-10 w-[130%] md:w-[70%] min-w-[120px] md:min-w-[290px]">
                       <div className="w-full">
-                        <span className="block uppercase font-medium tracking-wider text-base leading-none lg:leading-none xl:leading-none 2xl:leading-non w-11/12 bg-white border border-black/50 px-3 py-5 text-center">
-                          10,000,000 installs
-                        </span>
-                      </div>
+
+                        <span className="block uppercase font-medium tracking-wider text-base leading-none lg:leading-none xl:leading-none 2xl:leading-non w-11/12 bg-white border border-black/50 px-3 py-5 text-center">{home.featuredGames[0].installs} installs</span>
                     </div>
                   </div>
                 </div>

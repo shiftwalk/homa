@@ -233,7 +233,13 @@ export default function Careers(initialData) {
 
             <div className="w-full bg-pink/20 border-b border-black/50 mx-auto relative overflow-hidden">
               <div className="grid grid-cols-12 max-w-screen-3xl mx-auto">
-                <div className="col-span-10 col-start-2 md:col-span-10 md:col-start-2 md:border-l md:border-r border-black/50 py-[10vw] md:px-16 xl:px-24">
+                <div className="col-span-10 col-start-2 md:col-span-10 md:col-start-2 md:border-l md:border-r border-black/50 py-[10vw] md:px-16 xl:px-24 relative">
+                  <video loop={true} autoPlay="autoplay" playsInline={true} muted className={`w-[65%] absolute top-0 right-0 hidden lg:block translate-y-[-15.5%]`}>
+                    <source src={'/videos/faces.webm'} type="video/webm" />
+
+                    Sorry. Your browser does not support the video tag.
+                  </video>
+
                   <h2 className="display-text w-8/12 xl:w-[60%] mb-8 lg:mb-24">Want to join us?</h2>
                   <span className="uppercase text-sm tracking-widest mb-5 lg:mb-8 block font-medium">Open Roles</span>
                   

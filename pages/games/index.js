@@ -32,6 +32,7 @@ const query = `{
     projectCode,
     title,
     partnerName,
+    gameplayVideo,
     googlePlayStoreLink,
     appStoreLink
   },
@@ -148,7 +149,7 @@ export default function Games(initialData) {
             </div>
 
             <Container>
-              <div className="flex flex-wrap py-12 lg:pt-[10vw] lg:pb-[15vw]">
+              <div className="flex flex-wrap py-12 lg:pt-[10vw] lg:pb-[5vw] xl:pb-0">
                 <div className="w-full lg:w-1/2">
                   <h2 className="font-black text-[clamp(48px,_4.17vw,_80px)] leading-[0.95] mb-8 lg:mb-[5vw] uppercase w-11/12 break-words">From Customers to collaborators</h2>
 
@@ -157,8 +158,12 @@ export default function Games(initialData) {
                   </div>
                 </div>
 
-                <div className="w-full lg:w-1/2 flex items-center justify-center">
-                  <div className="w-[300px] h-[300px] border border-black/50"></div>
+                <div className="w-full lg:w-1/2 flex items-start translate-y-[-15%] lg:translate-y-[-25%]">
+                  <video loop={true} autoPlay="autoplay" playsInline={true} muted className={`w-full`}>
+                    <source src={'/videos/faces.webm'} type="video/webm" />
+
+                    Sorry. Your browser does not support the video tag.
+                  </video>
                 </div>
               </div>
             </Container>
@@ -295,7 +300,11 @@ export default function Games(initialData) {
 
                   <div className="w-full flex flex-wrap border border-black/50 mb-6 lg:mb-8">
                     <div className="w-full lg:w-1/3 xl:w-1/3 border-b lg:border-b-0 lg:border-r border-black/50 p-5 lg:p-6 xl:p-8 2xl:p-10">
-                      <div className="w-full h-[200px] xl:h-auto xl:aspect-square border-black/50 border mb-6 lg:mb-10"></div>
+                      <video loop={true} autoPlay="autoplay" playsInline={true} muted className={`w-full`}>
+                        <source src={'/videos/cog.webm'} type="video/webm" />
+
+                        Sorry. Your browser does not support the video tag.
+                      </video>
 
                       <h3 className="font-bold text-2xl lg:text-3xl xl:text-4xl leading-[0.95] mb-5 lg:mb-8 uppercase">
                         Send a prototype
@@ -311,7 +320,11 @@ export default function Games(initialData) {
                     </div>
 
                     <div className="w-full lg:w-1/3 xl:w-1/3 border-b lg:border-b-0 lg:border-r border-black/50 p-5 lg:p-6 xl:p-8 2xl:p-10">
-                      <div className="w-full h-[200px] xl:h-auto xl:aspect-square border-black/50 border mb-6 lg:mb-10"></div>
+                      <video loop={true} autoPlay="autoplay" playsInline={true} muted className={`w-full`}>
+                        <source src={'/videos/brick.webm'} type="video/webm" />
+
+                        Sorry. Your browser does not support the video tag.
+                      </video>
 
                       <h3 className="font-bold text-2xl lg:text-3xl xl:text-4xl leading-[0.95] mb-5 lg:mb-8 uppercase">
                         Build a game
@@ -329,7 +342,11 @@ export default function Games(initialData) {
                     </div>
 
                     <div className="w-full lg:w-1/3 xl:w-1/3 p-5 lg:p-6 xl:p-8 2xl:p-10">
-                      <div className="w-full h-[200px] xl:h-auto xl:aspect-square border-black/50 border mb-6 lg:mb-10"></div>
+                      <video loop={true} autoPlay="autoplay" playsInline={true} muted className={`w-full`}>
+                        <source src={'/videos/rocket.webm'} type="video/webm" />
+
+                        Sorry. Your browser does not support the video tag.
+                      </video>
 
                       <h3 className="font-bold text-2xl lg:text-3xl xl:text-4xl leading-[0.95] mb-5 lg:mb-8 uppercase">
                         Launch a hit

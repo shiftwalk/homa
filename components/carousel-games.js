@@ -50,16 +50,23 @@ export const CarouselGames = ({ heading, items }) => {
                   <div className="w-full flex justify-center embla__slide-inner-blur my-auto lg:py-0">
                     <div className="w-[55%] lg:w-[40%] relative">
                       <PhoneIcon className="w-full relative z-0" />
-                      <div className="absolute inset-0 z-1 scale-[0.922] mt-[-4%]">
-                        <Image
-                          src="/images/game-example.webp"
-                          alt="Character Test"
-                          layout="responsive"
-                          width={496}
-                          height={882}
-                          quality={75}
-                          className="w-full"
-                        />
+                      <div className="absolute inset-0 z-1 scale-y-[0.96] overflow-hidden rounded-[9%] mt-[-1px] scale-x-[0.93]">
+                        {e.gameplayVideo ? (
+                        <video loop={true} autoPlay="autoplay" playsInline={true} muted className={`object-cover object-center w-full h-full absolute inset-0 scale-[1.03]`}>
+                          <source src={e.gameplayVideo} type="video/mp4" />
+
+                          Sorry. Your browser does not support the video tag.
+                        </video>
+                        ) : (
+                          <Image
+                            src="/images/game-example.webp"
+                            layout="responsive"
+                            width={496}
+                            height={882}
+                            quality={75}
+                            className="w-full"
+                          />
+                        )}
                       </div>
                     </div>
                   </div>

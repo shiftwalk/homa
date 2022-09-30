@@ -152,6 +152,10 @@ canvas {
       grid-auto-columns: 32.5%;
     }
   }
+  
+  .embla__slide {
+    @apply mr-8 xl:mr-16;
+  }
 
   .is-selected {
     .embla__slide-inner {

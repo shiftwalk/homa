@@ -347,17 +347,26 @@ export default function About(initialData) {
                   <div className="content content--lg max-w-3xl mb-8 xl:mb-12 w-10/12">
                     <p>
                       We set our goals ambitiously high and don’t shy away from
-                      the climb.
+                      the climb. We’re on a mission to take over an industry
+                      thick with incumbents who won’t go quietly into the night.
+                      To succeed here, you’ll need a highly metaphorical shield
+                      and a sword.
                     </p>
                   </div>
                 </div>
 
                 <div className="col-span-12 lg:col-span-6 z-10 h-full">
-                  <div className="h-full flex items-center justify-center">
-                    <div
-                      ref={target1}
-                      className="w-[300px] h-[300px] border-black border"
-                    ></div>
+                  <div className="h-full flex items-center justify-center relative">
+                    <video
+                      loop={true}
+                      autoPlay="autoplay"
+                      playsInline={true}
+                      muted
+                      className={`w-full translate-y-[-5%]`}
+                    >
+                      <source src={"/videos/flagpole.webm"} type="video/webm" />
+                      Sorry. Your browser does not support the video tag.
+                    </video>
                   </div>
                 </div>
               </div>
@@ -373,22 +382,30 @@ export default function About(initialData) {
                     Humility
                   </h2>
                   <span className="uppercase text-xl lg:text-2xl xl:text-3xl tracking-widest mb-3 lg:mb-5 block font-black leading-none lg:leading-none xl:leading-none">
-                    Points on scoreboards
+                    We put our egos aside
                   </span>
                   <div className="content content--lg max-w-3xl mb-8 xl:mb-12 w-10/12">
                     <p>
-                      Homa is a team sport where no one plays like they’re alone
-                      on the field.
+                      We put our hands up. First to volunteer to help, second to
+                      high-five. Having an ego is natural, but letting it run
+                      the show is unhelpful to everyone. In the words of Mr.
+                      Lamar: Sit down. Be humble.
                     </p>
                   </div>
                 </div>
 
                 <div className="col-span-12 lg:col-span-6 z-10 h-full">
                   <div className="h-full flex items-center justify-center">
-                    <div
-                      ref={target2}
-                      className="w-[300px] h-[300px] border-black border"
-                    ></div>
+                    <video
+                      loop={true}
+                      autoPlay="autoplay"
+                      playsInline={true}
+                      muted
+                      className={`w-full translate-y-[-5%]`}
+                    >
+                      <source src={"/videos/hands.webm"} type="video/webm" />
+                      Sorry. Your browser does not support the video tag.
+                    </video>
                   </div>
                 </div>
               </div>
@@ -406,22 +423,30 @@ export default function About(initialData) {
                     Curiosity
                   </h2>
                   <span className="uppercase text-xl lg:text-2xl xl:text-3xl tracking-widest mb-3 lg:mb-5 block font-black leading-none lg:leading-none xl:leading-none">
-                    Questions on lips
+                    We keep our eyes open
                   </span>
                   <div className="content content--lg max-w-3xl mb-8 xl:mb-12 w-10/12">
                     <p>
-                      We believe in staying curious to keep our minds and
-                      creativity sharp.
+                      We believe the best way to know anything is to question
+                      everything. And to do that, you need open eyes and open
+                      minds at all times. Please excuse us, our office is full
+                      of dead cats.
                     </p>
                   </div>
                 </div>
 
                 <div className="col-span-12 lg:col-span-6 z-10 h-full">
                   <div className="h-full flex items-center justify-center">
-                    <div
-                      ref={target3}
-                      className="w-[300px] h-[300px] border-black border"
-                    ></div>
+                    <video
+                      loop={true}
+                      autoPlay="autoplay"
+                      playsInline={true}
+                      muted
+                      className={`w-full translate-y-[-5%]`}
+                    >
+                      <source src={"/videos/eye.webm"} type="video/webm" />
+                      Sorry. Your browser does not support the video tag.
+                    </video>
                   </div>
                 </div>
               </div>
