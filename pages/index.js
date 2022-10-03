@@ -112,7 +112,7 @@ export default function Home(initialData) {
       0.03,
       0.001,
       "#c9e31f",
-      0.2
+      0.05
     );
   });
 

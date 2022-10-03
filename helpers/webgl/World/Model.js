@@ -26,6 +26,7 @@ export default class Model {
     this.animationTimingModifier = animationTimingModifier;
     this.customEmissive = customEmissive;
     this.mouseMultiplicator = mouseMultiplicator;
+    this.modelFaces = false;
 
     this.createModel();
     this.getBounds();
@@ -54,12 +55,16 @@ export default class Model {
 
       this.modelScene.add(this.model.scene);
 
-      if (this.model.scene.animations) {
+      if (this.model.scene.animations && this.model.animations[0]) {
         this.mixer = new THREE.AnimationMixer(this.model.scene);
         const action = this.mixer.clipAction(this.model.animations[0]);
         action.play();
       }
     });
+
+    if (this.modelUrl.includes("faces")) {
+      this.modelFaces = true;
+    }
   };
 
   getBounds = () => {
@@ -82,17 +87,45 @@ export default class Model {
   update = () => {
     if (this.modelScene !== null) {
       if (this.mouseMultiplicator !== 0 && this.model) {
-        this.model.scene.position.x = lerp(
-          this.model.scene.position.x,
-          this.scroll.mouse.x * this.mouseMultiplicator,
-          0.04
-        );
-        this.model.scene.position.y = lerp(
-          this.model.scene.position.y,
-          -this.scroll.mouse.y * this.mouseMultiplicator,
-          0.04
-        );
+        if (this.modelFaces === true) {
+          this.model.scene.rotation.y = lerp(
+            this.model.scene.rotation.y,
+            this.scroll.mouse.x * this.mouseMultiplicator,
+            0.07
+          );
+          this.model.scene.rotation.x = lerp(
+            this.model.scene.rotation.x,
+            this.scroll.mouse.y * this.mouseMultiplicator,
+            0.07
+          );
+        } else {
+          this.model.scene.quaternion.z = lerp(
+            this.model.scene.quaternion.z,
+            -this.scroll.mouse.x * this.mouseMultiplicator,
+            0.07
+          );
+
+          this.model.scene.quaternion.x = lerp(
+            this.model.scene.quaternion.x,
+            this.scroll.mouse.y * this.mouseMultiplicator,
+            0.07
+          );
+        }
       }
+
+      // if (this.modelScene.userData.camera && this.model) {
+      //   this.modelScene.userData.camera.quaternion.y = lerp(
+      //     this.modelScene.userData.camera.quaternion.y,
+      //     -this.scroll.mouse.x * this.mouseMultiplicator,
+      //     0.075
+      //   );
+      // this.modelScene.userData.camera.quaternion.y = lerp(
+      //   this.modelScene.userData.camera.quaternion.y,
+      //   -this.scroll.mouse.y * this.mouseMultiplicator,
+      //   0.075
+      // );
+      // this.modelScene.userData.camera.lookAt(this.model.scene.position);
+      // }
 
       if (this.mixer) {
         this.mixer.update(

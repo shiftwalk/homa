@@ -22,7 +22,8 @@ import TextScrambler from "@/components/text-scrambler";
 import { CarouselGames } from "@/components/carousel-games";
 import { CarouselCards } from "@/components/carousel-cards";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
+import Experience from "@/helpers/webgl/Experience";
 
 // Sanity
 import SanityPageService from "@/services/sanityPageService";
@@ -78,9 +79,20 @@ const query = `{
 const pageService = new SanityPageService(query);
 
 export default function Games(initialData) {
-  // useEffect(() => {
-  //   window.experience.clearPage();
-  // });
+  const target1 = useRef(null);
+
+  useEffect(() => {
+    const experience = new Experience();
+    experience.clearPage();
+    experience.world.addScene(
+      "/models/faces.glb",
+      target1.current,
+      0.03,
+      0.001,
+      "#FFF",
+      0.5
+    );
+  });
 
   // Sanity Data
   const {
@@ -199,16 +211,12 @@ export default function Games(initialData) {
                 </div>
 
                 <div className="w-full lg:w-1/2 flex items-start translate-y-[-15%] lg:translate-y-[-25%]">
-                  <video
-                    loop={true}
-                    autoPlay="autoplay"
-                    playsInline={true}
-                    muted
-                    className={`w-full`}
+                  <div
+                    ref={target1}
+                    className="w-[100%] translate-y-[-20%] absolute top-0 right-0 z-[1] hidden lg:block"
                   >
-                    <source src={"/videos/faces.webm"} type="video/webm" />
-                    Sorry. Your browser does not support the video tag.
-                  </video>
+                    <div className="w-full aspect-square "></div>
+                  </div>
                 </div>
               </div>
             </Container>

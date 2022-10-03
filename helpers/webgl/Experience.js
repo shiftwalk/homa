@@ -41,6 +41,7 @@ export default class Experience {
   }
 
   resize = () => {
+    this.renderer.resize();
     this.world.resize();
   };
 
