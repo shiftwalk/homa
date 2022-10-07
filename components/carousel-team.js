@@ -18,33 +18,33 @@ export const CarouselTeam = ({items}) => {
   }, [emblaApi])
 
   return (
-    <div className="embla embla--team">
-      <div className="w-[91.05vw] ml-auto flex flex-wrap mb-6">
+    <div className="embla embla--team py-16 lg:py-0">
+      <div className="w-full lg:w-[91.05vw] ml-auto flex flex-wrap mb-6 px-6 lg:px-0">
         <div className="flex-1">
         <h2 className="font-bold text-xl lg:text-2xl xl:text-3xl leading-[0.9] lg:leading-[0.9] xl:leading-[0.9] uppercase">Our Partners &amp; Investors</h2>
         </div>
 
-        <div className="flex lg:justify-end w-full lg:w-auto lg:ml-auto pr-6 lg:pr-10 mb-5 lg:mb-0">
-          <button class="embla__prev w-12 lg:w-16 h-12 lg:h-16 flex items-center p-3 lg:p-4 justify-center border border-black/50 border-r-0 transition-colors ease-in-out duration-300 hover:border-black/100 focus:border-black/100" onClick={scrollPrev}>
+        <div className="hidden lg:flex lg:justify-end w-full lg:w-auto lg:ml-auto pr-6 lg:pr-10 mb-5 lg:mb-0">
+          <button className="embla__prev w-12 lg:w-16 h-12 lg:h-16 flex items-center p-3 lg:p-4 justify-center border border-black/50 border-r-0 transition-colors ease-in-out duration-300 hover:border-black/100 focus:border-black/100" onClick={scrollPrev}>
             <ArrowRightIcon className="w-full rotate-180" />
           </button>
-          <button class="embla__next w-12 lg:w-16 h-12 lg:h-16 flex items-center p-3 lg:p-4 justify-center border border-black/50 transition-colors ease-in-out duration-300 hover:border-black focus:border-black" onClick={scrollNext}>
+          <button className="embla__next w-12 lg:w-16 h-12 lg:h-16 flex items-center p-3 lg:p-4 justify-center border border-black/50 transition-colors ease-in-out duration-300 hover:border-black focus:border-black" onClick={scrollNext}>
             <ArrowRightIcon className="w-full" />
           </button>
         </div>
       </div>
 
-      <div class="embla__viewport w-[91.05vw] ml-auto bg-opacity-70 overflow-hidden" ref={emblaTeamRef}>
+      <div className="embla__viewport lg:w-[91.05vw] ml-auto bg-opacity-70 overflow-hidden px-6 lg:px-0" ref={emblaTeamRef}>
         <div className="embla__container">
           {items?.map((e, i) => {
             return (
               <div className="embla__slide" key={i}>
-                <div className="w-full bg-gray-100 aspect-square border-b border-black/50 relative overflow-hidden">
+                <div className="w-full bg-gray-100 aspect-square border-b border-black/50 relative overflow-hidden bg-blend-multiply mix-blend-multiply">
                   <SanityImage image={e.image} layout="fill" className="block w-full h-full absolute inset-0 aspect-square scale-[1.03] embla__slide-inner-blur" />
                 </div>
                 <div className="embla__slide-inner">
                   <div className="embla__slide-inner-blur">
-                    <span className="block uppercase font-bold tracking-widest text-xl leading-none lg:text-2xl lg:leading-none mb-3">{e.title}</span>
+                    <span className="block uppercase font-bold tracking-normal text-xl leading-none lg:text-2xl lg:leading-none mb-3">{e.title}</span>
                     {(e.jobTitle || e.company) && (
                       <span className="block text-base leading-[1.15] lg:text-lg lg:leading-[1.15]">{e.jobTitle ? e.jobTitle : null}, {e.company ? e.company : null}</span>
                     )}
@@ -83,6 +83,15 @@ export const CarouselTeam = ({items}) => {
             )
           })}
         </div>
+      </div>
+
+      <div className="flex lg:hidden lg:justify-end w-full relative z-[100] mt-8 lg:mt-0 px-6 lg:px-0">
+        <button className="embla__prev w-12 lg:w-16 h-12 lg:h-16 flex items-center p-3 lg:p-4 justify-center border border-black/50 border-r-0 transition-colors ease-in-out duration-300 hover:border-black/100 focus:border-black/100" onClick={scrollPrev}>
+          <ArrowRightIcon className="w-full rotate-180" />
+        </button>
+        <button className="embla__next w-12 lg:w-16 h-12 lg:h-16 flex items-center p-3 lg:p-4 justify-center border border-black/50 transition-colors ease-in-out duration-300 hover:border-black focus:border-black" onClick={scrollNext}>
+          <ArrowRightIcon className="w-full" />
+        </button>
       </div>
     </div>
   )

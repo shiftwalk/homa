@@ -13,7 +13,7 @@ export default function ModularQuoteBlock({ text, authorName, authorJobTitle }) 
         )}
       </div>
       <div className="w-full xl:w-[75%] 2xl:w-[70%] order-1 xl:order-1 pb-3 xl:pb-0 bg-gradient-to-b from-pink/20 to-pink">
-        <h3 className="block text-[clamp(40px,_4.45vw,_86px)] leading-[0.9] uppercase font-black p-8 pb-16 md:p-12 md:pb-20 lg:p-16 lg:pb-24 xl:p-24 xl:pb-32">{text}</h3>
+        <h3 className="block text-[clamp(28px,_3.45vw,_50px)] leading-[0.96] uppercase font-black p-8 pb-16 md:p-12 md:pb-20 lg:p-16 lg:pb-24 xl:p-24 xl:pb-32">{text}</h3>
       </div>
       <div className="flex-1 hidden xl:block order-3"></div>
     </div>

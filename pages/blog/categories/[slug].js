@@ -10,7 +10,7 @@ import { NextSeo } from 'next-seo';
 import DayInfo from '@/components/day-info';
 import MousePosition from '@/components/mouse-position';
 import Link from 'next/link';
-import SanityImage from '@/components/sanity-image';
+import BlogCard from '@/components/blog-card';
 
 const query = `{
   "currentCat": *[_type == "categories" && slug.current == $slug][0] {
@@ -19,10 +19,12 @@ const query = `{
   "blog": *[_type == "blog" && category->slug.current == $slug] | order(date desc) {
     title,
     category-> {
+      title,
       slug {
         current
       }
     },
+    publishDate,
     heroImage {
       asset-> {
         ...
@@ -37,13 +39,23 @@ const query = `{
     slug {
       current
     }
+  },
+  "contact": *[_type == "contact"][0]{
+    email,
+    phone,
+    twitter,
+    instagram,
+    linkedIn,
+    facebook,
+    tikTok,
+    discord
   }
 }`
 
 const pageService = new SanityPageService(query)
 
 export default function BlogCategory(initialData) {
-  const { data: { currentCat, blog } } = pageService.getPreviewHook(initialData)()
+  const { data: { currentCat, blog, contact } } = pageService.getPreviewHook(initialData)()
 
   return (
     <Layout>
@@ -71,7 +83,7 @@ export default function BlogCategory(initialData) {
               <div className={`max-w-screen-3xl mx-auto mt-6 lg:mt-0`}>
                 <Link href="/blog">
                   <a className="w-10 lg:w-12 xl:w-16 h-10 lg:h-12 xl:h-16 border border-black/50 p-3 xl:p-4 flex items-center justify-center leading-[0] text-2xl mb-6 lg:mb-10 xl:mb-16 hover:bg-black hover:text-white">
-                    <svg className="w-full" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.102 20.9 20.9 1.1M20.898 20.9 1.1 1.1" stroke="currentColor" stroke-miterlimit="10"/></svg>
+                    <svg className="w-full" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.102 20.9 20.9 1.1M20.898 20.9 1.1 1.1" stroke="currentColor" strokeMiterlimit="10"/></svg>
                   </a>
                 </Link>
 
@@ -84,32 +96,20 @@ export default function BlogCategory(initialData) {
             <div className="max-w-screen-3xl mx-auto px-6 lg:px-10 mt-10 lg:mt-[6vw]">
               <div className="flex flex-wrap md:-mx-4 lg:-mx-6">
                 {blog.map((e, i) => {
+                  let d = new Date(e.publishDate);
+                  let ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d);
+                  let mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(d);
+                  let da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d);
+
                   return (
-                    <div className="md:px-4 lg:px-6 w-full md:w-1/2 lg:w-1/3 mb-6 md:mb-20 lg:mb-32">
-                      <Link href="#">
-                        <a className="block border border-black/50 w-full">
-                          <div className="aspect-square w-full bg-gray-200 border-b border-black/50 relative overflow-hidden">
-                            <SanityImage
-                              image={e.heroImage}
-                              layout="fill"
-                              className="block w-full h-full absolute inset-0 aspect-square scale-[1.03]"
-                            />
-                          </div>
-
-                          <div className="p-6 xl:p-10">
-                            <h2 className="font-bold text-xl lg:text-2xl xl:text-3xl uppercase w-full mb-12 md:mb-20 lg:mb-28 xl:mb-32">{e.title}</h2>
-
-
-                            <div className="flex items-end">
-                              {e.category && (
-                                <span className="inline-block border border-black/50 font-medium uppercase leading-none p-3 rounded-sm hover:bg-black hover:text-white focus:bg-black focus:text-white">{e.category.slug.current}</span>
-                              )}
-
-                              <span className="block text-sm lg:text-base text-black/50 leading-none ml-auto">June 8 2022</span>
-                            </div>
-                          </div>
-                        </a>
-                      </Link>
+                    <div className="md:px-4 lg:px-6 w-full md:w-1/2 lg:w-1/3 mb-6 md:mb-20 lg:mb-32" key={i}>
+                      <BlogCard
+                        href={`/blog/${e.slug.current}`}
+                        heading={e.title}
+                        image={e.heroImage}
+                        category={e.category.title}
+                        date={`${da} ${mo} ${ye}`}
+                      />
                     </div>
                   )
                 })}
@@ -117,7 +117,7 @@ export default function BlogCategory(initialData) {
             </div>
 
             <FooterCta />          
-            <Footer />
+            <Footer contact={contact} />
           </m.div>
         </m.div>
       </LazyMotion>

@@ -35,7 +35,7 @@ export default function SanityImage({ image, layout, widthOverride, heightOverri
       )}
     </div>
 	) : (
-    <figure className={`image opacity-0 ${className} ${layout == 'fill' && 'cover-image' } ${imageIsLoaded ? 'opacity-100' : 'opacity-0'} transition-opacity duration-500 ease-in-out will-change`}>
+    <figure className={`image ${className} ${layout == 'fill' && 'cover-image' } ${imageIsLoaded ? 'opacity-100' : 'opacity-0'} transition-opacity duration-300 ease-in-out will-change`}>
 		  <Img {...imageProps} {...attributes} onLoad={event => {
           const target = event.target;
           if (target.src.indexOf('data:image/gif;base64') < 0) {

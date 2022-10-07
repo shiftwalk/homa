@@ -21,11 +21,14 @@ import SanityPageService from '@/services/sanityPageService'
 import SkipButtons from './skip-buttons'
 import TextScrambler from './text-scrambler'
 import SanityImage from './sanity-image'
+import BlogCard from './blog-card'
+import ScramblePillButton from './scramble-pill-button'
 
-export const articlesPerPage = 9;
+export const articlesPerPage = 24;
+
 
 export const query = `{
-  "blog": *[_type == "blog"] | order(date desc) [$start ... $stop] {
+  "blog": *[_type == "blog"] | order(publishDate desc) [$start ... $stop] {
     title,
     heroImage {
       asset-> {
@@ -55,12 +58,22 @@ export const query = `{
       current
     }
   },
-  "numberOfArticles": count(*[_type == "blog"]) 
+  "numberOfArticles": count(*[_type == "blog"]),
+  "contact": *[_type == "contact"][0]{
+    email,
+    phone,
+    twitter,
+    instagram,
+    linkedIn,
+    facebook,
+    tikTok,
+    discord
+  }
 }`
 
 const pageService = new SanityPageService(query)
 
-export default function BlogBody({blog, numberOfArticles, categories, subPage, index}) {
+export default function BlogBody({blog, numberOfArticles, categories, subPage, index, contact}) {
   
   return (
     <Layout>
@@ -85,18 +98,16 @@ export default function BlogBody({blog, numberOfArticles, categories, subPage, i
                 <MousePosition />
               </div>
 
-              <div className={`max-w-screen-3xl mx-auto hidden lg:block ${!subPage && 'mb-12 lg:mb-24 xl:mb-32' }`}>
-                <h1 className="text-base uppercase tracking-widest font-medium leading-none block"><TextScrambler text="The news arcade" seed={14} /></h1>
+              <div className={`max-w-screen-3xl mx-auto block ${!subPage && 'mb-6 lg:mb-24 xl:mb-32' }`}>
+                <h1 className="text-sm lg:text-base uppercase tracking-widest font-medium leading-none block"><TextScrambler text="The news arcade" seed={14} /></h1>
               </div>
 
               {!subPage && (
-                <div className="flex flex-wrap max-w-screen-3xl mx-auto mb-8 xl:mb-10">
+                <div className="flex flex-wrap max-w-screen-3xl mx-auto mb-5 lg:mb-8 xl:mb-10">
                   <div className="w-full lg:w-2/3 flex flex-nowrap overflow-x-scroll lg:overflow-hidden lg:flex-wrap ">
                     {categories?.map((e, i) => {
                       return (
-                        <Link href={`/blog/categories/${e.slug.current}`}>
-                          <a className="inline-block flex-shrink-0 border border-black/50 font-medium uppercase leading-none p-3 rounded-sm hover:bg-black hover:text-white focus:bg-black focus:text-white mr-3 mb-3">{e.title}</a>
-                        </Link>
+                        <ScramblePillButton href={`/blog/categories/${e.slug.current}`} label={e.title} internal className="mr-3 mb-3 min-w-[155px] text-center" />
                       )
                     })}
                   </div>
@@ -107,15 +118,17 @@ export default function BlogBody({blog, numberOfArticles, categories, subPage, i
             {!subPage && (
               <div className="w-full border-b border-black/50">
                 <div className="flex flex-wrap">
-                  <div className="w-full lg:w-1/2 py-6 lg:py-10 pl-6 xl:pl-10 pr-6 xl:pr-10">
+                  <div className="w-full lg:w-1/2 order-2 lg:order-1 py-12 lg:py-10 pl-6 xl:pl-10 pr-6 xl:pr-10">
                     <div className="max-w-[920px] ml-auto">
-                      <Link href={`/blog/categories/${blog[0].category.slug.current}`}>
-                        <a className="inline-block border border-black/50 font-medium uppercase leading-none p-3 rounded-sm hover:bg-black hover:text-white focus:bg-black focus:text-white mr-3 mb-6 lg:mb-12">{blog[0].category.title}</a>
+                      <ScramblePillButton href={`/blog/categories/${blog[0].category.slug.current}`} label={blog[0].category.title} internal className="mr-3 mb-6 lg:mb-12" />
+
+                      <Link href={`/blog/${blog[0].slug.current}`}>
+                        <a className="block">
+                          <h2 className="font-black text-[clamp(40px,_4.45vw,_86px)] leading-[0.9] mb-12 lg:mb-[15vw] uppercase w-[99%] lg:w-11/12">{blog[0].title}</h2>
+                        </a>
                       </Link>
 
-                      <h2 className="font-black text-[clamp(40px,_4.45vw,_86px)] leading-[0.9] mb-12 lg:mb-[15vw] uppercase w-11/12">Headline that runs over multiple lines lorem ipsum dolor sit amet consectetur adipiscing elit.</h2>
-
-                      <div className="flex flex-wrap">
+                      {/* <div className="flex flex-wrap">
                         {Array.from(Array(4), (e, i) => {
                           return (
                             <Link href="#">
@@ -123,26 +136,26 @@ export default function BlogBody({blog, numberOfArticles, categories, subPage, i
                             </Link>
                           )
                         })}
-                      </div>
+                      </div> */}
                     </div>
                   </div>
-                  <div className="w-full lg:w-1/2 lg:border-l border-black/50 relative overflow-hidden">
-                    <div className="scale-[1.125] w-full h-full aspect-square">
-                      <ScrollParallax isAbsolutelyPositioned lerpEase={1} strength={-0.05}>
-                        <Image
-                          src="/images/about.jpg"
-                          alt="About Test"
+                  <div className="w-full lg:w-1/2 order-1 lg:order-2 lg:border-l border-black/50 relative overflow-hidden">
+                    <Link href={`/blog/${blog[0].slug.current}`}>
+                      <a className="w-full h-full aspect-square block">
+                        <SanityImage
+                          image={blog[0].heroImage}
                           layout="fill"
                           className="w-full h-full absolute inset-0 z-0 object-cover object-top"
                         />
-                      </ScrollParallax>
-                    </div>
+                      </a>
+                    </Link>
                   </div>
                 </div>
               </div>
             )}
             
-            <div className="max-w-screen-3xl mx-auto px-6 lg:px-10 mt-10 lg:mt-[6vw]">
+            <div className="max-w-screen-3xl mx-auto px-6 lg:px-10 mt-20 lg:mt-[6vw]">
+              <h2 className="block font-bold uppercase text-lg lg:text-2xl xl:text-3xl w-full mb-6 lg:mb-10">More Stories</h2>
               <div className="flex flex-wrap md:-mx-4 lg:-mx-6">
                 {blog.map((e, i) => {
                   let d = new Date(e.publishDate);
@@ -151,38 +164,21 @@ export default function BlogBody({blog, numberOfArticles, categories, subPage, i
                   let da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d);
 
                   return (
-                    <div className="md:px-4 lg:px-6 w-full md:w-1/2 lg:w-1/3 mb-6 md:mb-20 lg:mb-32" key={i}>
-                      <Link href={`/blog/${e.slug.current}`}>
-                        <a className="block border border-black/50 w-full h-full">
-                          <div className="aspect-square w-full bg-gray-200 border-b border-black/50 relative overflow-hidden">
-                            <SanityImage
-                              image={e.heroImage}
-                              layout="fill"
-                              className="block w-full h-full absolute inset-0 aspect-square scale-[1.03]"
-                            />
-                          </div>
-
-                          <div className="p-6 xl:p-10">
-                            <h2 className="font-bold text-xl lg:text-2xl xl:text-3xl uppercase w-full mb-12 md:mb-20 lg:mb-28 xl:mb-32">{e.title}</h2>
-
-
-                            <div className="flex items-end">
-                              {e.category && (
-                                <span className="inline-block border border-black/50 font-medium uppercase leading-none p-3 rounded-sm hover:bg-black hover:text-white focus:bg-black focus:text-white">{e.category.title}</span>
-                              )}
-
-                              <span className="block text-sm lg:text-base text-black/50 leading-none ml-auto">{da} {mo} {ye}</span>
-                            </div>
-                          </div>
-                        </a>
-                      </Link>
+                    <div className="md:px-4 lg:px-6 w-full md:w-1/2 lg:w-1/3 mb-12 md:mb-20 lg:mb-32" key={i}>
+                      <BlogCard
+                        href={`/blog/${e.slug.current}`}
+                        heading={e.title}
+                        image={e.heroImage}
+                        category={e.category.title}
+                        date={`${da} ${mo} ${ye}`}
+                      />
                     </div>
                   )
                 })}
               </div>
 
               {/* PAGINATION */}
-              {numberOfArticles > 9 && (
+              {numberOfArticles > 24 && (
                 <div className="mb-8 lg:mb-12 xl:mb-16">
                   <SkipButtons index={index} maxIndex={Math.floor(numberOfArticles/articlesPerPage)} />
                 </div> 
@@ -190,7 +186,7 @@ export default function BlogBody({blog, numberOfArticles, categories, subPage, i
             </div>
 
             <FooterCta />
-            <Footer />
+            <Footer contact={contact} />
           </m.div>
         </m.div>
       </LazyMotion>

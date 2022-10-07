@@ -9,7 +9,7 @@ export default function DayInfo({ className }) {
   
   return (
     <span className={`block tabular-nums ${className ? className : null}`}>
-        <TextScrambler text={`${date.replace(',', '').replace(', ', ' ')} ${time.replace(' ', '')} XX°C`} seed={16} />
+      <TextScrambler text={`${date.replace(',', '').replace(', ', ' ')} ${time.replace(' ', '')}`} seed={16} />
     </span>
   )
 }

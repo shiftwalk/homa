@@ -5,7 +5,7 @@ import ArrowRightIcon from "@/icons/arrow-right.svg"
 
 export default function MobileMenu({ menuClose, setMobileChildMenuOpen, mobileChildMenuOpen}) {
   return (
-    <Div100vh className="w-full flex bg-white bg-opacity-50 backdrop-blur-xl lg:hidden">
+    <Div100vh className="w-full flex bg-white bg-opacity-20 backdrop-blur-lg lg:hidden border-t border-black/50">
       <div className="w-full h-full overflow-scroll p-6 pb-16">
         <nav className="ml-auto w-full">
           <ul className="w-full">
@@ -56,13 +56,13 @@ export default function MobileMenu({ menuClose, setMobileChildMenuOpen, mobileCh
                       </a>
                     </Link>
                   </li>
-                  <li className="block">
+                  {/* <li className="block">
                     <Link href="/homa-lab/dev-tools">
                       <a className="block px-6 py-5 uppercase text-base leading-none relative" onClick={menuClose}>
                         Dev Tools
                       </a>
                     </Link>
-                  </li>
+                  </li> */}
                   <li className="block">
                     <Link href="/homa-lab/data-analytics">
                       <a className="block px-6 py-5 uppercase text-base leading-none relative" onClick={menuClose}>

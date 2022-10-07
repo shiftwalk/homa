@@ -1,8 +1,9 @@
 /* Content Stylings */
 .content {
   & > p,
-  & > ul {
-    @apply mb-5 lg:mb-10 last-of-type:mb-0 md:text-xl 2xl:text-2xl md:leading-normal 2xl:leading-normal;
+  & > ul,
+  & > blockquote {
+    @apply mb-5 lg:mb-10 last-of-type:mb-0 md:text-xl 2xl:text-2xl leading-[1.25] md:leading-[1.35] 2xl:leading-[1.35];
   }
 
   & > ul {
@@ -26,15 +27,15 @@
   }
 
   & > h1, & > .h1 {
-    @apply text-2xl lg:text-4xl mb-[8vw] lg:mb-[5vw];
+    @apply text-3xl lg:text-4xl xl:text-5xl mb-6 md:mb-10 md:pb-0 tracking-tight font-bold;
   }
 
   & > h2, & > .h2 {
-    @apply text-xl lg:text-3xl;
+    @apply text-2xl lg:text-3xl;
   }
 
   & > h3, & > .h3 {
-    @apply text-lg lg:text-2xl;
+    @apply text-xl lg:text-2xl;
   }
 }
 
@@ -51,7 +52,7 @@
 
 .content--nolead {
   & > p {
-    @apply leading-[1.25] lg:leading-[1.25] xl:leading-[1.25]
+    @apply leading-[1.075] lg:leading-[1.25] xl:leading-[1.25]
   }
 }
 
@@ -65,26 +66,35 @@ h1, .h1, h2, .h2, h3, .h3 {
   font-size: clamp(50px, 7.5vw, 150px);
 }
 
+.display-text--large {
+  @apply font-black leading-none uppercase;
+  font-size: clamp(40px, 8vw, 180px);
+}
+
 .index-heading {
   @apply text-[68px];
   
   @screen md {
-    @apply text-[120px]
+    @apply text-[120px] translate-x-[-0.3vw]
   }
 
   @screen lg {
-    @apply text-[11vw];
+    @apply text-[11.02vw];
   }
   
   @screen xl {
-    @apply text-[10.85vw];
+    @apply text-[10.9vw];
   }
 
   @screen 2xl {
-    @apply text-[10.97vw];
+    @apply text-[11.02vw];
   }
 
-  @media screen and (min-width: 1900px) {
-    @apply text-[208px];
+  @screen 3xl {
+    @apply text-[11.15vw];
+  }
+
+  @media screen and (min-width: 2300px) {
+    @apply text-[11.24vw];
   }
 }

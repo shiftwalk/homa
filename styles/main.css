@@ -42,11 +42,11 @@ html {
   }
   
   .nav-child {
-    @apply hidden absolute top-0 left-0 right-0 opacity-0 p-6 border-b border-black/50 backdrop-blur-3xl bg-white bg-opacity-40 w-full;
+    @apply hidden fixed top-0 left-0 right-0 opacity-0 p-6 bg-white bg-opacity-0 w-full z-[100];
 
     &:after {
       content: ' ';
-      @apply absolute top-0 left-0 bottom-[-1px] w-[100vw] translate-x-[-100vw] border-b border-black/50 backdrop-blur-3xl bg-white bg-opacity-40;
+      @apply absolute top-0 left-0 h-full translate-y-[-1px] w-[200vw] translate-x-[-100vw] border-b border-black/50 bg-opacity-0 backdrop-blur-lg z-0 bg-white/20;
     }
 
     &:focus-within {
@@ -98,6 +98,22 @@ canvas {
 }
 
 .embla--games {
+  .embla__container {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 100%;
+
+    @apply justify-start;
+
+    @screen lg {
+      grid-auto-columns: 49%;
+    }
+  }
+
+  .embla__slide-inner {
+    @apply h-[130vw] lg:h-[60vw] xl:h-[55vw] 2xl:h-[50vw];
+  }
+
   .is-selected {
     .embla__slide-inner {
       @apply bg-pink/20;
@@ -114,7 +130,7 @@ canvas {
   .embla__container {
     display: grid;
     grid-auto-flow: column;
-    grid-auto-columns: 70%;
+    grid-auto-columns: 95%;
 
     @apply justify-start;
 
@@ -128,7 +144,7 @@ canvas {
   }
 
   .embla__slide {
-    @apply border border-black/50 mr-8 lg:mr-12;
+    @apply border border-black/50 mr-6 lg:mr-12 bg-pink/20;
   }
 
   .embla__slide-inner {
@@ -144,7 +160,55 @@ canvas {
   }
 }
 
+.embla--games-videos {
+  .embla__container {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 100%;
+
+    @apply justify-start;
+
+    @screen lg {
+      grid-auto-columns: 100%;
+    }
+
+    @screen xl {
+      grid-auto-columns: 100%;
+    }
+  }
+
+  .embla__slide {
+    @apply border-r-0;
+  }
+
+  .embla__slide-inner {
+    @apply transition-all ease-in-out duration-500 h-auto lg:h-auto p-0 lg:p-0;
+  }
+
+  .embla__slide-text {
+    @apply transition-all ease-in-out duration-500 opacity-0 hidden;
+  }
+
+  .embla__slide-inner-blur {
+    @apply blur-lg transition-all ease-in-out duration-500;
+  }
+
+  .is-selected {
+    .embla__slide-inner-blur {
+      @apply blur-0;
+    }
+    
+    .embla__slide-text {
+      @apply opacity-100 block;
+    }
+  }
+}
+
 .embla--blog {
+
+  .embla__slide {
+    @apply bg-white !important;
+  }
   .embla__container {
     grid-auto-columns: 90%;
 
@@ -156,26 +220,91 @@ canvas {
   .embla__slide {
     @apply mr-8 xl:mr-16;
   }
+}
+
+.embla--mobile-scroller {
+  @apply px-6 lg:px-0;
+
+  .embla__container {
+    grid-auto-columns: 100%;
+
+    @screen lg {
+      grid-auto-columns: 49%;
+      grid-column-gap: 0px;
+    }
+  }
+
+  .embla__slide {
+    @apply border-r-0 border-l-0 border-t-0 border-b-0 lg:border-r lg:mr-0 !important;
+  }
+  
+  .embla__slide-inner {
+    @apply p-0 lg:p-0 border-0 h-auto !important;
+  }
+
+  .embla__slide-title {
+    @apply opacity-0 transition-opacity ease-in-out duration-300;
+  }
+
+  .embla__slide-inner-blur {
+    @apply blur-0 lg:blur-lg transition-all ease-in-out duration-500 lg:scale-[1.02];
+  }
 
   .is-selected {
-    .embla__slide-inner {
-      @apply bg-white;
+    .embla__slide-inner-blur {
+      @apply lg:scale-[1.02] blur-0 lg:blur-0;
+    }
+
+    .embla__slide-title {
+      @apply opacity-100;
     }
   }
 }
 
-.embla--card {
+.embla--mobile-scroller--team {
+  @apply px-0 lg:px-0 !important;
+
   .embla__slide-inner {
-    @apply p-0 lg:p-0
+    @apply px-6 !important;
+  }
+}
+
+.embla--card {
+  @apply px-6 lg:px-0;
+
+  .embla__container {
+    grid-auto-columns: 100%;
+
+    @screen lg {
+      grid-auto-columns: 49%;
+      grid-column-gap: 0px;
+    }
+  }
+  
+
+  .embla__slide {
+    @apply border-r-0 border-l-0 lg:border-r lg:mr-0 !important;
+  }
+
+  .embla__slide-inner {
+    @apply p-0 lg:p-0;
   }
 
   .embla__slide-title {
-    @apply opacity-0 transition-opacity ease-in-out duration-300 hidden;
+    @apply opacity-0 transition-opacity ease-in-out duration-300;
+  }
+
+  .embla__slide-inner-blur {
+    @apply blur-0 lg:blur-lg transition-all ease-in-out duration-500 lg:scale-[1.02];
   }
 
   .is-selected {
+    .embla__slide-inner-blur {
+      @apply lg:scale-[1.02] blur-0 lg:blur-0;
+    }
+
     .embla__slide-title {
-      @apply opacity-100 block;
+      @apply opacity-100;
     }
   }
 }
@@ -186,7 +315,7 @@ canvas {
 }
 
 .roll-btn__front {
-  @apply bg-black block text-white text-center uppercase px-6 py-6 tracking-wide relative;
+  @apply bg-black text-white text-center uppercase px-12 py-6 tracking-wide relative h-full flex items-center justify-center border border-transparent;
   -webkit-transform-origin: 50% 100% 0;
   transform-origin: 50% 100% 0;
   transition: -webkit-transform .3s cubic-bezier(.76,0,.24,1) 0s;
@@ -195,7 +324,7 @@ canvas {
 }
 
 .roll-btn__back {
-  @apply block text-black h-full w-full text-center uppercase px-6 py-6 tracking-wide absolute left-0 top-[100%] z-[-1] bg-pink;
+  @apply flex items-center justify-center text-black h-full w-full text-center uppercase px-12 py-6 tracking-wide absolute left-0 top-[100%] z-[-1] bg-pink border border-black/50;
   -webkit-transform-origin: 50% 0 0;
   transform-origin: 50% 0 0;
   -webkit-transform: rotateX(-90deg);
@@ -205,19 +334,33 @@ canvas {
   transition: transform .3s cubic-bezier(.76,0,.24,1) 0s, -webkit-transform .3s cubic-bezier(.76,0,.24,1) 0s;
 }
 
-.roll-btn:hover {
-  .roll-btn__front {
-    -webkit-transform: translateY(-100%) rotateX(90deg);
-    transform: translateY(-100%) rotateX(90deg);
+@screen lg {
+  .roll-btn:hover {
+    .roll-btn__front {
+      -webkit-transform: translateY(-100%) rotateX(90deg);
+      transform: translateY(-100%) rotateX(90deg);
+    }
+    .roll-btn__back {
+      -webkit-transform: translateY(-100%) rotateX(0);
+      transform: translateY(-100%) rotateX(0);
+    }
   }
-  .roll-btn__back {
-    -webkit-transform: translateY(-100%) rotateX(0);
-    transform: translateY(-100%) rotateX(0);
+}
+
+.roll-btn--header {
+  .roll-btn__front, roll-btn__back {
+    @apply px-2 lg:px-12;
+  }
+}
+
+.roll-btn--hero {
+  .roll-btn__front, roll-btn__back {
+    @apply px-4 py-6 lg:px-12 lg:py-6 text-sm lg:text-base;
   }
 }
 
 .pill-btn {
-  @apply inline-block border border-black/50 font-medium uppercase leading-none p-3 rounded-sm hover:bg-black hover:text-white focus:bg-black focus:text-white;
+  @apply inline-block border border-current border-opacity-50 font-medium uppercase leading-none p-1 lg:p-3 rounded-sm hover:bg-black hover:text-white focus:bg-black focus:text-white text-sm lg:text-base;
 }
 
 
@@ -240,5 +383,32 @@ canvas {
 .cover-image {
   img {
     @apply object-cover object-center;
+  }
+}
+
+.cover-image--bottom {
+  img {
+    @apply object-cover object-bottom;
+  }
+}
+
+.phone-mask, .phone-backer, .phone-mask img {
+  -webkit-mask-image: url('/icons/phone-block.svg');
+  mask-image: url('/icons/phone-block.svg');
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
+@supports not (aspect-ratio: 1 / 1) {
+  .aspect-square::before {
+    float: left;
+    padding-top: 100%;
+    content: "";
+  }
+
+  .aspect-square::after {
+    display: block;
+    content: "";
+    clear: both;
   }
 }
