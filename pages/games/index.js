@@ -95,7 +95,7 @@ export default function Games(initialData) {
   useEffect(() => {
     const experience = new Experience();
     experience.clearPage();
-    experience.world.addScene(
+    experience.world.addModel(
       "/models/faces.glb",
       target1.current,
       0.03,

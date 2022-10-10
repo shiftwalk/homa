@@ -15,7 +15,7 @@ import DayInfo from "@/components/day-info";
 import Image from "next/image";
 import Link from "next/link";
 import SocialScroller from "@/components/social-scroller";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import PixelatedImage from "@/components/pixelated-image";
 import { CarouselBlog } from "@/components/carousel-blog";
 
@@ -148,6 +148,27 @@ const pageService = new SanityPageService(query);
 export default function Home(initialData) {
   const characterBinder = useRef(null);
   const target1 = useRef(null);
+  const target2 = useRef(null);
+
+  useEffect(() => {
+    window.experience.world.addModel(
+      "/models/ship.glb",
+      target1.current,
+      0.01,
+      0.001,
+      "#c9e31f",
+      0.1
+    );
+
+    window.experience.world.addModel(
+      "/models/test.glb",
+      target2.current,
+      0.02,
+      0.001,
+      null,
+      0.1
+    );
+  }, []);
 
   // Sanity Data
   const {
@@ -651,6 +672,7 @@ export default function Home(initialData) {
                   playsInline={true}
                   muted
                   className={`w-full mt-4 lg:mt-0 scale-[1.1]`}
+                  ref={target2}
                 >
                   <source
                     src={"/videos/stairs.mp4"}
@@ -714,6 +736,7 @@ export default function Home(initialData) {
                     autoPlay="autoplay"
                     playsInline={true}
                     muted
+                    ref={target1}
                     className={`w-[60%] absolute top-0 right-0 z-[1] translate-x-[65%] lg:translate-y-[10%] xl:translate-y-[-5%] hidden lg:block`}
                   >
                     <source src={"/videos/rocket.mov"} type="video/quicktime" />

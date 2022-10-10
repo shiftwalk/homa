@@ -2,6 +2,8 @@ import Experience from "../Experience";
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import lerp from "../utils/Maths/lerp";
+import fitTo from "../utils/Maths/fitTo";
+import { Box3 } from "three";
 
 export default class Model {
   constructor(
@@ -13,10 +15,11 @@ export default class Model {
     mouseMultiplicator
   ) {
     this.experience = new Experience();
+    this.scene = this.experience.scene;
     this.time = this.experience.time;
     this.sizes = this.experience.sizes;
-    this.renderer = this.experience.renderer.instance;
     this.scroll = this.experience.scroll;
+    this.camera = this.experience.camera.instance;
 
     this.gltfLoader = new GLTFLoader();
 
@@ -29,20 +32,17 @@ export default class Model {
     this.modelFaces = false;
 
     this.createModel();
-    this.getBounds();
   }
 
   createModel = () => {
-    this.modelScene = new THREE.Scene();
-    this.modelScene.userData.element = this.container;
-
-    const camera = new THREE.PerspectiveCamera(50, 1, 1, 10);
-    camera.position.z = 2;
-    this.modelScene.userData.camera = camera;
-
     this.gltfLoader.load(this.modelUrl, (file) => {
       this.model = file;
-      this.model.scene.scale.set(this.scale, this.scale, this.scale);
+
+      this.box3 = new Box3().setFromObject(this.model.scene);
+      this.size = new THREE.Vector3();
+      this.box3.getSize(this.size);
+
+      this.resizeModel();
 
       if (this.customEmissive !== null) {
         this.model.scene.traverse((scene) => {
@@ -53,7 +53,7 @@ export default class Model {
         });
       }
 
-      this.modelScene.add(this.model.scene);
+      this.scene.add(this.model.scene);
 
       if (this.model.scene.animations && this.model.animations[0]) {
         this.mixer = new THREE.AnimationMixer(this.model.scene);
@@ -67,25 +67,63 @@ export default class Model {
     }
   };
 
-  getBounds = () => {
-    this.containerRect = this.container.getBoundingClientRect();
+  resizeModel = () => {
+    this.fitter = fitTo(
+      this.camera,
+      this.model.scene.position.z,
+      this.sizes.screen.width,
+      this.sizes.screen.height
+    );
+    const containerRect = this.container.getBoundingClientRect();
 
-    this.rectWidth = this.containerRect.right - this.containerRect.left;
-    this.rectHeight = this.containerRect.bottom - this.containerRect.top;
-    this.rectLeft = this.containerRect.left;
-    this.rectBottom =
-      this.renderer.domElement.clientHeight - this.containerRect.bottom;
+    this.modelWidth =
+      (this.fitter.width * containerRect.width) /
+        this.sizes.screen.width /
+        this.size.x -
+      this.scale;
 
-    this.renderer.setScissor(
-      this.rectLeft,
-      this.rectBottom,
-      this.rectWidth,
-      this.rectHeight
+    this.model.scene.scale.set(
+      this.modelWidth,
+      this.modelWidth,
+      this.modelWidth
+    );
+
+    const elementCenterX = containerRect.width / 2;
+    const elementCenterY = containerRect.height / 2;
+    const elementX = containerRect.left;
+    const elementY = containerRect.top + window.lenis.scroll;
+
+    const x =
+      -this.sizes.viewport.width +
+      elementX +
+      elementCenterX * this.fitter.width;
+    const y = this.sizes.screen.height / 2 - elementY - elementCenterY;
+
+    this.model.scene.position.set(
+      x / this.sizes.screen.width + this.fitter.width * 0.01,
+      (y / this.sizes.screen.height) * this.fitter.height,
+      this.model.scene.position.z
     );
   };
 
+  getCoords = (elem) => {
+    // crossbrowser version
+    var box = elem.getBoundingClientRect();
+
+    var body = document.body;
+    var docEl = document.documentElement;
+
+    var scrollTop = window.lenis.scroll;
+
+    var clientTop = docEl.clientTop || body.clientTop || 0;
+
+    var top = box.top - box.height / 2 + scrollTop - clientTop;
+
+    return { top };
+  };
+
   update = () => {
-    if (this.modelScene !== null) {
+    if (this.model) {
       if (this.mouseMultiplicator !== 0 && this.model) {
         if (this.modelFaces === true) {
           this.model.scene.rotation.y = lerp(
@@ -101,7 +139,7 @@ export default class Model {
         } else {
           this.model.scene.quaternion.z = lerp(
             this.model.scene.quaternion.z,
-            -this.scroll.mouse.x * this.mouseMultiplicator,
+            -this.scroll.mouse.x * this.mouseMultiplicator + 0.1,
             0.07
           );
 
@@ -113,44 +151,17 @@ export default class Model {
         }
       }
 
-      // if (this.modelScene.userData.camera && this.model) {
-      //   this.modelScene.userData.camera.quaternion.y = lerp(
-      //     this.modelScene.userData.camera.quaternion.y,
-      //     -this.scroll.mouse.x * this.mouseMultiplicator,
-      //     0.075
-      //   );
-      // this.modelScene.userData.camera.quaternion.y = lerp(
-      //   this.modelScene.userData.camera.quaternion.y,
-      //   -this.scroll.mouse.y * this.mouseMultiplicator,
-      //   0.075
-      // );
-      // this.modelScene.userData.camera.lookAt(this.model.scene.position);
-      // }
-
       if (this.mixer) {
         this.mixer.update(
           this.time.delta * this.animationTimingModifier +
             this.scroll.scrollForce * 0.001
         );
       }
-
-      const bottom =
-        this.renderer.domElement.clientHeight -
-        this.container.getBoundingClientRect().bottom;
-
-      this.renderer.setViewport(
-        this.rectLeft,
-        bottom,
-        this.rectWidth,
-        this.rectHeight
-      );
-
-      this.renderer.render(this.modelScene, this.modelScene.userData.camera);
     }
   };
 
   resize = () => {
-    this.getBounds();
+    this.resizeModel();
   };
 
   destroy = () => {

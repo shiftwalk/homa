@@ -23,7 +23,7 @@ body {
 
 /* Soften Page Transition Scrolls */
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: initial;
 }
 
 @screen lg {
@@ -411,4 +411,9 @@ canvas {
     content: "";
     clear: both;
   }
+}
+
+/* DELETE */
+video {
+  opacity: 0 !important;
 }

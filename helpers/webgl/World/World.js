@@ -15,10 +15,10 @@ export default class World {
 
     this.gltfLoader = new GLTFLoader();
 
-    this.currentScenes = [];
+    this.models = [];
   }
 
-  addScene = (
+  addModel = (
     modelUrl,
     container,
     scale,
@@ -34,31 +34,30 @@ export default class World {
       customEmissive,
       mouseMultiplicator
     );
-    this.currentScenes.push(newModel);
+    this.models.push(newModel);
   };
 
   update = () => {
-    if (this.currentScenes.length > 0) {
-      this.currentScenes.forEach((scene) => {
-        scene.update();
+    if (this.models) {
+      this.models.forEach((model) => {
+        model.update();
       });
     }
   };
 
   resize = () => {
-    if (this.currentScenes.length > 0) {
-      this.currentScenes.forEach((scene) => {
-        scene.resize();
+    if (this.models) {
+      this.models.forEach((model) => {
+        model.resize();
       });
     }
   };
 
   destroy = () => {
-    if (this.currentScenes.length > 0) {
-      this.currentScenes.forEach((scene) => {
-        scene.destroy();
+    if (this.models) {
+      this.models.forEach((model) => {
+        model.destroy();
       });
-      this.currentScenes = [];
     }
   };
 }

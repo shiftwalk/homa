@@ -4,9 +4,32 @@ import { useRouter } from "next/router";
 import { DefaultSeo } from "next-seo";
 import SEO from "@/helpers/seo.config";
 import { GoogleAnalytics } from "nextjs-google-analytics";
+import WebGL from "@/components/webgl";
+import { useLayoutEffect } from "react";
+import Lenis from "@studio-freight/lenis";
 
 export default function App({ Component, pageProps }) {
   const router = useRouter();
+
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0);
+    const lenis = new Lenis({
+      smooth: true,
+      easing: (t) => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t)), // https://easings.net/en#easeOutExpo
+    });
+
+    window.lenis = lenis;
+
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+
+    requestAnimationFrame(raf);
+    return () => {
+      lenis.destroy();
+    };
+  }, []);
 
   return (
     <>

@@ -8,6 +8,8 @@ import Camera from "./Camera";
 import Renderer from "./Renderer";
 import World from "./World/World";
 
+import debounce from "lodash/debounce";
+
 let instance = null;
 
 export default class Experience {
@@ -37,16 +39,25 @@ export default class Experience {
     this.renderer = new Renderer();
     this.world = new World();
 
+    this.debounceResize = debounce(this.debounceResize, 100);
+
     window.experience = this;
   }
 
   resize = () => {
+    this.debounceResize();
+  };
+
+  debounceResize = () => {
     this.renderer.resize();
+    this.camera.resize();
     this.world.resize();
   };
 
   update = () => {
     this.world.update();
+    this.renderer.update();
+    this.camera.update();
   };
 
   destroy = () => {

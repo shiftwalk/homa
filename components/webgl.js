@@ -7,7 +7,7 @@ export default function WebGL() {
   let experience;
   useEffect(() => {
     experience = new Experience(canvasRef.current);
-  });
+  }, []);
 
   return <canvas ref={canvasRef} id="webgl"></canvas>;
 }
