@@ -58,6 +58,7 @@ export default class World {
       this.models.forEach((model) => {
         model.destroy();
       });
+      this.models = [];
     }
   };
 }
